@@ -33,10 +33,11 @@ const Navbar = () => {
               🛠️ Quản lý
             </button>
             <ul className="dropdown-menu dropdown-menu-end">
-              <li><Link className="dropdown-item" to="/admin/users">Người dùng</Link></li>
-              <Link className="nav-link" to="/chuong-trinh">Chương Trình Đào Tạo</Link>
-              <Link className="nav-link" to="/khoa-hoc">📘 Khóa học</Link>
-              <li><Link className="dropdown-item" to="/admin/lop">Lớp học</Link></li>
+              {/* <li><Link className="dropdown-item" to="/admin/users">Người dùng</Link></li> */}
+              <li><Link className="dropdown-item" to="/chuong-trinh">Chương Trình</Link></li>
+              <li><Link className="dropdown-item" to="/khoa-hoc">Khóa học</Link></li>
+              <li><Link className="dropdown-item" to="/lop">Lớp học</Link></li>
+              <li><Link className="dropdown-item" to="/loai-lop">Loại lớp</Link></li>
             </ul>
           </div>
         )}

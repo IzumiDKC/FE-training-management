@@ -26,7 +26,7 @@ const ChuongTrinhList = () => {
   return (
     <div className="container mt-4">
       <h3>📘 Chương trình đào tạo</h3>
-      <button className="btn btn-primary mb-3" onClick={() => navigate("/chuongtrinh/create")}>
+      <button className="btn btn-primary mb-3" onClick={() => navigate("/chuong-trinh/create")}>
         ➕ Thêm mới
       </button>
       <table className="table table-bordered table-striped">
@@ -43,7 +43,7 @@ const ChuongTrinhList = () => {
               <td>{ct.tenChuongTrinh}</td>
               <td>{ct.moTa}</td>
               <td>
-                <button className="btn btn-sm btn-info me-2" onClick={() => navigate(`/chuong-trinh/detail/${ct.chuongTrinhDaoTaoId}`)}>Xem</button>
+                <button className="btn btn-sm btn-info me-2" onClick={() => navigate(`/chuong-trinh/${ct.chuongTrinhDaoTaoId}`)}>Xem</button>
                 <button className="btn btn-sm btn-warning me-2" onClick={() => navigate(`/chuong-trinh/edit/${ct.chuongTrinhDaoTaoId}`)}>Sửa</button>
                 <button className="btn btn-sm btn-danger" onClick={() => handleDelete(ct.chuongTrinhDaoTaoId)}>Xóa</button>
               </td>

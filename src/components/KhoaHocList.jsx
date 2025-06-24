@@ -1,4 +1,3 @@
-// File: src/components/KhoaHocList.jsx
 import React, { useEffect, useState } from "react";
 import { getAllKhoaHoc, deleteKhoaHoc } from "../services/khoaHocApi";
 import { useNavigate } from "react-router-dom";
@@ -11,8 +10,8 @@ const KhoaHocList = () => {
     try {
       const data = await getAllKhoaHoc();
       setKhoaHocs(data);
-    } catch (err) {
-      console.error("Lỗi khi tải dữ liệu:", err);
+    } catch (error) {
+      console.error("Lỗi khi tải danh sách khóa học:", error);
     }
   };
 
@@ -33,17 +32,7 @@ const KhoaHocList = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h3>📘 Danh sách Khóa học</h3>
-        <button
-          className="btn btn-success"
-          onClick={() => navigate("/khoa-hoc/create")}
-        >
-          ➕ Thêm mới
-        </button>
-      </div>
-
+    <div>
       <table className="table table-bordered table-hover shadow-sm">
         <thead className="table-light">
           <tr>
@@ -64,7 +53,7 @@ const KhoaHocList = () => {
                     {kh.lops.map((lop) => (
                       <li key={lop.lopId}>
                         <strong>{lop.tenLop}</strong> (
-                        {new Date(lop.ngayBatDauDuKien).toLocaleDateString()} - {" "}
+                        {new Date(lop.ngayBatDauDuKien).toLocaleDateString()} -{" "}
                         {new Date(lop.ngayKetThucDuKien).toLocaleDateString()})
                       </li>
                     ))}
