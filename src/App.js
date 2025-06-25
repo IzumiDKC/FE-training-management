@@ -32,6 +32,11 @@ import LoaiLopEdit from "./pages/LoaiLop/LoaiLopEdit";
 import LoaiLopDetail from "./pages/LoaiLop/LoaiLopDetail";
 import ChonHocVien from "./pages/Lop/ChonHocVien";
 
+import ChiTietLopPage from "./pages/ChiTietLop/ChiTietLopPage";
+import ChiTietLopCreate from "./pages/ChiTietLop/ChiTietLopCreate";
+import ChiTietLopEdit from "./pages/ChiTietLop/ChiTietLopEdit";
+import ChiTietLopDetail from "./pages/ChiTietLop/ChiTietLopDetail";
+
 function App() {
   return (
     <AuthProvider>
@@ -64,8 +69,10 @@ function App() {
           <Route path="/loai-lop/:id" element={<LoaiLopDetail />} />
           <Route path="/lop/chon-hoc-vien/:id" element={<ChonHocVien />} />
 
-
-          {/* Add more routes as needed */}
+          <Route path="/chi-tiet-lop/:lopId" element={<ChiTietLopPage />} />
+          <Route path="/chi-tiet-lop/create/:lopId" element={<ChiTietLopCreate />} />
+          <Route path="/chi-tiet-lop/edit/:id" element={<ChiTietLopEdit />} />
+          <Route path="/chi-tiet-lop/detail/:id" element={<ChiTietLopDetail />} />
 
         </Routes>
       </Router>

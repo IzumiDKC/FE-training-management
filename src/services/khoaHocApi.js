@@ -1,9 +1,5 @@
 // service/khoaHocApi.js
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: 'https://localhost:7247/api', 
-});
+import api from "../config/api";
 
 export const getAllKhoaHoc = async () => {
   const response = await api.get('/khoaHoc');

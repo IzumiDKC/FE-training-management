@@ -1,8 +1,4 @@
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: 'https://localhost:7247/api',
-});
+import api from "../config/api";
 
 export const getAllChuongTrinh = async () => {
   const res = await api.get('/ChuongTrinhDaoTao');
