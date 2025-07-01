@@ -1,5 +1,6 @@
 // service/khoaHocApi.js
-import api from "../config/api";
+import api from "../api/api";
+
 
 export const getAllKhoaHoc = async () => {
   const response = await api.get('/khoaHoc');

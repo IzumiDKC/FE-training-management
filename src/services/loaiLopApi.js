@@ -1,4 +1,4 @@
-import api from "../config/api";
+import api from "../api/api";
 
 export const getAllLoaiLop = async () => {
   const response = await api.get("/LoaiLop");

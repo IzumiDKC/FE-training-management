@@ -1,5 +1,5 @@
 // File: src/services/chiTietLopApi.js
-import api from "../config/api";
+import api from "../api/api";
 
 export const getChiTietLopsByLopId = async (lopId) => {
   const res = await api.get(`/ChiTietLop/lop/${lopId}`);
