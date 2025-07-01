@@ -1,5 +1,5 @@
 // File: src/services/lopApi.js
-import api from "../config/api";
+import api from "../api/api";
 
 export const getAllLop = async () => {
   const res = await api.get("/Lop");

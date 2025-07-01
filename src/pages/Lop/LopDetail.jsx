@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { getLopById } from "../../services/lopApi";
+import { getDsHocVienByLopId } from "../../services/dsHocVienApi";
 import { useParams, useNavigate } from "react-router-dom";
 
 const LopDetail = () => {
   const { id } = useParams();
   const [lop, setLop] = useState(null);
+  const [dsHocVien, setDsHocVien] = useState([]);
+  const [message, setMessage] = useState(""); 
   const navigate = useNavigate();
 
   useEffect(() => {
     getLopById(id).then(setLop);
+
+    if (id) {
+      getDsHocVienByLopId(id).then((data) => {
+        if (data.message) {
+          setMessage(data.message); 
+        } else {
+          setDsHocVien(data);
+        }
+      });
+    }
   }, [id]);
 
   if (!lop) return <div className="container mt-4">🔄 Đang tải thông tin lớp học...</div>;
@@ -18,12 +31,26 @@ const LopDetail = () => {
       <div className="card shadow-sm border-0">
         <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
           <h4 className="mb-0">📄 Thông tin lớp học</h4>
-          <button
-            className="btn btn-light btn-sm"
-            onClick={() => navigate(`/chi-tiet-lop/${lop.lopId}`)}
-          >
-            📋 Xem buổi học
-          </button>
+          <div>
+            <button
+              className="btn btn-light btn-sm me-2"
+              onClick={() => navigate(`/lop/edit/${lop.lopId}`)}
+            >
+              ✏️ Chỉnh sửa lớp
+            </button>
+            <button
+              className="btn btn-info btn-sm me-2"
+              onClick={() => navigate(`/chi-tiet-lop/${lop.lopId}`)} // Điều hướng đến chi tiết buổi học
+            >
+              👀 Xem buổi học
+            </button>
+            <button
+              className="btn btn-secondary btn-sm"
+              onClick={() => navigate("/lop")}
+            >
+              ⬅️ Quay lại
+            </button>
+          </div>
         </div>
         <div className="card-body">
           <dl className="row">
@@ -46,6 +73,38 @@ const LopDetail = () => {
             </dd>
           </dl>
         </div>
+      </div>
+
+      <div className="mt-4">
+        <h4>📋 Danh sách học viên</h4>
+        {message ? (
+          <p>{message}</p>
+        ) : (
+          <table className="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>🆔 Mã học viên</th>
+                <th>👤 Họ tên học viên</th>
+                <th>💳 Số CCCD</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dsHocVien.length === 0 ? (
+                <tr>
+                  <td colSpan="3" className="text-center">Không có học viên</td>
+                </tr>
+              ) : (
+                dsHocVien.map((item) => (
+                  <tr key={item.danhSachHocVienId}>
+                    <td>{item.hocVienId}</td>
+                    <td>{item.hocVienName}</td>
+                    <td>{item.soCanCuoc}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
