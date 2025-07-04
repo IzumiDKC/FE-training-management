@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { getDiemDanhByChiTietLopId } from "../services/diemDanhApi"; // Lấy API
+import { getDiemDanhByChiTietLopId } from "../services/diemDanhApi"; 
+import { getDsHocVienByLopId } from "../services/dsHocVienApi"; 
 
-const DiemDanhList = ({ chiTietLopId }) => {
+const DiemDanhList = ({ chiTietLopId, lopId }) => { 
   const [diemDanhs, setDiemDanhs] = useState([]);
+  const [hocViens, setHocViens] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getDiemDanhByChiTietLopId(chiTietLopId); // Lấy điểm danh theo chiTietLopId
-        setDiemDanhs(result);
+        const result = await getDiemDanhByChiTietLopId(lopId, chiTietLopId);
+        if (result.length === 0) {
+          const hocVienResult = await getDsHocVienByLopId(lopId);
+          setHocViens(hocVienResult); 
+        } else {
+          setDiemDanhs(result); 
+        }
         setLoading(false);
       } catch (error) {
         setErrorMessage("Không có điểm danh cho buổi học này.");
@@ -21,7 +28,7 @@ const DiemDanhList = ({ chiTietLopId }) => {
     if (chiTietLopId) {
       fetchData();
     }
-  }, [chiTietLopId]); // Lắng nghe chiTietLopId
+  }, [chiTietLopId, lopId]);
 
   if (loading) return <p>Đang tải...</p>;
 
@@ -39,20 +46,20 @@ const DiemDanhList = ({ chiTietLopId }) => {
           </tr>
         </thead>
         <tbody>
-          {diemDanhs.length === 0 ? (
+          {diemDanhs.length === 0 && hocViens.length === 0 ? (
             <tr>
               <td colSpan="5" className="text-center">
-                Không có điểm danh cho buổi học này.
+                Không có điểm danh cho buổi học này và cũng không có học viên.
               </td>
             </tr>
           ) : (
-            diemDanhs.map((diemDanh) => (
-              <tr key={diemDanh.diemDanhId}>
-                <td>{diemDanh.hocVienName}</td>
-                <td>{diemDanh.soCanCuoc}</td>
-                <td>{diemDanh.checkIn || "Chưa check-in"}</td>
-                <td>{diemDanh.checkOut || "Chưa check-out"}</td>
-                <td>{diemDanh.note || "Không có ghi chú"}</td>
+            (diemDanhs.length > 0 ? diemDanhs : hocViens).map((item, index) => (
+              <tr key={item.diemDanhId || item.hocVienId}>
+                <td>{item.hocVienName || item.tenHocVien}</td>
+                <td>{item.soCanCuoc}</td>
+                <td>{item.checkIn || "Chưa check-in"}</td>
+                <td>{item.checkOut || "Chưa check-out"}</td>
+                <td>{item.note || "Không có ghi chú"}</td>
               </tr>
             ))
           )}

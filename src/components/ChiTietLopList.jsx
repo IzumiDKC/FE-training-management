@@ -4,26 +4,25 @@ import { useNavigate, useParams } from "react-router";
 
 const ChiTietLopList = () => {
   const [buoiHocList, setBuoiHocList] = useState([]);
-  const { lopId } = useParams();
+  const { lopId } = useParams(); 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getChiTietLopsByLopId(lopId);
+        const data = await getChiTietLopsByLopId(lopId); 
         setBuoiHocList(data);
       } catch (error) {
         console.error("Error fetching lessons:", error);
       }
     };
-
     if (lopId) fetchData();
   }, [lopId]); 
 
   const handleDelete = async (id) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa buổi học này?")) {
       await deleteChiTietLop(id);
-      setBuoiHocList((prev) => prev.filter((item) => item.chiTietLopId !== id)); // Update state after delete
+      setBuoiHocList((prev) => prev.filter((item) => item.chiTietLopId !== id));
     }
   };
 
@@ -35,7 +34,7 @@ const ChiTietLopList = () => {
       </h3>
       <button
         className="btn btn-primary mb-3"
-        onClick={() => navigate(`/chi-tiet-lop/create/${lopId}`)}
+        onClick={() => navigate(`/chi-tiet-lop/create/${lopId}`)} 
       >
         ➕ Thêm buổi học
       </button>
@@ -79,14 +78,14 @@ const ChiTietLopList = () => {
                   </button>
                   <button
                     className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(item.chiTietLopId)}
+                    onClick={() => handleDelete(item.chiTietLopId)} 
                   >
                     🗑️ Xóa
                   </button>
 
                   <button
                     className="btn btn-success btn-sm me-2"
-                    onClick={() => navigate(`/diem-danh/${lopId}`)}
+                    onClick={() => navigate(`/diem-danh/${lopId}/${item.chiTietLopId}`)}
                   >
                     📋 Điểm danh
                   </button>

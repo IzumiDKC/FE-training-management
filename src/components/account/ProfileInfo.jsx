@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { getCurrentUser } from "../../services/accountApi";
+import { checkTokenValidity } from "../../services/accountApi";
 
 const ProfileInfo = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
+  const [tokenError, setTokenError] = useState(""); 
 
   useEffect(() => {
-    getCurrentUser()
-      .then(setUser)
+    checkTokenValidity()
+      .then(() => {
+        getCurrentUser()
+          .then(setUser)
+          .catch(() => {
+            setError("Không thể tải thông tin. Có thể bạn chưa đăng nhập.");
+          });
+      })
       .catch(() => {
-        setError("Không thể tải thông tin. Có thể bạn chưa đăng nhập.");
+        setTokenError("Token không hợp lệ. Bạn cần đăng nhập lại.");
       });
   }, []);
+
+  if (tokenError) return <div className="alert alert-danger mt-4">{tokenError}</div>;
 
   if (error) return <div className="alert alert-danger mt-4">{error}</div>;
   if (!user) return <div className="text-center mt-5">🔄 Đang tải...</div>;
@@ -30,11 +40,10 @@ const ProfileInfo = () => {
           <div className="col-md-6 mb-3">
             <strong>Số căn cước:</strong> <div>{user.soCanCuoc}</div>
           </div>
-<div className="col-md-6 mb-3">
-  <strong>Vai trò:</strong>
-<div>{Array.isArray(user.roles) ? user.roles.join(", ") : "Chưa có"}</div>
-</div>
-
+          <div className="col-md-6 mb-3">
+            <strong>Vai trò:</strong>
+            <div>{Array.isArray(user.roles) ? user.roles.join(", ") : "Chưa có"}</div>
+          </div>
         </div>
       </div>
     </div>

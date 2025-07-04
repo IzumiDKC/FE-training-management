@@ -10,6 +10,7 @@ const LopDetail = () => {
   const [message, setMessage] = useState(""); 
   const navigate = useNavigate();
 
+
   useEffect(() => {
     getLopById(id).then(setLop);
 
@@ -40,7 +41,7 @@ const LopDetail = () => {
             </button>
             <button
               className="btn btn-info btn-sm me-2"
-              onClick={() => navigate(`/chi-tiet-lop/${lop.lopId}`)} // Điều hướng đến chi tiết buổi học
+              onClick={() => navigate(`/chi-tiet-lop/${lop.lopId}`)} 
             >
               👀 Xem buổi học
             </button>

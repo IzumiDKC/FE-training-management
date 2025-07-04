@@ -1,4 +1,3 @@
-// src/contexts/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getCurrentUser } from "../services/accountApi";
 
@@ -17,7 +16,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchUser();
+    if (localStorage.getItem("token")) {
+      fetchUser();
+    }
   }, []);
 
   return (
