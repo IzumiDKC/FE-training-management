@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap styles are imported
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Ensure Bootstrap JS is imported
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useAuth } from "../../contexts/AuthContext";
-
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    rememberMe: false
+    rememberMe: false,
   });
 
   const [message, setMessage] = useState("");
@@ -21,46 +20,47 @@ const LoginForm = () => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     });
     setError(null);
   };
-const navigate = useNavigate();
 
-const { fetchUser } = useAuth(); // 👈 Lấy từ context
+  const navigate = useNavigate();
+  const { fetchUser } = useAuth();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsLoading(true);
-  setMessage("");
-  setError(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage("");
+    setError(null);
 
-  try {
-    const response = await axios.post(
-      "https://localhost:7247/api/account/login",
-      formData,
-      { withCredentials: true }
-    );
+    try {
+      const response = await axios.post(
+        "https://localhost:7247/api/account/login",
+        formData,
+        { withCredentials: true }
+      );
 
-    setMessage(response.data.message || "🎉 Đăng nhập thành công!");
+      setMessage(response.data.message || "🎉 Đăng nhập thành công!");
 
-    setFormData({
-      email: "",
-      password: "",
-      rememberMe: false
-    });
+localStorage.setItem("token", response.data.token); 
+// console.log("Token lưu vào localStorage:", response.data.token);
 
-    await fetchUser(); 
-    navigate("/");
-  } catch (err) {
-    console.error(err);
-    setError(err.response?.data?.error || "Đăng nhập thất bại.");
-  } finally {
-    setIsLoading(false);
-  }
-};
+      setFormData({
+        email: "",
+        password: "",
+        rememberMe: false,
+      });
 
-
+      await fetchUser();
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.error || "Đăng nhập thất bại.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="container my-5">

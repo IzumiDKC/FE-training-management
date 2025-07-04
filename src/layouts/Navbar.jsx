@@ -13,7 +13,7 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const isAdmin = currentUser?.roles?.includes("Admin");
+  const isAdmin = currentUser?.roles?.includes("Admin",);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light px-4 shadow-sm">
