@@ -10,10 +10,9 @@ export const getDiemDanhByChiTietLopId = async (lopId, chiTietLopId) => {
   }
 };
 
-
 export const resetAllCheckIn = async (chiTietLopId) => {
   try {
-    await api.post("/DiemDanh/ResetAllCheckIn", { chiTietLopId }); 
+    await api.post(`/DiemDanh/ResetAllCheckIn/${chiTietLopId}`);
   } catch (error) {
     console.error("Error resetting check-in", error);
     throw error;
@@ -22,7 +21,7 @@ export const resetAllCheckIn = async (chiTietLopId) => {
 
 export const resetAllCheckOut = async (chiTietLopId) => {
   try {
-    await api.post("/DiemDanh/ResetAllCheckOut", { chiTietLopId });
+    await api.post(`/DiemDanh/ResetAllCheckOut/${chiTietLopId}`);
   } catch (error) {
     console.error("Error resetting check-out", error);
     throw error;
