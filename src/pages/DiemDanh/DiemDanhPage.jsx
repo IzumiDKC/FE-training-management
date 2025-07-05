@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import DiemDanhList from "../../components/DiemDanhList";  
 import { Button, Spinner } from "react-bootstrap"; 
+import { resetAllCheckIn, resetAllCheckOut } from "../../services/diemDanhApi";
 
 const DiemDanhPage = () => {
   const { chiTietLopId, lopId } = useParams(); 
@@ -48,6 +49,28 @@ const DiemDanhPage = () => {
     });
   };
 
+  const handleResetCheckIn = async () => {
+    if (!chiTietLopId) return;
+    try {
+      await resetAllCheckIn(chiTietLopId);
+      alert("✅ Đã reset tất cả Check-in.");
+    } catch (err) {
+      console.error("Error resetting check-in:", err);
+      alert("❌ Có lỗi xảy ra khi reset Check-in.");
+    }
+  };
+
+  const handleResetCheckOut = async () => {
+    if (!chiTietLopId) return;
+    try {
+      await resetAllCheckOut(chiTietLopId);
+      alert("✅ Đã reset tất cả Check-out.");
+    } catch (err) {
+      console.error("Error resetting check-out:", err);
+      alert("❌ Có lỗi xảy ra khi reset Check-out.");
+    }
+  };
+
   const handleBackToLop = () => {
     navigate(`/lop/${lopId}`);
   };
@@ -77,6 +100,23 @@ const DiemDanhPage = () => {
         >
           🔒 Tạo mã Check-out
         </Button>
+
+        <Button 
+          variant="danger" 
+          className="ms-4" 
+          onClick={handleResetCheckIn}
+          disabled={loading}
+        >
+          ♻️ Reset All Check-in
+        </Button>
+        <Button 
+          variant="warning" 
+          className="ms-2" 
+          onClick={handleResetCheckOut}
+          disabled={loading}
+        >
+          ♻️ Reset All Check-out
+        </Button>
       </div>
 
       {loading && (
@@ -96,7 +136,6 @@ const DiemDanhPage = () => {
       )}
 
       <DiemDanhList chiTietLopId={chiTietLopId} lopId={lopId} />
-
     </div>
   );
 };
