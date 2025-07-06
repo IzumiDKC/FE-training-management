@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getLopById, updateLop } from "../../services/lopApi";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 
 const LopEdit = () => {
   const { id } = useParams();
@@ -28,13 +28,10 @@ const LopEdit = () => {
     <div className="container mt-4">
       <h3>✏️ Sửa lớp học</h3>
       <form onSubmit={handleSubmit}>
-        {/* giống với LopCreate */}
-        {/* ví dụ: */}
         <div className="mb-3">
           <label className="form-label">Tên lớp</label>
           <input className="form-control" name="tenLop" value={form.tenLop} onChange={handleChange} required />
         </div>
-        {/* thêm các input khác tương tự */}
         <button className="btn btn-warning">Cập nhật</button>
       </form>
     </div>

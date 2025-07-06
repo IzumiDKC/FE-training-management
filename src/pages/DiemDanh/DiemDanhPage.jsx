@@ -1,3 +1,4 @@
+// File: src/pages/DiemDanh/DiemDanhPage.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import DiemDanhList from "../../components/DiemDanhList";  

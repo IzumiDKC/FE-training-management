@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { getKhoaHocById, updateKhoaHoc } from "../../services/khoaHocApi";
 import { getAllChuongTrinh } from "../../services/chuongTrinhApi";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 
 const KhoaHocEdit = () => {
   const { id } = useParams();

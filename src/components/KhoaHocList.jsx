@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAllKhoaHoc, deleteKhoaHoc } from "../services/khoaHocApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const KhoaHocList = () => {
   const [khoaHocs, setKhoaHocs] = useState([]);

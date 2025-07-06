@@ -1,7 +1,7 @@
 // File: src/pages/KhoaHoc/KhoaHocDetail.jsx
 import React, { useEffect, useState } from "react";
 import { getKhoaHocById } from "../../services/khoaHocApi";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 const KhoaHocDetail = () => {
   const { id } = useParams();
