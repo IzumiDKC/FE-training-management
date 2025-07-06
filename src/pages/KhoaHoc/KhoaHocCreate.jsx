@@ -1,5 +1,5 @@
 import { createKhoaHoc } from "../../services/khoaHocApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import React, { useState } from "react";
 
 const KhoaHocCreate = () => {

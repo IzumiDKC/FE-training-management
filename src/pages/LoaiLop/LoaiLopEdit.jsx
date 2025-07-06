@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getLoaiLopById, updateLoaiLop } from "../../services/loaiLopApi";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 
 const LoaiLopEdit = () => {
   const { id } = useParams();

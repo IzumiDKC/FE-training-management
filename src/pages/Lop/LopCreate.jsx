@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createLop } from "../../services/lopApi";
 import { getAllKhoaHoc } from "../../services/khoaHocApi";
 import { getAllLoaiLop } from "../../services/loaiLopApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const formatDateTimeLocal = (date) => {
   const offset = date.getTimezoneOffset();

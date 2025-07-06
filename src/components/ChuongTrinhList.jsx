@@ -1,7 +1,7 @@
 // File: src/components/ChuongTrinhList.jsx
 import React, { useEffect, useState } from "react";
 import { getAllChuongTrinh, deleteChuongTrinh } from "../services/chuongTrinhApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const ChuongTrinhList = () => {
   const [chuongTrinhs, setChuongTrinhs] = useState([]);

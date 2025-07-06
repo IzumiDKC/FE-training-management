@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getDiemDanhByChiTietLopId } from "../services/diemDanhApi"; 
 import { getDsHocVienByLopId } from "../services/dsHocVienApi"; 
+// eslint-disable-next-line
+import { formatDate, formatTime } from "../utils/formatTime";
 
 const DiemDanhList = ({ chiTietLopId, lopId }) => { 
   const [diemDanhs, setDiemDanhs] = useState([]);
@@ -57,8 +59,9 @@ const DiemDanhList = ({ chiTietLopId, lopId }) => {
               <tr key={item.diemDanhId || item.hocVienId}>
                 <td>{item.hocVienName || item.tenHocVien}</td>
                 <td>{item.soCanCuoc}</td>
-                <td>{item.checkIn || "Chưa check-in"}</td>
-                <td>{item.checkOut || "Chưa check-out"}</td>
+<td>{item.checkIn ? formatTime(item.checkIn) : "Chưa check-in"}</td>
+<td>{item.checkOut ? formatTime(item.checkOut) : "Chưa check-out"}</td>
+
                 <td>{item.note || "Không có ghi chú"}</td>
               </tr>
             ))

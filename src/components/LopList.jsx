@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAllLop, deleteLop } from "../services/lopApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const LopList = () => {
   const [lops, setLops] = useState([]);

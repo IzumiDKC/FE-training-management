@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getLopById } from "../../services/lopApi";
 import { getDsHocVienByLopId } from "../../services/dsHocVienApi";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 
 const LopDetail = () => {
   const { id } = useParams();

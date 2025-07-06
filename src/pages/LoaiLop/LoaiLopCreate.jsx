@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createLoaiLop } from "../../services/loaiLopApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const LoaiLopCreate = () => {
   const [tenLoaiLop, setTenLoaiLop] = useState("");

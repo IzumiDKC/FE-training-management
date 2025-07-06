@@ -17,7 +17,6 @@ export const getDsHocVienByLopId = async (lopId) => {
 };
 
 
-// Thêm học viên vào lớp
 export const addDsHocVienToLop = async (dto) => {
   try {
     const response = await api.post("/DanhSachHocVien/AddHocVienToLop", dto);
@@ -28,7 +27,6 @@ export const addDsHocVienToLop = async (dto) => {
   }
 };
 
-// Cập nhật thông tin học viên trong lớp
 export const updateDsHocVien = async (id, dto) => {
   try {
     const response = await api.put(`/DanhSachHocVien/UpdateDanhSachHocVien/${id}`, dto);

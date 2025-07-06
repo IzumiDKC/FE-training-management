@@ -1,7 +1,7 @@
 // src/pages/Lop/ChonHocVien.jsx
 import React, { useEffect, useState } from "react";
 import { getHocVienSelector, themHocVienVaoLop } from "../../services/lopApi";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 
 const ChonHocVien = () => {
   const { id: lopId } = useParams();
