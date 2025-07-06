@@ -1,23 +1,45 @@
 // File: src/layouts/Footer.jsx
 import React from "react";
+import { FaFacebookF, FaLinkedinIn, FaEnvelope } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-light text-center text-lg-start mt-5 border-top py-3">
-      <div className="container">
-        <div className="text-muted">
-          © {new Date().getFullYear()} Hệ thống Quản lý Đào tạo | Phát triển bởi Dien Nguyen
+    <footer className="footer-custom">
+      <div className="container footer-content">
+        <div className="footer-left">
+          <span className="footer-logo">🎓</span>
+          <span className="footer-title ms-2">Hệ thống Quản lý Đào tạo</span>
         </div>
-        <div className="mt-2">
-          <a href="https://www.facebook.com/Izumi.3107/" className="me-3 text-decoration-none text-primary">
-            Facebook
+        <div className="footer-center">
+          <a
+            href="https://www.facebook.com/Izumi.3107/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-icon"
+            aria-label="Facebook"
+          >
+            <FaFacebookF />
           </a>
-          <a href="https://www.linkedin.com/" className="me-3 text-decoration-none text-primary">
-            LinkedIn
+          <a
+            href="https://www.linkedin.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-icon"
+            aria-label="LinkedIn"
+          >
+            <FaLinkedinIn />
           </a>
-          <a href="mailto:huudien111@gmail.com" className="text-decoration-none text-primary">
-            Liên hệ
+          <a
+            href="mailto:huudien111@gmail.com"
+            className="footer-icon"
+            aria-label="Email"
+          >
+            <FaEnvelope />
           </a>
+        </div>
+        <div className="footer-right">
+          © {new Date().getFullYear()} | Phát triển bởi{" "}
+          <span className="footer-dev">Dien Nguyen</span>
         </div>
       </div>
     </footer>
