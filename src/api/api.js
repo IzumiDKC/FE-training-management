@@ -19,4 +19,30 @@ api.interceptors.request.use(
   }
 );
 
+const publicPaths = ["/", "/login", "/register", "/forgot-password", "/reset-password", "/confirm-email", "/resend-confirmation"];
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response) {
+      const { status } = error.response;
+      const currentPath = window.location.pathname;
+
+      const isPublic = publicPaths.includes(currentPath);
+
+      if (status === 401 && !isPublic) {
+        window.location.href = "/login";
+      } else if (status === 403) {
+        window.location.href = "/403";
+      } else if (status === 404) {
+        window.location.href = "/404";
+      } else if (status >= 500) {
+        window.location.href = "/500";
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export default api;

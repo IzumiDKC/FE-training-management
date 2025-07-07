@@ -9,11 +9,14 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { expanded } = useSidebar();
 
-  const handleLogout = async () => {
-    await axios.post("https://localhost:7247/api/account/logout", {}, { withCredentials: true });
-    setCurrentUser(null);
-    navigate("/login");
-  };
+const handleLogout = async () => {
+  await axios.post("https://localhost:7247/api/account/logout", {}, { withCredentials: true });
+  localStorage.removeItem("token");
+  localStorage.removeItem("roles");
+  setCurrentUser(null);
+  navigate("/login");
+};
+
 
   const isAdmin = currentUser?.roles?.includes("Admin");
 

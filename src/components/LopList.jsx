@@ -4,9 +4,17 @@ import { useNavigate } from "react-router";
 
 const LopList = () => {
   const [lops, setLops] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isGiangVien, setIsGiangVien] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const roles = JSON.parse(localStorage.getItem("roles") || "[]");
+      console.log("Roles trong localStorage:", roles); // <== LOG GIÁ TRỊ
+
+    setIsAdmin(roles.includes("Admin"));
+    setIsGiangVien(roles.includes("GiangVien"));
+
     getAllLop().then(setLops).catch(console.error);
   }, []);
 
@@ -49,7 +57,9 @@ const LopList = () => {
               <td>
                 <button className="btn btn-sm btn-info me-2" onClick={() => navigate(`/lop/${lop.lopId}`)}>Xem</button>
                 <button className="btn btn-sm btn-warning me-2" onClick={() => navigate(`/lop/edit/${lop.lopId}`)}>Sửa</button>
-                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(lop.lopId)}>Xóa</button>
+                {(isAdmin || isGiangVien) && (
+                  <button className="btn btn-sm btn-danger" onClick={() => handleDelete(lop.lopId)}>Xóa</button>
+                )}
               </td>
             </tr>
           ))}

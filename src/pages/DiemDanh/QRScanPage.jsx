@@ -1,59 +1,51 @@
+// File: src/pages/QRScanPage.jsx
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Card, Button, Alert, Spinner, Container } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const QRScanPage = () => {
-  const { token } = useParams();  
+  const { token } = useParams();
   const [scanResult, setScanResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  if (token) {
-    const authToken = localStorage.getItem("token");
+    if (!token) return;
 
-    fetch(`https://localhost:7247/api/DiemDanh/Scan?token=${token}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${authToken}` 
-      }
-    })
-    .then((response) => {
-      if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error("Mã QR không hợp lệ hoặc đã hết hạn.");
+    const fetchQRScan = async () => {
+      try {
+        const authToken = localStorage.getItem("token");
+
+        const response = await fetch(`https://localhost:7247/api/DiemDanh/Scan?token=${token}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${authToken}`,
+          },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Mã QR không hợp lệ hoặc đã hết hạn.");
         }
-        if (response.status === 400) {
-          throw new Error("Mã QR không hợp lệ hoặc đã hết hạn.");
-        }
-        throw new Error(`API Error: ${response.status} - ${response.statusText}`);
-      }
-      return response.json(); 
-    })
-    .then((data) => {
-      if (data.success) {
-        setScanResult(data); 
-      } else {
-        setErrorMessage(data.message); 
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);  
-      setErrorMessage(`Có lỗi xảy ra: ${error.message}`);
-    })
-    .finally(() => setLoading(false));  
-  }
-}, [token]);  
 
+        setScanResult(data);
+      } catch (error) {
+        setErrorMessage(`Có lỗi xảy ra: ${error.message}`);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchQRScan();
+  }, [token]);
 
   return (
     <Container className="mt-5">
       {errorMessage && (
         <Alert variant="danger">
-          <h4>Error!</h4>
+          <h4>❌ Lỗi</h4>
           <p>{errorMessage}</p>
         </Alert>
       )}
