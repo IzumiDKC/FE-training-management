@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getDiemDanhByChiTietLopId } from "../services/diemDanhApi"; 
-import { getDsHocVienByLopId } from "../services/dsHocVienApi"; 
+import { getDiemDanhByChiTietLopId } from "../services/diemDanhApi";
+import { getDsHocVienByLopId } from "../services/dsHocVienApi";
 // eslint-disable-next-line
 import { formatDate, formatTime } from "../utils/formatTime";
 
-const DiemDanhList = ({ chiTietLopId, lopId }) => { 
+const DiemDanhList = ({ chiTietLopId, lopId }) => {
   const [diemDanhs, setDiemDanhs] = useState([]);
-  const [hocViens, setHocViens] = useState([]); 
+  const [hocViens, setHocViens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -16,9 +16,9 @@ const DiemDanhList = ({ chiTietLopId, lopId }) => {
         const result = await getDiemDanhByChiTietLopId(lopId, chiTietLopId);
         if (result.length === 0) {
           const hocVienResult = await getDsHocVienByLopId(lopId);
-          setHocViens(hocVienResult); 
+          setHocViens(hocVienResult);
         } else {
-          setDiemDanhs(result); 
+          setDiemDanhs(result);
         }
         setLoading(false);
       } catch (error) {
@@ -59,9 +59,8 @@ const DiemDanhList = ({ chiTietLopId, lopId }) => {
               <tr key={item.diemDanhId || item.hocVienId}>
                 <td>{item.hocVienName || item.tenHocVien}</td>
                 <td>{item.soCanCuoc}</td>
-<td>{item.checkIn ? formatTime(item.checkIn) : "Chưa check-in"}</td>
-<td>{item.checkOut ? formatTime(item.checkOut) : "Chưa check-out"}</td>
-
+                <td>{item.checkIn ? formatTime(item.checkIn) : "Chưa check-in"}</td>
+                <td>{item.checkOut ? formatTime(item.checkOut) : "Chưa check-out"}</td>
                 <td>{item.note || "Không có ghi chú"}</td>
               </tr>
             ))
