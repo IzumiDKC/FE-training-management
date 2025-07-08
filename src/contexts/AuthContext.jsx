@@ -15,6 +15,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("roles");
+    setCurrentUser(null);
+  };
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       fetchUser();
@@ -22,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser, fetchUser }}>
+    <AuthContext.Provider value={{ currentUser, setCurrentUser, fetchUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

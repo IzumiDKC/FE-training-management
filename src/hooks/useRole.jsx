@@ -3,6 +3,7 @@ const useRole = () => {
 
   return {
     roles,
+    isAuthenticated: roles.length > 0,
     isAdmin: roles.includes("Admin"),
     isGiangVien: roles.includes("GiangVien"),
     isHocVien: roles.includes("HocVien"),
