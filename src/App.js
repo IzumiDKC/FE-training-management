@@ -28,11 +28,15 @@ import ErrorRoutes from "./routes/ErrorRoutes";
 
 import UserList from "./pages/Admin/UserList";
 
+import ErrorBoundary from "./components/ErrorBoundary";
+
 function App() {
   return (
     <AuthProvider>
       <SidebarProvider>
         <Router>
+                <ErrorBoundary>
+
           <Routes>
             {/* KHÔNG dùng layout */}
 
@@ -60,6 +64,7 @@ function App() {
               {DiemDanhRoutes()}
             </Route>
           </Routes>
+                </ErrorBoundary>
         </Router>
       </SidebarProvider>
     </AuthProvider>
