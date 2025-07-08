@@ -13,14 +13,14 @@ import {
   FaInfoCircle,
 } from "react-icons/fa";
 import { useSidebar } from "../contexts/SidebarContext";
-import useRole from "../hooks/useRole"; 
+import useRole from "../hooks/useRole";
 import "./Sidebar.css";
 
 const Sidebar = () => {
   const { expanded, setExpanded } = useSidebar();
   const [openQLLop, setOpenQLLop] = useState(false);
 
-  const { isAdmin } = useRole();
+  const { isAdmin, isAuthenticated } = useRole();
 
   return (
     <div
@@ -34,54 +34,60 @@ const Sidebar = () => {
       </div>
 
       <nav className="sidebar-nav">
+        
         <Link to="/" className="sidebar-link">
           <FaHome /> {expanded && <span className="ms-2">Trang chủ</span>}
         </Link>
-
         <Link to="/chuong-trinh" className="sidebar-link">
           <FaBook /> {expanded && <span className="ms-2">Chương Trình Đào Tạo</span>}
         </Link>
-
         <Link to="/khoa-hoc" className="sidebar-link">
           <FaBook /> {expanded && <span className="ms-2">Khóa học</span>}
         </Link>
 
-        <div
-          className={`sidebar-link sidebar-dropdown ${openQLLop ? "open" : ""}`}
-          onClick={() => setOpenQLLop((v) => !v)}
-          style={{ cursor: "pointer" }}
-        >
-          <FaChalkboardTeacher />
-          {expanded && (
-            <>
-              <span className="ms-2">Quản lý lớp</span>
-              <span className="ms-auto">{openQLLop ? <FaChevronUp /> : <FaChevronDown />}</span>
-            </>
-          )}
-        </div>
-
-        {expanded && openQLLop && (
-          <div className="sidebar-submenu ms-4">
-            <Link to="/lop" className="sidebar-link">
-              <FaLayerGroup className="me-1" /> Lớp
-            </Link>
-            <Link to="/loai-lop" className="sidebar-link">
-              <FaBook className="me-1" /> Loại lớp
-            </Link>
-            <Link to="/chi-tiet-lop/:lopId" className="sidebar-link">
-              <FaInfoCircle className="me-1" /> Thông tin lớp
-            </Link>
-          </div>
-        )}
-
-        {isAdmin && (
+        {/* Buộc Login mới thấy */}
+        {isAuthenticated && (
           <>
-            <Link to="/hocvien" className="sidebar-link">
-              <FaUsers /> {expanded && <span className="ms-2">Học viên</span>}
-            </Link>
-            <Link to="/baocao" className="sidebar-link">
-              <FaChartBar /> {expanded && <span className="ms-2">Báo cáo</span>}
-            </Link>
+            {/* Dropdown Quản lý lớp */}
+            <div
+              className={`sidebar-link sidebar-dropdown ${openQLLop ? "open" : ""}`}
+              onClick={() => setOpenQLLop((v) => !v)}
+              style={{ cursor: "pointer" }}
+            >
+              <FaChalkboardTeacher />
+              {expanded && (
+                <>
+                  <span className="ms-2">Quản lý lớp</span>
+                  <span className="ms-auto">{openQLLop ? <FaChevronUp /> : <FaChevronDown />}</span>
+                </>
+              )}
+            </div>
+
+            {expanded && openQLLop && (
+              <div className="sidebar-submenu ms-4">
+                <Link to="/lop" className="sidebar-link">
+                  <FaLayerGroup className="me-1" /> Lớp
+                </Link>
+                <Link to="/loai-lop" className="sidebar-link">
+                  <FaBook className="me-1" /> Loại lớp
+                </Link>
+                <Link to="/chi-tiet-lop/:lopId" className="sidebar-link">
+                  <FaInfoCircle className="me-1" /> Thông tin lớp
+                </Link>
+              </div>
+            )}
+
+            {/* ADMIN */}
+            {isAdmin && (
+              <>
+                <Link to="/hocvien" className="sidebar-link">
+                  <FaUsers /> {expanded && <span className="ms-2">Học viên</span>}
+                </Link>
+                <Link to="/baocao" className="sidebar-link">
+                  <FaChartBar /> {expanded && <span className="ms-2">Báo cáo</span>}
+                </Link>
+              </>
+            )}
           </>
         )}
       </nav>

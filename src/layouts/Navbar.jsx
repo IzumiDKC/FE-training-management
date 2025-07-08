@@ -1,19 +1,26 @@
 import React from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
-import axios from "axios";
+import api from "../api/api"; 
 // eslint-disable-next-line
 import { FaUserCircle, FaCogs, FaGraduationCap } from "react-icons/fa";
 
 const Navbar = () => {
-  const { currentUser, setCurrentUser } = useAuth();
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
-  const handleLogout = async () => {
-    await axios.post("https://localhost:7247/api/account/logout", {}, { withCredentials: true });
-    setCurrentUser(null);
+const handleLogout = async () => {
+  try {
+    await api.post("/account/logout"); 
+    logout();                          
     navigate("/login");
-  };
+  } catch (err) {
+    alert("Đăng xuất thất bại");
+    console.error(err);
+  }
+};
+
 // eslint-disable-next-line
   const isAdmin = currentUser?.roles?.includes("Admin");
 
