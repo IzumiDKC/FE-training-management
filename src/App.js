@@ -26,6 +26,8 @@ import ResendEmailPage from "./pages/account/manage/ResendEmailPage";
 
 import ErrorRoutes from "./routes/ErrorRoutes";
 
+import UserList from "./pages/Admin/UserList";
+
 function App() {
   return (
     <AuthProvider>
@@ -46,6 +48,8 @@ function App() {
             <Route path="/" element={<Main />}>
               <Route index element={<Home />} />
               <Route path="profile" element={<ProfilePage />} />
+
+              <Route path="user-list" element={<UserList />} />
 
               {/* Route group xài fragment */}
               {KhoaHocRoutes()}

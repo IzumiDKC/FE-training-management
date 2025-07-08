@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { getAllLop, deleteLop } from "../services/lopApi";
 import { useNavigate } from "react-router";
+import useRole from "../hooks/useRole";
 
 const LopList = () => {
   const [lops, setLops] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isGiangVien, setIsGiangVien] = useState(false);
+const { isAdmin, isGiangVien } = useRole();
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const roles = JSON.parse(localStorage.getItem("roles") || "[]");
-      console.log("Roles trong localStorage:", roles); // <== LOG GIÁ TRỊ
-
-    setIsAdmin(roles.includes("Admin"));
-    setIsGiangVien(roles.includes("GiangVien"));
 
     getAllLop().then(setLops).catch(console.error);
   }, []);

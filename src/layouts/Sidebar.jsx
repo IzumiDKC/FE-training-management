@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaChalkboardTeacher, FaUsers, FaBook, FaChartBar, FaBars, FaHome, FaChevronDown, FaChevronUp, FaLayerGroup, FaInfoCircle } from "react-icons/fa";
+import {
+  FaChalkboardTeacher,
+  FaUsers,
+  FaBook,
+  FaChartBar,
+  FaBars,
+  FaHome,
+  FaChevronDown,
+  FaChevronUp,
+  FaLayerGroup,
+  FaInfoCircle,
+} from "react-icons/fa";
 import { useSidebar } from "../contexts/SidebarContext";
+import useRole from "../hooks/useRole"; 
 import "./Sidebar.css";
 
 const Sidebar = () => {
   const { expanded, setExpanded } = useSidebar();
   const [openQLLop, setOpenQLLop] = useState(false);
+
+  const { isAdmin } = useRole();
 
   return (
     <div
@@ -24,7 +38,19 @@ const Sidebar = () => {
           <FaHome /> {expanded && <span className="ms-2">Trang chủ</span>}
         </Link>
 
-        <div className={`sidebar-link sidebar-dropdown ${openQLLop ? "open" : ""}`} onClick={() => setOpenQLLop(v => !v)} style={{ cursor: "pointer" }}>
+        <Link to="/chuong-trinh" className="sidebar-link">
+          <FaBook /> {expanded && <span className="ms-2">Chương Trình Đào Tạo</span>}
+        </Link>
+
+        <Link to="/khoa-hoc" className="sidebar-link">
+          <FaBook /> {expanded && <span className="ms-2">Khóa học</span>}
+        </Link>
+
+        <div
+          className={`sidebar-link sidebar-dropdown ${openQLLop ? "open" : ""}`}
+          onClick={() => setOpenQLLop((v) => !v)}
+          style={{ cursor: "pointer" }}
+        >
           <FaChalkboardTeacher />
           {expanded && (
             <>
@@ -33,6 +59,7 @@ const Sidebar = () => {
             </>
           )}
         </div>
+
         {expanded && openQLLop && (
           <div className="sidebar-submenu ms-4">
             <Link to="/lop" className="sidebar-link">
@@ -47,15 +74,16 @@ const Sidebar = () => {
           </div>
         )}
 
-        <Link to="/hocvien" className="sidebar-link">
-          <FaUsers /> {expanded && <span className="ms-2">Học viên</span>}
-        </Link>
-        <Link to="/khoa-hoc" className="sidebar-link">
-          <FaBook /> {expanded && <span className="ms-2">Khóa học</span>}
-        </Link>
-        <Link to="/baocao" className="sidebar-link">
-          <FaChartBar /> {expanded && <span className="ms-2">Báo cáo</span>}
-        </Link>
+        {isAdmin && (
+          <>
+            <Link to="/hocvien" className="sidebar-link">
+              <FaUsers /> {expanded && <span className="ms-2">Học viên</span>}
+            </Link>
+            <Link to="/baocao" className="sidebar-link">
+              <FaChartBar /> {expanded && <span className="ms-2">Báo cáo</span>}
+            </Link>
+          </>
+        )}
       </nav>
     </div>
   );
