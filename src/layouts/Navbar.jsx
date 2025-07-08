@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
+// eslint-disable-next-line
 import { FaUserCircle, FaCogs, FaGraduationCap } from "react-icons/fa";
 
 const Navbar = () => {
@@ -13,7 +14,7 @@ const Navbar = () => {
     setCurrentUser(null);
     navigate("/login");
   };
-
+// eslint-disable-next-line
   const isAdmin = currentUser?.roles?.includes("Admin");
 
   return (
@@ -28,7 +29,7 @@ const Navbar = () => {
           </span>
         </Link>
         <div className="ms-auto d-flex align-items-center gap-3">
-          {isAdmin && (
+          {/* {isAdmin && (
             <div className="dropdown me-2">
               <button className="btn btn-light border-0 d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown">
                 <FaCogs style={{ color: "#2563eb" }} /> Quản lý
@@ -40,7 +41,7 @@ const Navbar = () => {
                 <li><Link className="dropdown-item" to="/loai-lop">Loại lớp</Link></li>
               </ul>
             </div>
-          )}
+          )} */}
 
           {!currentUser ? (
             <>
