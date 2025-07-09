@@ -1,25 +1,21 @@
 import { useAuth } from "../contexts/AuthContext";
-
-class HttpError extends Error {
-  constructor(status, message) {
-    super(message);
-    this.name = "HttpError";
-    this.status = status;
-  }
-}
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RoleRoute = ({ allowedRoles, children }) => {
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
-  if (!currentUser) {
-    throw new HttpError(401, "Chưa đăng nhập");
-  }
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/unauthorized");
+    } else if (!currentUser.roles?.some(role => allowedRoles.includes(role))) {
+      navigate("/forbidden");
+    }
+  }, [currentUser, navigate, allowedRoles]);
 
-  const hasRole = currentUser.roles?.some((role) => allowedRoles.includes(role));
-
-  if (!hasRole) {
-    throw new HttpError(403, "Không có quyền truy cập");
-  }
+  const hasRole = currentUser?.roles?.some((role) => allowedRoles.includes(role));
+  if (!currentUser || !hasRole) return null;
 
   return children;
 };

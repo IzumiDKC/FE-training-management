@@ -1,6 +1,6 @@
-// File: src/App.jsx
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// src/App.jsx
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 
 import { AuthProvider } from "./contexts/AuthContext";
 import { SidebarProvider } from "./contexts/SidebarContext";
@@ -26,49 +26,60 @@ import ResendEmailPage from "./pages/account/manage/ResendEmailPage";
 
 import ErrorRoutes from "./routes/ErrorRoutes";
 
-import UserList from "./pages/Admin/UserList";
-
 import ErrorBoundary from "./components/ErrorBoundary";
 
-function App() {
+import AdminRoutes from "./routes/AdminRoutes";
+import DangKyKhoaHocRoutes from "./routes/DangKyKhoaHocRoutes";
+import { setNavigate } from "./utils/navigateService";
+
+// Wrapper để gán navigate vào service
+const AppWithNavigation = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setNavigate(navigate);
+  }, [navigate]);
+
   return (
-    <AuthProvider>
-      <SidebarProvider>
-        <Router>
-                <ErrorBoundary>
+    <ErrorBoundary>
+      <Routes>
+        {/* KHÔNG dùng layout */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/confirm-email" element={<ConfirmEmailPage />} />
+        <Route path="/resend-confirmation" element={<ResendEmailPage />} />
 
-          <Routes>
-            {/* KHÔNG dùng layout */}
+        {ErrorRoutes()}
 
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/confirm-email" element={<ConfirmEmailPage />} />
-            <Route path="/resend-confirmation" element={<ResendEmailPage />} />
+        <Route path="/" element={<Main />}>
+          <Route index element={<Home />} />
+          <Route path="profile" element={<ProfilePage />} />
 
-            {ErrorRoutes()}
+          {KhoaHocRoutes()}
+          {ChuongTrinhRoutes()}
+          {LopRoutes()}
+          {LoaiLopRoutes()}
+          {ChiTietLopRoutes()}
+          {DiemDanhRoutes()}
+          {AdminRoutes()}
+          {DangKyKhoaHocRoutes()}
 
-            <Route path="/" element={<Main />}>
-              <Route index element={<Home />} />
-              <Route path="profile" element={<ProfilePage />} />
-
-              <Route path="user-list" element={<UserList />} />
-
-              {/* Route group xài fragment */}
-              {KhoaHocRoutes()}
-              {ChuongTrinhRoutes()}
-              {LopRoutes()}
-              {LoaiLopRoutes()}
-              {ChiTietLopRoutes()}
-              {DiemDanhRoutes()}
-            </Route>
-          </Routes>
-                </ErrorBoundary>
-        </Router>
-      </SidebarProvider>
-    </AuthProvider>
+        </Route>
+      </Routes>
+    </ErrorBoundary>
   );
-}
+};
+
+const App = () => (
+  <AuthProvider>
+    <SidebarProvider>
+      <Router>
+        <AppWithNavigation />
+      </Router>
+    </SidebarProvider>
+  </AuthProvider>
+);
 
 export default App;

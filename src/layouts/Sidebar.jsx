@@ -11,6 +11,9 @@ import {
   FaChevronUp,
   FaLayerGroup,
   FaInfoCircle,
+  FaClipboardList,
+  FaEdit,
+  FaTasks,
 } from "react-icons/fa";
 import { useSidebar } from "../contexts/SidebarContext";
 import useRole from "../hooks/useRole";
@@ -19,8 +22,9 @@ import "./Sidebar.css";
 const Sidebar = () => {
   const { expanded, setExpanded } = useSidebar();
   const [openQLLop, setOpenQLLop] = useState(false);
+  const [openKhoaHoc, setOpenKhoaHoc] = useState(false);
 
-  const { isAdmin, isAuthenticated } = useRole();
+  const { isAdmin, isGiangVien, isAuthenticated } = useRole();
 
   return (
     <div
@@ -34,18 +38,53 @@ const Sidebar = () => {
       </div>
 
       <nav className="sidebar-nav">
-        
         <Link to="/" className="sidebar-link">
           <FaHome /> {expanded && <span className="ms-2">Trang chủ</span>}
         </Link>
+
         <Link to="/chuong-trinh" className="sidebar-link">
           <FaBook /> {expanded && <span className="ms-2">Chương Trình Đào Tạo</span>}
         </Link>
-        <Link to="/khoa-hoc" className="sidebar-link">
-          <FaBook /> {expanded && <span className="ms-2">Khóa học</span>}
-        </Link>
 
-        {/* Buộc Login mới thấy */}
+        {/* Dropdown: Khóa học */}
+        <div
+          className={`sidebar-link sidebar-dropdown ${openKhoaHoc ? "open" : ""}`}
+          onClick={() => setOpenKhoaHoc((v) => !v)}
+          style={{ cursor: "pointer" }}
+        >
+          <FaTasks />
+          {expanded && (
+            <>
+              <span className="ms-2">Khóa học</span>
+              <span className="ms-auto">{openKhoaHoc ? <FaChevronUp /> : <FaChevronDown />}</span>
+            </>
+          )}
+        </div>
+
+        {expanded && openKhoaHoc && (
+          <div className="sidebar-submenu ms-4">
+            {/* Luôn hiển thị */}
+            <Link to="/khoa-hoc" className="sidebar-link">
+              <FaBook className="me-1" /> Danh sách khóa học
+            </Link>
+
+            {/* Chỉ cho Giảng viên hoặc Admin */}
+            {(isAdmin || isGiangVien) && (
+              <Link to="/dang-ky-khoa-hoc" className="sidebar-link">
+                <FaClipboardList className="me-1" /> Xem đăng ký
+              </Link>
+            )}
+
+            {/* Chỉ cần đăng nhập */}
+            {isAuthenticated && (
+              <Link to="/dang-ky-khoa-hoc/create" className="sidebar-link">
+                <FaEdit className="me-1" /> Đăng ký khóa học
+              </Link>
+            )}
+          </div>
+        )}
+
+        {/* Buộc login mới thấy */}
         {isAuthenticated && (
           <>
             {/* Dropdown Quản lý lớp */}
@@ -80,8 +119,8 @@ const Sidebar = () => {
             {/* ADMIN */}
             {isAdmin && (
               <>
-                <Link to="/hocvien" className="sidebar-link">
-                  <FaUsers /> {expanded && <span className="ms-2">Học viên</span>}
+                <Link to="/admin/user-list" className="sidebar-link">
+                  <FaUsers /> {expanded && <span className="ms-2">DS Tài Khoản</span>}
                 </Link>
                 <Link to="/baocao" className="sidebar-link">
                   <FaChartBar /> {expanded && <span className="ms-2">Báo cáo</span>}
