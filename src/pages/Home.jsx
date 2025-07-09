@@ -99,7 +99,7 @@ const Home = () => {
 						))}
 					</div>
 				</div>
-				{/* Icon trang trí hai bên */}
+				{/* Icon hai bên */}
 				<img
 					src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
 					className="bg-icon left"

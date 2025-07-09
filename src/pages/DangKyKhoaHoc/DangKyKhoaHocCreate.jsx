@@ -20,33 +20,31 @@ const DangKyKhoaHocCreate = () => {
     }
   }, [selectedKhoaHoc]);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const parsedKhoaHocId = parseInt(selectedKhoaHoc);
-  const parsedLopId = parseInt(selectedLop);
+    const parsedKhoaHocId = parseInt(selectedKhoaHoc);
+    const parsedLopId = parseInt(selectedLop);
 
-  if (isNaN(parsedKhoaHocId) || isNaN(parsedLopId)) {
-    alert("Vui lòng chọn khóa học và lớp hợp lệ.");
-    return;
-  }
+    if (isNaN(parsedKhoaHocId) || isNaN(parsedLopId)) {
+      alert("Vui lòng chọn khóa học và lớp hợp lệ.");
+      return;
+    }
 
-  const payload = {
-    khoaHocId: parsedKhoaHocId,
-    lopId: parsedLopId,
+    const payload = {
+      khoaHocId: parsedKhoaHocId,
+      lopId: parsedLopId,
+    };
+
+    try {
+      await createDangKy(payload);
+      alert("✅ Đăng ký thành công!");
+      navigate("/");
+    } catch (err) {
+      console.error("Đăng ký thất bại:", err);
+      alert("Đăng ký thất bại: " + (err?.response?.data || err.message));
+    }
   };
-
-  try {
-    await createDangKy(payload);
-
-    // ✅ Hiển thị popup rồi chuyển hướng sau 1.5s
-    alert("✅ Đăng ký thành công!");
-    navigate("/"); // chuyển về trang chủ
-  } catch (err) {
-    console.error("Đăng ký thất bại:", err);
-    alert("Đăng ký thất bại: " + (err?.response?.data || err.message));
-  }
-};
 
 
 
@@ -56,36 +54,36 @@ const handleSubmit = async (e) => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label>Khóa học</label>
-<select
-  className="form-select"
-  value={selectedKhoaHoc}
-  onChange={(e) => setSelectedKhoaHoc(e.target.value)} // string
-  required
->
-  <option value="">-- Chọn khóa học --</option>
-  {khoaHocs.map((k) => (
-    <option key={k.khoaHocId} value={k.khoaHocId}>
-      {k.tenKhoaHoc}
-    </option>
-  ))}
-</select>
+          <select
+            className="form-select"
+            value={selectedKhoaHoc}
+            onChange={(e) => setSelectedKhoaHoc(e.target.value)} // string
+            required
+          >
+            <option value="">-- Chọn khóa học --</option>
+            {khoaHocs.map((k) => (
+              <option key={k.khoaHocId} value={k.khoaHocId}>
+                {k.tenKhoaHoc}
+              </option>
+            ))}
+          </select>
 
         </div>
         <div className="mb-3">
           <label>Lớp</label>
-<select
-  className="form-select"
-  value={selectedLop}
-  onChange={(e) => setSelectedLop(e.target.value)}
-  required
->
-  <option value="">-- Chọn lớp --</option>
-  {lops.map((l) => (
-    <option key={l.lopId} value={l.lopId}>
-      {l.tenLop}
-    </option>
-  ))}
-</select>
+          <select
+            className="form-select"
+            value={selectedLop}
+            onChange={(e) => setSelectedLop(e.target.value)}
+            required
+          >
+            <option value="">-- Chọn lớp --</option>
+            {lops.map((l) => (
+              <option key={l.lopId} value={l.lopId}>
+                {l.tenLop}
+              </option>
+            ))}
+          </select>
 
         </div>
         <button type="submit" className="btn btn-primary">

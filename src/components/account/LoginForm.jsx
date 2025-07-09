@@ -46,30 +46,30 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsLoading(true);
-  setMessage("");
-  setError(null);
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage("");
+    setError(null);
 
-  try {
-    const response = await api.post("/account/login", formData);
+    try {
+      const response = await api.post("/account/login", formData);
 
-    const { token, roles } = response.data;
+      const { token, roles } = response.data;
 
-    localStorage.setItem("token", token);
-    localStorage.setItem("roles", JSON.stringify(roles));
+      localStorage.setItem("token", token);
+      localStorage.setItem("roles", JSON.stringify(roles));
 
-    setMessage("🎉 Đăng nhập thành công!");
-    setFormData({ email: "", password: "", rememberMe: false });
+      setMessage("🎉 Đăng nhập thành công!");
+      setFormData({ email: "", password: "", rememberMe: false });
 
-    await fetchUser();  
-    navigate("/");
-  } catch (err) {
-    console.error(err);
-    setError(err.response?.data?.error || "Đăng nhập thất bại.");
-  } finally {
-    setIsLoading(false);
-  }
+      await fetchUser();
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.error || "Đăng nhập thất bại.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

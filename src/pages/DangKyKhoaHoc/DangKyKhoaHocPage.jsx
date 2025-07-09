@@ -23,14 +23,14 @@ const DangKyKhoaHocPage = () => {
           </tr>
         </thead>
         <tbody>
-  {data.map((item) => (
-    <tr key={item.dangKyKhoaHocId}>
-      <td>{item.tenHocVien}</td>
-      <td>{item.tenKhoaHoc}</td>
-      <td>{new Date(item.ngayDangKy).toLocaleString()}</td>
-    </tr>
-  ))}
-</tbody>
+          {data.map((item) => (
+            <tr key={item.dangKyKhoaHocId}>
+              <td>{item.tenHocVien}</td>
+              <td>{item.tenKhoaHoc}</td>
+              <td>{new Date(item.ngayDangKy).toLocaleString()}</td>
+            </tr>
+          ))}
+        </tbody>
 
       </table>
     </div>
