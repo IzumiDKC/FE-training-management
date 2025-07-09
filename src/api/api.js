@@ -1,11 +1,13 @@
+// src/services/api.js
 import axios from "axios";
+import { navigateTo } from "../utils/navigateService";
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
   withCredentials: true,
 });
 
-// Thêm token vào request header nếu có
+// Thêm token vào header nếu có
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -18,8 +20,16 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Các path cho phép truy cập công khai
-const publicPaths = ["/", "/login", "/register", "/forgot-password", "/reset-password", "/confirm-email", "/resend-confirmation"];
+// Các path không cần login
+const publicPaths = [
+  "/",
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/reset-password",
+  "/confirm-email",
+  "/resend-confirmation",
+];
 
 api.interceptors.response.use(
   (response) => response,
@@ -27,17 +37,22 @@ api.interceptors.response.use(
     if (error.response) {
       const { status } = error.response;
       const currentPath = window.location.pathname;
+
       const isPublic = publicPaths.includes(currentPath);
 
-      if (status === 401 && !isPublic) {
-        // Chuyển sang trang thông báo 401
-        window.location.href = "/unauthorized";
-      } else if (status === 403) {
-        window.location.href = "/forbidden";
-      } else if (status === 404) {
-        window.location.href = "/404";
-      } else if (status >= 500) {
-        window.location.href = "/500";
+      const errorPages = ["/unauthorized", "/forbidden", "/not-found", "/server-error"];
+      const alreadyInErrorPage = errorPages.includes(currentPath);
+
+      if (!alreadyInErrorPage) {
+        if (status === 401 && !isPublic) {
+          navigateTo("/unauthorized");
+        } else if (status === 403) {
+          navigateTo("/forbidden");
+        } else if (status === 404) {
+          navigateTo("/not-found");
+        } else if (status >= 500) {
+          navigateTo("/server-error");
+        }
       }
     }
 

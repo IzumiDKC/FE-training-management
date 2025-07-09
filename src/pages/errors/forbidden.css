@@ -25,7 +25,6 @@
 .countdown {
   font-weight: bold;
   color: #dc3545;
-  animation: blink 1s steps(2, start) infinite;
 }
 
 @keyframes blink {
