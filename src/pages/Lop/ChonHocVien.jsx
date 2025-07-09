@@ -35,29 +35,29 @@ const ChonHocVien = () => {
       <form onSubmit={handleSubmit}>
         <table className="table">
           <thead>
-  <tr>
-    <th></th>
-    <th>Họ tên</th>
-    <th>Số căn cước</th>
-    <th>UserId</th>
-  </tr>
-</thead>
-<tbody>
-  {hocViens.map((hv, i) => (
-    <tr key={hv.userId}>
-      <td>
-        <input
-          type="checkbox"
-          checked={hv.isSelected}
-          onChange={() => handleChange(i)}
-        />
-      </td>
-      <td>{hv.hoTen}</td>
-      <td>{hv.soCanCuoc}</td>
-      <td><code>{hv.userId}</code></td>
-    </tr>
-  ))}
-</tbody>
+            <tr>
+              <th></th>
+              <th>Họ tên</th>
+              <th>Số căn cước</th>
+              <th>UserId</th>
+            </tr>
+          </thead>
+          <tbody>
+            {hocViens.map((hv, i) => (
+              <tr key={hv.userId}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={hv.isSelected}
+                    onChange={() => handleChange(i)}
+                  />
+                </td>
+                <td>{hv.hoTen}</td>
+                <td>{hv.soCanCuoc}</td>
+                <td><code>{hv.userId}</code></td>
+              </tr>
+            ))}
+          </tbody>
 
         </table>
         <button className="btn btn-primary">✅ Thêm vào lớp</button>

@@ -33,7 +33,7 @@
 // src/components/ErrorBoundary.jsx
 
 import React from "react";
-import { navigateTo } from "../utils/navigateService"; 
+import { navigateTo } from "../utils/navigateService";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {

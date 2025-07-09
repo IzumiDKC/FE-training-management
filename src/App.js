@@ -32,7 +32,7 @@ import AdminRoutes from "./routes/AdminRoutes";
 import DangKyKhoaHocRoutes from "./routes/DangKyKhoaHocRoutes";
 import { setNavigate } from "./utils/navigateService";
 
-// Wrapper để gán navigate vào service
+// Wrapper gán navigate vào service
 const AppWithNavigation = () => {
   const navigate = useNavigate();
 

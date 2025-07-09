@@ -37,7 +37,6 @@ export const updateDsHocVien = async (id, dto) => {
   }
 };
 
-// Xóa học viên khỏi lớp
 export const deleteDsHocVien = async (id) => {
   try {
     const response = await api.delete(`/DanhSachHocVien/DeleteDanhSachHocVien/${id}`);

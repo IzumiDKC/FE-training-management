@@ -17,8 +17,6 @@ export const getAllChuongTrinh = async () => {
   }
 };
 
-
-
 export const getChuongTrinhById = async (id) => {
   const res = await api.get(`/ChuongTrinhDaoTao/${id}`);
   return res.data;
