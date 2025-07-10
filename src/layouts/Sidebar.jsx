@@ -14,6 +14,7 @@ import {
   FaClipboardList,
   FaEdit,
   FaTasks,
+  FaStar
 } from "react-icons/fa";
 import { useSidebar } from "../contexts/SidebarContext";
 import useRole from "../hooks/useRole";
@@ -23,7 +24,7 @@ const Sidebar = () => {
   const { expanded, setExpanded } = useSidebar();
   const [openQLLop, setOpenQLLop] = useState(false);
   const [openKhoaHoc, setOpenKhoaHoc] = useState(false);
-
+  const [openDanhGia, setOpenDanhGia] = useState(false);
   const { isAdmin, isGiangVien, isAuthenticated } = useRole();
 
   return (
@@ -84,10 +85,9 @@ const Sidebar = () => {
           </div>
         )}
 
-        {/* Buộc login mới thấy */}
+        {/* LOGIN */}
         {isAuthenticated && (
           <>
-            {/* Dropdown Quản lý lớp */}
             <div
               className={`sidebar-link sidebar-dropdown ${openQLLop ? "open" : ""}`}
               onClick={() => setOpenQLLop((v) => !v)}
@@ -115,6 +115,39 @@ const Sidebar = () => {
                 </Link>
               </div>
             )}
+
+            {(isAdmin || isGiangVien) && (
+              <>
+                <div
+                  className={`sidebar-link sidebar-dropdown ${openDanhGia ? "open" : ""}`}
+                  onClick={() => setOpenDanhGia((v) => !v)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <FaStar />
+                  {expanded && (
+                    <>
+                      <span className="ms-2">Đánh Giá Học Viên</span>
+                      <span className="ms-auto">
+                        {openDanhGia ? <FaChevronUp /> : <FaChevronDown />}
+                      </span>
+                    </>
+                  )}
+                </div>
+
+                {expanded && openDanhGia && (
+                  <div className="sidebar-submenu ms-4">
+                    <Link to="/danh-gia" className="sidebar-link">
+                      <FaClipboardList className="me-1" /> Xem đánh giá
+                    </Link>
+                    {/* <Link to="/danh-gia/create" className="sidebar-link">
+          <FaEdit className="me-1" /> Tạo đánh giá
+                    </Link> */}
+                  </div>
+                )}
+              </>
+            )}
+
+
 
             {/* ADMIN */}
             {isAdmin && (

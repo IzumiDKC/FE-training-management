@@ -1,3 +1,4 @@
+// File: src/layouts/Navbar.jsx
 import React from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
@@ -13,7 +14,8 @@ const Navbar = () => {
 const handleLogout = async () => {
   try {
     await api.post("/account/logout"); 
-    logout();                          
+    logout();   
+
     navigate("/login");
   } catch (err) {
     alert("Đăng xuất thất bại");

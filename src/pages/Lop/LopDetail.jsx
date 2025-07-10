@@ -85,6 +85,7 @@ const LopDetail = () => {
                   <th>🆔 Mã học viên</th>
                   <th>👤 Họ tên học viên</th>
                   <th>💳 Số CCCD</th>
+                  <th>⚙️ Thao tác</th>
                 </tr>
               </thead>
               <tbody>
@@ -97,7 +98,15 @@ const LopDetail = () => {
                     <tr key={item.danhSachHocVienId}>
                       <td>{item.hocVienId}</td>
                       <td>{item.hocVienName}</td>
-                      <td>{item.soCanCuoc}</td>
+<td>{item.soCanCuoc}</td>
+<td>
+  <button
+    className="btn btn-sm btn-success"
+    onClick={() => navigate(`/danh-gia/create/${item.hocVienId}/${id}`)}
+  >
+    📝 Đánh giá
+  </button>
+</td>
                     </tr>
                   ))
                 )}
