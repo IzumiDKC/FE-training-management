@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { createLop } from "../../services/lopApi";
 import { getAllKhoaHoc } from "../../services/khoaHocApi";
 import { getAllLoaiLop } from "../../services/loaiLopApi";
-import { useNavigate } from "react-router";
-
-const formatDateTimeLocal = (date) => {
-  const offset = date.getTimezoneOffset();
-  const localDate = new Date(date.getTime() - offset * 60 * 1000);
-  return localDate.toISOString().slice(0, 16);
-};
+import { formatDateTimeLocal, calculateSoGio } from "../../utils/timeUtils";
 
 const LopCreate = () => {
+  const navigate = useNavigate();
+
   const defaultStart = new Date();
   defaultStart.setHours(7, 0, 0, 0);
 
@@ -21,16 +18,16 @@ const LopCreate = () => {
     tenLop: "",
     ngayBatDauDuKien: formatDateTimeLocal(defaultStart),
     ngayKetThucDuKien: formatDateTimeLocal(defaultEnd),
-    soGio: 0,
+    soGio: calculateSoGio(defaultStart.toISOString(), defaultEnd.toISOString()),
     soGioQuyDoi: 0,
     coDanhSachHocVien: false,
     khoaHocId: "",
     loaiLopId: "",
   });
 
+  const [userModifiedSoGio, setUserModifiedSoGio] = useState(false);
   const [khoaHocs, setKhoaHocs] = useState([]);
   const [loaiLops, setLoaiLops] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     getAllKhoaHoc().then(setKhoaHocs);
@@ -38,41 +35,46 @@ const LopCreate = () => {
   }, []);
 
   useEffect(() => {
-    const start = new Date(form.ngayBatDauDuKien);
-    const end = new Date(form.ngayKetThucDuKien);
-    if (end > start) {
-      const hoursPerDay =
-        end.getHours() + end.getMinutes() / 60 -
-        (start.getHours() + start.getMinutes() / 60);
-      const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-      const total = hoursPerDay * days;
-      setForm((prev) => ({ ...prev, soGio: total }));
-    }
-  }, [form.ngayBatDauDuKien, form.ngayKetThucDuKien]);
+  const newSoGio = calculateSoGio(form.ngayBatDauDuKien, form.ngayKetThucDuKien);
+  setForm((prev) => ({
+    ...prev,
+    soGio: userModifiedSoGio ? prev.soGio : newSoGio,
+  }));
+}, [form.ngayBatDauDuKien, form.ngayKetThucDuKien, userModifiedSoGio]);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    if (name === "soGio") {
+      setUserModifiedSoGio(true);
+    }
+
     const parsedValue =
       type === "checkbox"
         ? checked
         : name.includes("Id")
         ? parseInt(value) || ""
+        : name === "soGio" || name === "soGioQuyDoi"
+        ? parseFloat(value)
         : value;
-    setForm({ ...form, [name]: parsedValue });
+
+    setForm((prev) => ({ ...prev, [name]: parsedValue }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.khoaHocId || !form.loaiLopId) {
-      alert("Vui lòng chọn đầy đủ khóa học và loại lớp.");
+    const start = new Date(form.ngayBatDauDuKien);
+    const end = new Date(form.ngayKetThucDuKien);
+
+    if (end <= start) {
+      alert("❌ Ngày kết thúc phải sau ngày bắt đầu!");
       return;
     }
 
-    const start = new Date(form.ngayBatDauDuKien);
-    const end = new Date(form.ngayKetThucDuKien);
-    if (end <= start) {
-      alert("❌ Ngày kết thúc phải sau ngày bắt đầu!");
+    if (!form.khoaHocId || !form.loaiLopId) {
+      alert("Vui lòng chọn đầy đủ khóa học và loại lớp.");
       return;
     }
 
@@ -124,22 +126,28 @@ const LopCreate = () => {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Số giờ (tự tính)</label>
+          <label className="form-label">Số giờ</label>
           <input
             type="number"
+            name="soGio"
             className="form-control"
-            value={form.soGio.toFixed(2)}
-            readOnly
+            value={form.soGio}
+            onChange={handleChange}
+            min={0}
+            step={0.5}
+            required
           />
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Số giờ quy đổi</label>
+          <label className="form-label">Số giờ quy đổi / Điểm đào tạo</label>
           <input
             type="number"
-            className="form-control"
             name="soGioQuyDoi"
+            className="form-control"
+            value={form.soGioQuyDoi}
             onChange={handleChange}
+            min={0}
             required
           />
         </div>
@@ -149,6 +157,7 @@ const LopCreate = () => {
             className="form-check-input"
             type="checkbox"
             name="coDanhSachHocVien"
+            checked={form.coDanhSachHocVien}
             onChange={handleChange}
           />
           <label className="form-check-label">Thêm học viên ngay?</label>

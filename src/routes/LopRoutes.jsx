@@ -1,18 +1,33 @@
+// File: src/routes/LopRoutes.js
 import { Route } from "react-router";
 import LopPage from "../pages/Lop/LopPage";
 import LopCreate from "../pages/Lop/LopCreate";
 import LopEdit from "../pages/Lop/LopEdit";
 import LopDetail from "../pages/Lop/LopDetail";
-
+import ChonHocVien from "../pages/Lop/ChonHocVien";
 import PrivateRoute from "./PrivateRoute";
 import RoleRoute from "./RoleRoute";
 
 const LopRoutes = () => (
   <>
-    {/* ✅ Public route */}
-    <Route path="/lop" element={<LopPage />} />
+    <Route
+      path="/lop"
+      element={
+        <PrivateRoute>
+          <LopPage />
+        </PrivateRoute>
+      }
+    />
 
-    {/* Admin, GiangVien */}
+    <Route
+      path="/lop/:id"
+      element={
+        <PrivateRoute>
+          <LopDetail />
+        </PrivateRoute>
+      }
+    />
+
     <Route
       path="/lop/create"
       element={
@@ -29,24 +44,25 @@ const LopRoutes = () => (
         </RoleRoute>
       }
     />
+
     <Route
       path="/lop/delete/:id"
       element={
-        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
+        <RoleRoute allowedRoles={["Admin"]}>
           <LopEdit />
         </RoleRoute>
       }
     />
-
-    {/* Login */}
     <Route
-      path="/lop/:id"
+      path="/lop/chon-hoc-vien/:id"
       element={
-        <PrivateRoute>
-          <LopDetail />
-        </PrivateRoute>
+        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
+          <ChonHocVien />
+        </RoleRoute>
       }
-    />
+    >
+
+</Route>
   </>
 );
 

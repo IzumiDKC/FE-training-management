@@ -15,7 +15,7 @@ const LoaiLopDetail = () => {
   return (
     <div className="container mt-4">
       <h3>📄 Chi tiết Loại lớp</h3>
-      <p><strong>Mã:</strong> {loaiLop.loaiLopId}</p>
+      <p><strong>ID:</strong> {loaiLop.loaiLopId}</p>
       <p><strong>Tên:</strong> {loaiLop.tenLoaiLop}</p>
     </div>
   );

@@ -6,15 +6,49 @@ import LoaiLopPage from "../pages/LoaiLop/LoaiLopPage";
 import LoaiLopCreate from "../pages/LoaiLop/LoaiLopCreate";
 import LoaiLopEdit from "../pages/LoaiLop/LoaiLopEdit";
 import LoaiLopDetail from "../pages/LoaiLop/LoaiLopDetail";
-import ChonHocVien from "../pages/Lop/ChonHocVien";
+
+import RoleRoute from "./RoleRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const LoaiLopRoutes = () => (
   <>
-    <Route path="loai-lop" element={<LoaiLopPage />} />
-    <Route path="loai-lop/create" element={<LoaiLopCreate />} />
-    <Route path="loai-lop/edit/:id" element={<LoaiLopEdit />} />
-    <Route path="loai-lop/:id" element={<LoaiLopDetail />} />
-    <Route path="lop/chon-hoc-vien/:id" element={<ChonHocVien />} />
+    <Route
+      path="loai-lop"
+      element={
+        <PrivateRoute>
+          <LoaiLopPage />
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="loai-lop/:id"
+      element={
+        <PrivateRoute>
+          <LoaiLopDetail />
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="loai-lop/create"
+      element={
+        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
+          <LoaiLopCreate />
+        </RoleRoute>
+      }
+    />
+
+    <Route
+      path="loai-lop/e/:id"
+      element={
+        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
+          <LoaiLopEdit />
+        </RoleRoute>
+      }
+    />
+
+
   </>
 );
 

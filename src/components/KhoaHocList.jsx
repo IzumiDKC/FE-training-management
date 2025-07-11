@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getAllKhoaHoc, deleteKhoaHoc } from "../services/khoaHocApi";
 import { useNavigate } from "react-router";
+import useRole from "../hooks/useRole";
 
 const KhoaHocList = () => {
   const [khoaHocs, setKhoaHocs] = useState([]);
   const navigate = useNavigate();
+  const { isAdmin, isGiangVien } = useRole();
 
   const fetchData = async () => {
     try {
@@ -32,7 +34,18 @@ const KhoaHocList = () => {
   };
 
   return (
-    <div>
+    <div className="container mt-4">
+      <h3>📚 Danh sách khóa học</h3>
+
+      {(isAdmin || isGiangVien) && (
+        <button
+          className="btn btn-primary mb-3"
+          onClick={() => navigate("/khoa-hoc/create")}
+        >
+          ➕ Thêm mới
+        </button>
+      )}
+
       <table className="table table-bordered table-hover shadow-sm">
         <thead className="table-light">
           <tr>
@@ -69,18 +82,24 @@ const KhoaHocList = () => {
                 >
                   Xem
                 </button>
-                <button
-                  className="btn btn-sm btn-warning me-2"
-                  onClick={() => navigate(`/khoa-hoc/edit/${kh.khoaHocId}`)}
-                >
-                  Sửa
-                </button>
-                <button
-                  className="btn btn-sm btn-danger"
-                  onClick={() => handleDelete(kh.khoaHocId)}
-                >
-                  Xóa
-                </button>
+
+                {(isAdmin || isGiangVien) && (
+                  <button
+                    className="btn btn-sm btn-warning me-2"
+                    onClick={() => navigate(`/khoa-hoc/edit/${kh.khoaHocId}`)}
+                  >
+                    Sửa
+                  </button>
+                )}
+
+                {isAdmin && (
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => handleDelete(kh.khoaHocId)}
+                  >
+                    Xóa
+                  </button>
+                )}
               </td>
             </tr>
           ))}

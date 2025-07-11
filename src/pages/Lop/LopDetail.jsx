@@ -8,7 +8,7 @@ const LopDetail = () => {
   const { id } = useParams();
   const [lop, setLop] = useState(null);
   const [dsHocVien, setDsHocVien] = useState([]);
-  const [message, setMessage] = useState(""); 
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const { isAdmin, isGiangVien } = useRole();
 
@@ -37,9 +37,11 @@ const LopDetail = () => {
         <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
           <h4 className="mb-0">📄 Thông tin lớp học</h4>
           <div>
-            <button className="btn btn-light btn-sm me-2" onClick={() => navigate(`/lop/edit/${lop.lopId}`)}>
-              ✏️ Chỉnh sửa lớp
-            </button>
+            {(isAdmin || isGiangVien) && (
+              <button className="btn btn-light btn-sm me-2" onClick={() => navigate(`/lop/edit/${lop.lopId}`)}>
+                ✏️ Chỉnh sửa lớp
+              </button>
+            )}
             <button className="btn btn-info btn-sm me-2" onClick={() => navigate(`/chi-tiet-lop/${lop.lopId}`)}>
               👀 Xem buổi học
             </button>
@@ -98,15 +100,15 @@ const LopDetail = () => {
                     <tr key={item.danhSachHocVienId}>
                       <td>{item.hocVienId}</td>
                       <td>{item.hocVienName}</td>
-<td>{item.soCanCuoc}</td>
-<td>
-  <button
-    className="btn btn-sm btn-success"
-    onClick={() => navigate(`/danh-gia/create/${item.hocVienId}/${id}`)}
-  >
-    📝 Đánh giá
-  </button>
-</td>
+                      <td>{item.soCanCuoc}</td>
+                      <td>
+                        <button
+                          className="btn btn-sm btn-success"
+                          onClick={() => navigate(`/danh-gia/create/${item.hocVienId}/${id}`)}
+                        >
+                          📝 Đánh giá
+                        </button>
+                      </td>
                     </tr>
                   ))
                 )}

@@ -12,22 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 const KhoaHocRoutes = () => (
   <>
     <Route path="/khoa-hoc" element={<KhoaHocPage />} />
-    <Route
-      path="/khoa-hoc/create"
-      element={
-        <RoleRoute allowedRoles={["Admin"]}>
-          <KhoaHocCreate />
-        </RoleRoute>
-      }
-    />
-    <Route
-      path="/khoa-hoc/edit/:id"
-      element={
-        <RoleRoute allowedRoles={["Admin"]}>
-          <KhoaHocEdit />
-        </RoleRoute>
-      }
-    />
+
     <Route
       path="/khoa-hoc/:id"
       element={
@@ -36,6 +21,24 @@ const KhoaHocRoutes = () => (
         </PrivateRoute>
       }
     />
+    
+    <Route
+      path="/khoa-hoc/create"
+      element={
+        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
+          <KhoaHocCreate />
+        </RoleRoute>
+      }
+    />
+    <Route
+      path="/khoa-hoc/edit/:id"
+      element={
+        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
+          <KhoaHocEdit />
+        </RoleRoute>
+      }
+    />
+
   </>
 );
 

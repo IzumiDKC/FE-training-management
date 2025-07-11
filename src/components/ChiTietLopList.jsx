@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getChiTietLopsByLopId, deleteChiTietLop } from "../services/chiTietLopApi";
 import { useNavigate, useParams } from "react-router";
+import useRole from "../hooks/useRole";
 
 const ChiTietLopList = () => {
   const [buoiHocList, setBuoiHocList] = useState([]);
   const { lopId } = useParams(); 
   const navigate = useNavigate();
+  const { isAdmin, isGiangVien } = useRole();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,7 +15,7 @@ const ChiTietLopList = () => {
         const data = await getChiTietLopsByLopId(lopId); 
         setBuoiHocList(data);
       } catch (error) {
-        console.error("Error fetching lessons:", error);
+        console.error("Lỗi khi tải danh sách buổi học:", error);
       }
     };
     if (lopId) fetchData();
@@ -32,12 +34,15 @@ const ChiTietLopList = () => {
         📚 Danh sách buổi học cho lớp #{lopId}
         {buoiHocList[0]?.tenLop ? ` - ${buoiHocList[0].tenLop}` : ""}
       </h3>
-      <button
-        className="btn btn-primary mb-3"
-        onClick={() => navigate(`/chi-tiet-lop/create/${lopId}`)} 
-      >
-        ➕ Thêm buổi học
-      </button>
+
+      {(isAdmin || isGiangVien) && (
+        <button
+          className="btn btn-primary mb-3"
+          onClick={() => navigate(`/chi-tiet-lop/create/${lopId}`)} 
+        >
+          ➕ Thêm buổi học
+        </button>
+      )}
 
       <table className="table table-bordered table-striped">
         <thead>
@@ -68,27 +73,31 @@ const ChiTietLopList = () => {
                     className="btn btn-sm btn-info me-2"
                     onClick={() => navigate(`/chi-tiet-lop/detail/${item.chiTietLopId}`)}
                   >
-                    🔍 Xem
-                  </button>
-                  <button
-                    className="btn btn-sm btn-warning me-2"
-                    onClick={() => navigate(`/chi-tiet-lop/edit/${item.chiTietLopId}`)}
-                  >
-                    ✏️ Sửa
-                  </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(item.chiTietLopId)} 
-                  >
-                    🗑️ Xóa
+                  Xem
                   </button>
 
-                  <button
-                    className="btn btn-success btn-sm me-2"
+                  {(isAdmin || isGiangVien) && (
+                    <>
+                      <button
+                        className="btn btn-sm btn-warning me-2"
+                        onClick={() => navigate(`/chi-tiet-lop/edit/${item.chiTietLopId}`)}
+                      >
+                      Sửa
+                      </button>
+                      <button
+                        className="btn btn-sm btn-danger me-2"
+                        onClick={() => handleDelete(item.chiTietLopId)} 
+                      >
+                      Xóa
+                      </button>
+                      <button
+                    className="btn btn-success btn-sm"
                     onClick={() => navigate(`/diem-danh/${lopId}/${item.chiTietLopId}`)}
                   >
-                    📋 Điểm danh
+                  Điểm danh
                   </button>
+                    </>
+                  )}              
                 </td>
               </tr>
             ))

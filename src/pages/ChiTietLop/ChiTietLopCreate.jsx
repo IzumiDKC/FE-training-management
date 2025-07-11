@@ -9,7 +9,7 @@ const ChiTietLopCreate = () => {
     thoiGianBatDau: "07:00:00",
     thoiGianKetThuc: "11:00:00",
     lopId: parseInt(lopId),
-    giangVienId: ""
+    giangVienId: "" // "" mặc định là không chọn
   });
   const [giangViens, setGiangViens] = useState([]);
   const navigate = useNavigate();
@@ -25,8 +25,20 @@ const ChiTietLopCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createChiTietLop(form);
-    navigate(`/chi-tiet-lop/${lopId}`);
+
+    // Nếu không chọn giảng viên, đặt giangVienId là null
+    const payload = {
+      ...form,
+      giangVienId: form.giangVienId === "" ? null : parseInt(form.giangVienId)
+    };
+
+    try {
+      await createChiTietLop(payload);
+      navigate(`/chi-tiet-lop/${lopId}`);
+    } catch (error) {
+      console.error("Lỗi khi tạo buổi học:", error);
+      alert("❌ Tạo buổi học thất bại!");
+    }
   };
 
   return (
@@ -35,25 +47,53 @@ const ChiTietLopCreate = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Ngày học</label>
-          <input type="date" className="form-control" name="ngayHoc" value={form.ngayHoc} onChange={handleChange} required />
+          <input
+            type="date"
+            className="form-control"
+            name="ngayHoc"
+            value={form.ngayHoc}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div className="mb-3">
           <label className="form-label">Thời gian bắt đầu</label>
-          <input type="time" className="form-control" name="thoiGianBatDau" value={form.thoiGianBatDau} onChange={handleChange} required />
+          <input
+            type="time"
+            className="form-control"
+            name="thoiGianBatDau"
+            value={form.thoiGianBatDau}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div className="mb-3">
           <label className="form-label">Thời gian kết thúc</label>
-          <input type="time" className="form-control" name="thoiGianKetThuc" value={form.thoiGianKetThuc} onChange={handleChange} required />
+          <input
+            type="time"
+            className="form-control"
+            name="thoiGianKetThuc"
+            value={form.thoiGianKetThuc}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Giảng viên</label>
-          <select className="form-select" name="giangVienId" onChange={handleChange} required>
-            <option value="">-- Chọn giảng viên --</option>
-            {giangViens.map(gv => (
-              <option key={gv.giangVienId} value={gv.giangVienId}>{gv.hoTen}</option>
+          <label className="form-label">Giảng viên (có thể bỏ trống)</label>
+          <select
+            className="form-select"
+            name="giangVienId"
+            value={form.giangVienId}
+            onChange={handleChange}
+          >
+            <option value="">-- Không phân công giảng viên --</option>
+            {giangViens.map((gv) => (
+              <option key={gv.giangVienId} value={gv.giangVienId}>
+                {gv.hoTen}
+              </option>
             ))}
           </select>
         </div>
