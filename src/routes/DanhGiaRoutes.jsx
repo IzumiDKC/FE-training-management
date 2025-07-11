@@ -1,13 +1,38 @@
+// src/routes/DanhGiaRoutes.jsx
 import { Route } from "react-router";
+
 import DanhGiaPage from "../pages/DanhGia/DanhGiaPage";
-import DanhGiaTheoNamPage from "../pages/DanhGia/DanhGiaTheoNamPage";
 import DanhGiaCreatePage from "../pages/DanhGia/DanhGiaCreatePage";
+import DanhGiaTheoNamPage from "../pages/DanhGia/DanhGiaTheoNamPage";
+
+import RoleRoute from "./RoleRoute";
 
 const DanhGiaRoutes = () => (
   <>
-    <Route path="/danh-gia" element={<DanhGiaPage />} />
-    <Route path="/danh-gia/create/:hocVienId/:lopId" element={<DanhGiaCreatePage />} />
-    <Route path="/danh-gia-theo-nam" element={<DanhGiaTheoNamPage />} />
+    <Route
+      path="/danh-gia"
+      element={
+        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
+          <DanhGiaPage />
+        </RoleRoute>
+      }
+    />
+    <Route
+      path="/danh-gia/create/:hocVienId/:lopId"
+      element={
+        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
+          <DanhGiaCreatePage />
+        </RoleRoute>
+      }
+    />
+    <Route
+      path="/danh-gia-theo-nam"
+      element={
+        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
+          <DanhGiaTheoNamPage />
+        </RoleRoute>
+      }
+    />
   </>
 );
 

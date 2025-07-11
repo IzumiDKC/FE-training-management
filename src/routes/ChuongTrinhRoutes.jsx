@@ -6,18 +6,26 @@ import ChuongTrinhCreate from "../pages/ChuongTrinh/ChuongTrinhCreate";
 import ChuongTrinhEdit from "../pages/ChuongTrinh/ChuongTrinhEdit";
 import ChuongTrinhDetail from "../pages/ChuongTrinh/ChuongTrinhDetail";
 
-import RoleRoute from "./RoleRoute";  
-import PrivateRoute from "./PrivateRoute"; 
+import RoleRoute from "./RoleRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const ChuongTrinhRoutes = () => (
   <>
-    {/* @Everyone */}
     <Route path="/chuong-trinh" element={<ChuongTrinhPage />} />
+
+    <Route
+      path="/chuong-trinh/:id"
+      element={
+        <PrivateRoute>
+          <ChuongTrinhDetail />
+        </PrivateRoute>
+      }
+    />
 
     <Route
       path="/chuong-trinh/create"
       element={
-        <RoleRoute allowedRoles={["Admin"]}>
+        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
           <ChuongTrinhCreate />
         </RoleRoute>
       }
@@ -27,7 +35,7 @@ const ChuongTrinhRoutes = () => (
     <Route
       path="/chuong-trinh/edit/:id"
       element={
-        <RoleRoute allowedRoles={["Admin"]}>
+        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
           <ChuongTrinhEdit />
         </RoleRoute>
       }
@@ -41,15 +49,7 @@ const ChuongTrinhRoutes = () => (
       }
     />
 
-    {/* Login */}
-    <Route
-      path="/chuong-trinh/:id"
-      element={
-        <PrivateRoute>
-          <ChuongTrinhDetail />
-        </PrivateRoute>
-      }
-    />
+
   </>
 );
 
