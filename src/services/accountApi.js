@@ -5,6 +5,17 @@ export const getCurrentUser = async () => {
   return response.data;
 };
 
+export const getProfile = async () => {
+  const response = await api.get("/account/profile");
+  return response.data;
+};
+
+export const updateProfile = async (data) => {
+  const response = await api.put("/account/profile", data);
+  return response.data;
+};
+
+
 export const checkTokenValidity = async () => {
   try {
     const response = await api.get("/account/check-token");
