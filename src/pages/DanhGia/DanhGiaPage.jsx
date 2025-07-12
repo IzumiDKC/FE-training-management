@@ -18,7 +18,7 @@ const DanhGiaPage = () => {
 
   return (
     <div className="container mt-4">
-      <h2>📋 Danh sách đánh giá theo lớp</h2>
+      <h2>📋 Danh sách đánh giá</h2>
       <table className="table table-bordered">
         <thead>
           <tr>
