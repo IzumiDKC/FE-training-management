@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../pages/css/Sidebar.css";
 import {
   FaChalkboardTeacher,
   FaUsers,
@@ -14,17 +15,17 @@ import {
   FaClipboardList,
   FaEdit,
   FaTasks,
-  FaStar
+  FaStar,
 } from "react-icons/fa";
 import { useSidebar } from "../contexts/SidebarContext";
 import useRole from "../hooks/useRole";
-import "./Sidebar.css";
 
 const Sidebar = () => {
   const { expanded, setExpanded } = useSidebar();
   const [openQLLop, setOpenQLLop] = useState(false);
   const [openKhoaHoc, setOpenKhoaHoc] = useState(false);
   const [openDanhGia, setOpenDanhGia] = useState(false);
+
   const { isAdmin, isGiangVien, isAuthenticated } = useRole();
 
   return (
@@ -110,16 +111,13 @@ const Sidebar = () => {
                 <Link to="/loai-lop" className="sidebar-link">
                   <FaBook className="me-1" /> Loại lớp
                 </Link>
-                <Link to="/chi-tiet-lop/:lopId" className="sidebar-link">
-                  <FaInfoCircle className="me-1" /> Thông tin lớp
-                </Link>
               </div>
             )}
 
             {(isAdmin || isGiangVien) && (
               <>
                 <div
-                  className={`sidebar-link sidebar-dropdown ${openDanhGia ? "open" : ""}`}
+                  className={`sidebar-link sidebar-dropdown evaluation-dropdown ${openDanhGia ? "open" : ""}`}
                   onClick={() => setOpenDanhGia((v) => !v)}
                   style={{ cursor: "pointer" }}
                 >
@@ -135,19 +133,17 @@ const Sidebar = () => {
                 </div>
 
                 {expanded && openDanhGia && (
-                  <div className="sidebar-submenu ms-4">
-                    <Link to="/danh-gia" className="sidebar-link">
+                  <div className="sidebar-submenu evaluation-submenu ms-4">
+                    <Link to="/danh-gia" className="sidebar-link evaluation-link">
                       <FaClipboardList className="me-1" /> Xem đánh giá
                     </Link>
-                    {/* <Link to="/danh-gia/create" className="sidebar-link">
-          <FaEdit className="me-1" /> Tạo đánh giá
+                    {/* <Link to="/danh-gia/create" className="sidebar-link evaluation-link">
+                      <FaEdit className="me-1" /> Tạo đánh giá
                     </Link> */}
                   </div>
                 )}
               </>
             )}
-
-
 
             {/* ADMIN */}
             {isAdmin && (

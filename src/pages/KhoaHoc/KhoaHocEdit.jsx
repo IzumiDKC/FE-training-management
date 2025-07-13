@@ -1,15 +1,22 @@
-// File: src/pages/KhoaHoc/KhoaHocEdit.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getKhoaHocById, updateKhoaHoc } from "../../services/khoaHocApi";
 import { getAllChuongTrinh } from "../../services/chuongTrinhApi";
 import { useParams, useNavigate } from "react-router";
+import { gsap } from "gsap";
+import { FaArrowLeft, FaSave, FaSpinner } from "react-icons/fa";
+import "../css/KhoaHoc/KhoaHocEdit.css";
 
 const KhoaHocEdit = () => {
   const { id } = useParams();
   const [tenKhoaHoc, setTenKhoaHoc] = useState("");
   const [chuongTrinhDaoTaoId, setChuongTrinhDaoTaoId] = useState("");
   const [chuongTrinhOptions, setChuongTrinhOptions] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+
+  // GSAP refs
+  const cardRef = useRef(null);
+  const formRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,61 +27,176 @@ const KhoaHocEdit = () => {
         setTenKhoaHoc(khoaHoc.tenKhoaHoc);
         setChuongTrinhDaoTaoId(khoaHoc.chuongTrinhDaoTao?.chuongTrinhDaoTaoId || "");
         setChuongTrinhOptions(chuongTrinhs);
+
+        // Entrance animation
+        gsap.fromTo(cardRef.current, 
+          { y: 50, opacity: 0, scale: 0.9 },
+          { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" }
+        );
+        
+        gsap.fromTo(".form-group", 
+          { x: -30, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.5, stagger: 0.1, delay: 0.3, ease: "power2.out" }
+        );
       } catch (err) {
         console.error("Lỗi khi tải dữ liệu:", err);
+        alert("Không thể tải thông tin khóa học");
+        navigate("/khoa-hoc");
       }
     };
 
     fetchData();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
+    // Submit animation
+    gsap.to(formRef.current, {
+      scale: 0.98,
+      duration: 0.1,
+      yoyo: true,
+      repeat: 1
+    });
+
     try {
       await updateKhoaHoc(id, {
         khoaHocId: parseInt(id),
         tenKhoaHoc,
         chuongTrinhDaoTaoId: parseInt(chuongTrinhDaoTaoId),
       });
-      navigate("/khoa-hoc");
+
+      // Success animation
+      gsap.to(cardRef.current, {
+        scale: 1.05,
+        duration: 0.2,
+        yoyo: true,
+        repeat: 1,
+        onComplete: () => {
+          gsap.to(cardRef.current, {
+            y: -50,
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => navigate("/khoa-hoc")
+          });
+        }
+      });
     } catch (error) {
-      alert("Lỗi khi cập nhật khóa học!");
       console.error(error);
+      
+      // Error shake
+      gsap.to(cardRef.current, {
+        x: -5,
+        duration: 0.1,
+        repeat: 3,
+        yoyo: true,
+        onComplete: () => {
+          alert("Lỗi khi cập nhật khóa học!");
+          setIsSubmitting(false);
+        }
+      });
     }
   };
 
+  const handleInputFocus = (e) => {
+    gsap.to(e.target, {
+      scale: 1.02,
+      borderColor: "#f59e0b",
+      duration: 0.2
+    });
+  };
+
+  const handleInputBlur = (e) => {
+    gsap.to(e.target, {
+      scale: 1,
+      borderColor: "#e2e8f0",
+      duration: 0.2
+    });
+  };
+
   return (
-    <div className="container mt-4">
-      <h3>✏️ Cập nhật Khóa học</h3>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label>Tên khóa học</label>
-          <input
-            className="form-control"
-            value={tenKhoaHoc}
-            onChange={(e) => setTenKhoaHoc(e.target.value)}
-            required
-          />
-        </div>
+    <div className="edit-page">
+      <div className="edit-container">
+        <div className="edit-card" ref={cardRef}>
+          <div className="card-header">
+            <button 
+              className="back-btn"
+              onClick={() => {
+                gsap.to(cardRef.current, {
+                  x: -100,
+                  opacity: 0,
+                  duration: 0.3,
+                  onComplete: () => navigate("/khoa-hoc")
+                });
+              }}
+            >
+              <FaArrowLeft />
+            </button>
+            <h2>✏️ Cập nhật Khóa học</h2>
+          </div>
 
-        <div className="mb-3">
-          <label>Chương trình đào tạo</label>
-          <select
-            className="form-select"
-            value={chuongTrinhDaoTaoId}
-            onChange={(e) => setChuongTrinhDaoTaoId(e.target.value)}
-            required
-          >
-            {chuongTrinhOptions.map((ct) => (
-              <option key={ct.chuongTrinhDaoTaoId} value={ct.chuongTrinhDaoTaoId}>
-                {ct.tenChuongTrinh}
-              </option>
-            ))}
-          </select>
-        </div>
+          <form onSubmit={handleSubmit} ref={formRef}>
+            <div className="form-group">
+              <label>Tên khóa học</label>
+              <input
+                className="form-input"
+                value={tenKhoaHoc}
+                onChange={(e) => setTenKhoaHoc(e.target.value)}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
+                required
+              />
+            </div>
 
-        <button className="btn btn-warning">Cập nhật</button>
-      </form>
+            <div className="form-group">
+              <label>Chương trình đào tạo</label>
+              <select
+                className="form-select"
+                value={chuongTrinhDaoTaoId}
+                onChange={(e) => setChuongTrinhDaoTaoId(e.target.value)}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
+                required
+              >
+                <option value="">-- Chọn chương trình --</option>
+                {chuongTrinhOptions.map((ct) => (
+                  <option key={ct.chuongTrinhDaoTaoId} value={ct.chuongTrinhDaoTaoId}>
+                    {ct.tenChuongTrinh}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-actions">
+              <button
+                type="button"
+                className="btn-cancel"
+                onClick={() => navigate("/khoa-hoc")}
+              >
+                Hủy
+              </button>
+              <button
+                type="submit"
+                className="btn-submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <FaSpinner className="spinning" />
+                    Đang cập nhật...
+                  </>
+                ) : (
+                  <>
+                    <FaSave />
+                    Cập nhật
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

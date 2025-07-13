@@ -7,6 +7,7 @@ import {
 } from "../../services/accountApi";
 
 import AutoCompleteInput from "../../utils/AutoCompleteInput";
+import "../../pages/css/account/ProfileInfo.css";
 
 const ProfileInfo = () => {
   const [user, setUser] = useState(null);
@@ -61,92 +62,171 @@ const ProfileInfo = () => {
     }
   };
 
-  if (tokenError) return <div className="alert alert-danger mt-4">{tokenError}</div>;
-  if (error) return <div className="alert alert-danger mt-4">{error}</div>;
-  if (!user) return <div className="text-center mt-5">🔄 Đang tải...</div>;
+  if (tokenError) return (
+    <div className="profile-container">
+      <div className="profile-content">
+        <div className="profile-card error-alert">{tokenError}</div>
+      </div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="profile-container">
+      <div className="profile-content">
+        <div className="profile-card error-alert">{error}</div>
+      </div>
+    </div>
+  );
+  
+  if (!user) return (
+    <div className="profile-container">
+      <div className="loading-spinner">🔄 Đang tải thông tin...</div>
+    </div>
+  );
 
   return (
-    <div className="container mt-5">
-      <div className="card shadow p-4 rounded-4 mb-5">
-        <h3 className="text-primary mb-4">👤 Thông tin tài khoản</h3>
-        <div className="row">
-          <div className="col-md-6 mb-3"><strong>Họ tên:</strong> <div>{user.hoTen}</div></div>
-          <div className="col-md-6 mb-3"><strong>Email:</strong> <div>{user.email}</div></div>
-          <div className="col-md-6 mb-3"><strong>Số căn cước:</strong> <div>{user.soCanCuoc}</div></div>
-          <div className="col-md-6 mb-3"><strong>Vai trò:</strong> <div>{Array.isArray(user.roles) ? user.roles.join(", ") : "Chưa có"}</div></div>
+    <div className="profile-container">
+      {/* Medical decorative elements */}
+      <div className="medical-element-1"></div>
+      <div className="medical-element-2"></div>
+      
+      <div className="profile-content">
+        <div className="profile-header">
+          <h1 className="profile-title">Hồ Sơ Cá Nhân</h1>
+          <p className="profile-subtitle">Quản lý thông tin tài khoản một cách hiện đại và chuyên nghiệp</p>
         </div>
-      </div>
 
-      <div className="card shadow p-4 rounded-4">
-        <h4 className="text-success mb-4">📝 Thông tin bổ sung</h4>
-        {message && <div className="alert alert-info">{message}</div>}
-
-        {!editMode ? (
-          <>
-            <div className="mb-3"><strong>Nơi công tác:</strong> <div>{profile.noiCongTac || "Chưa cập nhật"}</div></div>
-            <div className="mb-3"><strong>Ngày sinh:</strong> <div>{profile.ngaySinh || "Chưa cập nhật"}</div></div>
-            <div className="mb-3"><strong>Học hàm học vị:</strong> <div>{profile.hocHamHocVi || "Chưa cập nhật"}</div></div>
-            <div className="mb-3"><strong>Thuộc bệnh viện:</strong> <div>{profile.thuocBenhVien ? "Có" : "Không"}</div></div>
-
-            <button className="btn btn-primary mt-2" onClick={() => setEditMode(true)}>
-              ✏️ Thay đổi
-            </button>
-          </>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label>Nơi công tác</label>
-              <input
-                name="noiCongTac"
-                value={profile.noiCongTac}
-                onChange={handleChange}
-                placeholder="VD: Bệnh viện Ung Bướu Cơ Sở 2"
-                className="form-control"
-              />
+        <div className="profile-card">
+          <h3 className="card-title">
+            <div className="card-icon">👤</div>
+            Thông tin tài khoản
+          </h3>
+          <div className="info-grid">
+            <div className="info-item">
+              <div className="info-label">Họ và tên</div>
+              <div className="info-value">{user.hoTen}</div>
             </div>
-
-            <div className="mb-3">
-              <label>Ngày sinh</label>
-              <input
-                type="date"
-                name="ngaySinh"
-                value={profile.ngaySinh}
-                onChange={handleChange}
-                className="form-control"
-                min="1960-01-01"
-                max="2005-12-31"
-              />
-
+            <div className="info-item">
+              <div className="info-label">Địa chỉ Email</div>
+              <div className="info-value">{user.email}</div>
             </div>
-
-            <div className="mb-3">
-              <label>Học hàm học vị</label>
-              <AutoCompleteInput
-                value={profile.hocHamHocVi}
-                onChange={(newValue) =>
-                  setProfile((prev) => ({ ...prev, hocHamHocVi: newValue }))
-                }
-              />
+            <div className="info-item">
+              <div className="info-label">Số CCCD/CMND</div>
+              <div className="info-value">{user.soCanCuoc}</div>
             </div>
-
-            <div className="form-check mb-3">
-              <input
-                type="checkbox"
-                name="thuocBenhVien"
-                checked={profile.thuocBenhVien}
-                onChange={handleChange}
-                className="form-check-input"
-              />
-              <label className="form-check-label">Thuộc bệnh viện</label>
-              <div className="form-text">Tick nếu bạn đang công tác tại bệnh viện Ung Bướu Cơ Sở 2</div>
+            <div className="info-item">
+              <div className="info-label">Vai trò hệ thống</div>
+              <div className="info-value">{Array.isArray(user.roles) ? user.roles.join(", ") : "Chưa có"}</div>
             </div>
+          </div>
+        </div>
 
-            <div className="d-flex gap-2">
-              <button className="btn btn-success" type="submit">💾 Lưu</button>
-              <button className="btn btn-secondary" type="button" onClick={() => setEditMode(false)}>↩️ Huỷ</button>
-            </div>
-          </form>
-        )}
+        <div className="profile-card">
+          <h4 className="card-title">
+            <div className="card-icon">📝</div>
+            Thông tin bổ sung
+          </h4>
+          {message && <div className="alert-custom">{message}</div>}
+
+          {!editMode ? (
+            <>
+              <div className="info-grid">
+                <div className="info-item">
+                  <div className="info-label">Nơi công tác</div>
+                  <div className="info-value">{profile.noiCongTac || "Chưa cập nhật"}</div>
+                </div>
+                <div className="info-item">
+                  <div className="info-label">Ngày sinh</div>
+                  <div className="info-value">{profile.ngaySinh || "Chưa cập nhật"}</div>
+                </div>
+                <div className="info-item">
+                  <div className="info-label">Học hàm học vị</div>
+                  <div className="info-value">{profile.hocHamHocVi || "Chưa cập nhật"}</div>
+                </div>
+                <div className="info-item">
+                  <div className="info-label">Thuộc bệnh viện</div>
+                  <div className="info-value">{profile.thuocBenhVien ? "Có" : "Không"}</div>
+                </div>
+              </div>
+
+              <div className="button-group">
+                <button className="btn-custom btn-primary-custom" onClick={() => setEditMode(true)}>
+                  ✏️ Chỉnh sửa thông tin
+                </button>
+              </div>
+            </>
+          ) : (
+            <form onSubmit={handleSubmit} className="edit-form">
+              <div className="form-group">
+                <label className="form-label">Nơi công tác</label>
+                <input
+                  name="noiCongTac"
+                  value={profile.noiCongTac}
+                  onChange={handleChange}
+                  placeholder="VD: Bệnh viện Ung Bướu Cơ Sở 2"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Ngày sinh</label>
+                <input
+                  type="date"
+                  name="ngaySinh"
+                  value={profile.ngaySinh}
+                  onChange={handleChange}
+                  className="form-input"
+                  min="1960-01-01"
+                  max="2005-12-31"
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Học hàm học vị</label>
+                <AutoCompleteInput
+                  value={profile.hocHamHocVi}
+                  onChange={(newValue) =>
+                    setProfile((prev) => ({ ...prev, hocHamHocVi: newValue }))
+                  }
+                />
+              </div>
+
+              <div className="form-group">
+                <div className="form-checkbox">
+                  <div className="checkbox-wrapper">
+                    <input
+                      type="checkbox"
+                      name="thuocBenhVien"
+                      checked={profile.thuocBenhVien}
+                      onChange={handleChange}
+                      className="checkbox-input"
+                      id="thuocBenhVien"
+                    />
+                    <label className="checkbox-label" htmlFor="thuocBenhVien">
+                      Thuộc bệnh viện
+                    </label>
+                  </div>
+                  <div className="checkbox-text">
+                    Đánh dấu nếu bạn đang công tác tại bệnh viện Ung Bướu Cơ Sở 2
+                  </div>
+                </div>
+              </div>
+
+              <div className="button-group">
+                <button className="btn-custom btn-success-custom" type="submit">
+                  💾 Lưu thay đổi
+                </button>
+                <button 
+                  className="btn-custom btn-secondary-custom" 
+                  type="button" 
+                  onClick={() => setEditMode(false)}
+                >
+                  ↩️ Hủy bỏ
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   );
