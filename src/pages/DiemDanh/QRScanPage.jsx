@@ -2,6 +2,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Card, Button, Alert, Spinner, Container } from "react-bootstrap";
+import { 
+  FaCheckCircle, 
+  FaExclamationTriangle, 
+  FaHome, 
+  FaClock, 
+  FaCalendarAlt, 
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaSpinner
+} from "react-icons/fa";
+import "../css/DiemDanh/QRScanPage.css";
 
 const QRScanPage = () => {
   const { token } = useParams();
@@ -42,43 +53,129 @@ const QRScanPage = () => {
   }, [token]);
 
   return (
-    <Container className="mt-5">
-      {errorMessage && (
-        <Alert variant="danger">
-          <h4>❌ Lỗi</h4>
-          <p>{errorMessage}</p>
-        </Alert>
-      )}
-
-      {loading ? (
-        <div className="text-center">
-          <Spinner animation="border" variant="primary" />
-          <p>Đang xử lý...</p>
+    <div className="qrscan-page-wrapper">
+      {/* Background Effects */}
+      <div className="qrscan-bg-effects">
+        <div className="qrscan-particles">
+          {[...Array(12)].map((_, i) => (
+            <div key={i} className={`qrscan-particle particle-${i + 1}`}></div>
+          ))}
         </div>
-      ) : (
-        scanResult && (
-          <Card className="shadow-lg border-0 rounded p-4">
-            <Card.Body>
-              <Card.Title className="text-center text-success">
-                <i className="bi bi-check-circle" style={{ fontSize: "3rem" }}></i>
-                <h3>Thành công!</h3>
-              </Card.Title>
-              <Card.Text className="text-center text-muted">
-                <p>{scanResult.message}</p>
-                <div className="my-3">
-                  <p><strong>Check-in:</strong> {scanResult.checkInTime}</p>
-                  <p><strong>Check-out:</strong> {scanResult.checkOutTime}</p>
-                  <p><strong>Ngày:</strong> {scanResult.date}</p>
-                </div>
-                <Button variant="success" size="lg" onClick={() => window.location.href = "/"}>
-                  Quay lại trang chủ
-                </Button>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        )
-      )}
-    </Container>
+        <div className="qrscan-shapes">
+          <div className="qrscan-shape shape-circle"></div>
+          <div className="qrscan-shape shape-square"></div>
+          <div className="qrscan-shape shape-triangle"></div>
+        </div>
+      </div>
+
+      <Container className="qrscan-container">
+        <div className="qrscan-content">
+          {errorMessage && (
+            <div className="qrscan-error-card">
+              <Card className="qrscan-card shadow-lg border-0">
+                <Card.Body className="p-5 text-center">
+                  <div className="qrscan-error-icon mb-4">
+                    <FaExclamationTriangle />
+                  </div>
+                  <h3 className="qrscan-error-title mb-3">❌ Lỗi Quét QR</h3>
+                  <p className="qrscan-error-message mb-4">{errorMessage}</p>
+                  <Button 
+                    variant="danger" 
+                    size="lg" 
+                    className="qrscan-btn"
+                    onClick={() => window.location.href = "/"}
+                  >
+                    <FaHome className="me-2" />
+                    Quay lại trang chủ
+                  </Button>
+                </Card.Body>
+              </Card>
+            </div>
+          )}
+
+          {loading ? (
+            <div className="qrscan-loading-card">
+              <Card className="qrscan-card shadow-lg border-0">
+                <Card.Body className="p-5 text-center">
+                  <div className="qrscan-loading-icon mb-4">
+                    <FaSpinner className="qrscan-spin" />
+                  </div>
+                  <h3 className="qrscan-loading-title mb-3">Đang xử lý...</h3>
+                  <p className="qrscan-loading-message">Vui lòng chờ trong giây lát</p>
+                  <div className="qrscan-progress-bar">
+                    <div className="qrscan-progress-fill"></div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+          ) : (
+            scanResult && (
+              <div className="qrscan-success-card">
+                <Card className="qrscan-card shadow-lg border-0">
+                  <Card.Body className="p-5">
+                    <div className="text-center mb-4">
+                      <div className="qrscan-success-icon mb-3">
+                        <FaCheckCircle />
+                      </div>
+                      <h3 className="qrscan-success-title mb-2">Thành công!</h3>
+                      <p className="qrscan-success-message">{scanResult.message}</p>
+                    </div>
+
+                    <div className="qrscan-info-grid">
+                      <div className="qrscan-info-item">
+                        <div className="qrscan-info-icon checkin">
+                          <FaSignInAlt />
+                        </div>
+                        <div className="qrscan-info-content">
+                          <div className="qrscan-info-label">Check-in</div>
+                          <div className="qrscan-info-value">
+                            {scanResult.checkInTime || "Chưa check-in"}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="qrscan-info-item">
+                        <div className="qrscan-info-icon checkout">
+                          <FaSignOutAlt />
+                        </div>
+                        <div className="qrscan-info-content">
+                          <div className="qrscan-info-label">Check-out</div>
+                          <div className="qrscan-info-value">
+                            {scanResult.checkOutTime || "Chưa check-out"}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="qrscan-info-item full-width">
+                        <div className="qrscan-info-icon date">
+                          <FaCalendarAlt />
+                        </div>
+                        <div className="qrscan-info-content">
+                          <div className="qrscan-info-label">Ngày</div>
+                          <div className="qrscan-info-value">{scanResult.date}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-center mt-4">
+                      <Button 
+                        variant="success" 
+                        size="lg" 
+                        className="qrscan-btn"
+                        onClick={() => window.location.href = "/"}
+                      >
+                        <FaHome className="me-2" />
+                        Quay lại trang chủ
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </div>
+            )
+          )}
+        </div>
+      </Container>
+    </div>
   );
 };
 

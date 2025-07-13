@@ -1,91 +1,234 @@
 import React, { useEffect, useState } from "react";
 import { getAllKhoaHoc, deleteKhoaHoc } from "../services/khoaHocApi";
 import { useNavigate } from "react-router";
+import "../pages/css/KhoaHoc/KhoaHocList.css";
 
 const KhoaHocList = () => {
   const [khoaHocs, setKhoaHocs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const fetchData = async () => {
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    setIsLoading(true);
     try {
-      const data = await getAllKhoaHoc();
-      setKhoaHocs(data);
-    } catch (error) {
-      console.error("Lỗi khi tải danh sách khóa học:", error);
+      const result = await getAllKhoaHoc();
+      setKhoaHocs(result);
+    } catch (err) {
+      console.error("Lỗi khi tải danh sách:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const handleDelete = async (id) => {
-    if (window.confirm("Bạn có chắc muốn xóa khóa học này?")) {
+    if (window.confirm("Bạn có chắc chắn muốn xóa khóa học này?")) {
       try {
         await deleteKhoaHoc(id);
-        fetchData();
+        await loadData();
+        alert("Xóa khóa học thành công!");
       } catch (err) {
-        alert("Xóa thất bại!");
-        console.error(err);
+        console.error("Lỗi khi xóa:", err);
+        alert("Lỗi khi xóa khóa học!");
       }
     }
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("vi-VN");
+  };
+
+  // Helper function to check if a course is active based on its classes
+  const isCourseActive = (khoaHoc) => {
+    if (!khoaHoc.lops || khoaHoc.lops.length === 0) return false;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return khoaHoc.lops.some((lop) => {
+      if (!lop.ngayKetThucDuKien) return true;
+      const endDate = new Date(lop.ngayKetThucDuKien);
+      return endDate >= today;
+    });
+  };
+
+  // Helper function to check if a course is ended
+  const isCourseEnded = (khoaHoc) => {
+    if (!khoaHoc.lops || khoaHoc.lops.length === 0) return false;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Get the latest end date from all classes
+    const { endDate } = getCourseDateRange(khoaHoc);
+    
+    if (!endDate) return false;
+    
+    // Course is ended if the latest end date is in the past
+    return endDate < today;
+  };
+
+  // Helper function to get course date range from classes
+  const getCourseDateRange = (khoaHoc) => {
+    if (!khoaHoc.lops || khoaHoc.lops.length === 0) {
+      return { startDate: null, endDate: null };
+    }
+
+    const startDates = khoaHoc.lops
+      .filter((lop) => lop.ngayBatDauDuKien)
+      .map((lop) => new Date(lop.ngayBatDauDuKien));
+
+    const endDates = khoaHoc.lops
+      .filter((lop) => lop.ngayKetThucDuKien)
+      .map((lop) => new Date(lop.ngayKetThucDuKien));
+
+    const startDate =
+      startDates.length > 0 ? new Date(Math.min(...startDates)) : null;
+    const endDate =
+      endDates.length > 0 ? new Date(Math.max(...endDates)) : null;
+
+    return { startDate, endDate };
+  };
+
+  if (isLoading) {
+    return (
+      <div className="khoahoc-loading-container">
+        <div className="khoahoc-loading-spinner"></div>
+        <p>Đang tải dữ liệu...</p>
+      </div>
+    );
+  }
+
+  if (khoaHocs.length === 0) {
+    return (
+      <div className="khoahoc-empty-state">
+        <div className="khoahoc-empty-icon">📚</div>
+        <div className="khoahoc-empty-text">Chưa có khóa học nào</div>
+        <div className="khoahoc-empty-subtext">
+          Hãy tạo khóa học đầu tiên để bắt đầu
+        </div>
+        <button
+          className="khoahoc-empty-btn"
+          onClick={() => navigate("/khoa-hoc/create")}
+        >
+          Tạo khóa học ngay
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <table className="table table-bordered table-hover shadow-sm">
-        <thead className="table-light">
-          <tr>
-            <th>Tên khóa học</th>
-            <th>Chương trình ĐT</th>
-            <th>Lớp</th>
-            <th>Hành động</th>
-          </tr>
-        </thead>
-        <tbody>
-          {khoaHocs.map((kh) => (
-            <tr key={kh.khoaHocId}>
-              <td>{kh.tenKhoaHoc}</td>
-              <td>{kh.chuongTrinhDaoTao?.tenChuongTrinh || "—"}</td>
-              <td>
-                {kh.lops && kh.lops.length > 0 ? (
-                  <ul className="mb-0 ps-3">
-                    {kh.lops.map((lop) => (
-                      <li key={lop.lopId}>
-                        <strong>{lop.tenLop}</strong> (
-                        {new Date(lop.ngayBatDauDuKien).toLocaleDateString()} -{" "}
-                        {new Date(lop.ngayKetThucDuKien).toLocaleDateString()})
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <span className="text-muted">Chưa có lớp</span>
-                )}
-              </td>
-              <td>
+    <div className="khoahoc-list-container">
+      {/* Stats */}
+      <div className="khoahoc-stats">
+        <div className="khoahoc-stat-card">
+          <div className="khoahoc-stat-number">{khoaHocs.length}</div>
+          <div className="khoahoc-stat-label">Tổng khóa học</div>
+        </div>
+        <div className="khoahoc-stat-card">
+          <div className="khoahoc-stat-number">
+            {khoaHocs.filter((k) => isCourseActive(k)).length}
+          </div>
+          <div className="khoahoc-stat-label">Đang hoạt động</div>
+        </div>
+        <div className="khoahoc-stat-card">
+          <div className="khoahoc-stat-number">
+            {khoaHocs.filter((k) => isCourseEnded(k)).length}
+          </div>
+          <div className="khoahoc-stat-label">Đã kết thúc</div>
+        </div>
+      </div>
+
+      {/* Course Grid */}
+      <div className="khoahoc-grid">
+        {khoaHocs.map((khoaHoc, index) => {
+          const { startDate, endDate } = getCourseDateRange(khoaHoc);
+          const isActive = isCourseActive(khoaHoc);
+
+          return (
+            <div
+              key={khoaHoc.khoaHocId}
+              className="khoahoc-card"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="khoahoc-card-header">
+                <div className="khoahoc-card-icon">📖</div>
+                <div className="khoahoc-card-status">
+                  {(() => {
+                    if (!khoaHoc.lops || khoaHoc.lops.length === 0) {
+                      return <span className="status-ended">Chưa có lớp</span>;
+                    }
+                    
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    
+                    if (!endDate) {
+                      return <span className="status-active">Hoạt động</span>;
+                    }
+                    
+                    return endDate >= today ? (
+                      <span className="status-active">Hoạt động</span>
+                    ) : (
+                      <span className="status-ended">Đã kết thúc</span>
+                    );
+                  })()}
+                </div>
+              </div>
+
+              <div className="khoahoc-card-content">
+                <h3 className="khoahoc-card-title">{khoaHoc.tenKhoaHoc}</h3>
+                <p className="khoahoc-card-description">{khoaHoc.moTa}</p>
+
+                <div className="khoahoc-card-info">
+                  <div className="khoahoc-info-item">
+                    <span className="info-label">📅 Bắt đầu:</span>
+                    <span className="info-value">
+                      {startDate ? formatDate(startDate) : "Chưa có lớp"}
+                    </span>
+                  </div>
+                  <div className="khoahoc-info-item">
+                    <span className="info-label">🏁 Kết thúc:</span>
+                    <span className="info-value">
+                      {endDate ? formatDate(endDate) : "Chưa có lớp"}
+                    </span>
+                  </div>
+                  <div className="khoahoc-info-item">
+                    <span className="info-label">🏫 Số lớp:</span>
+                    <span className="info-value">
+                      {khoaHoc.lops ? khoaHoc.lops.length : 0} lớp
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="khoahoc-card-actions">
                 <button
-                  className="btn btn-sm btn-info me-2"
-                  onClick={() => navigate(`/khoa-hoc/${kh.khoaHocId}`)}
+                  className="khoahoc-btn-view"
+                  onClick={() => navigate(`/khoa-hoc/${khoaHoc.khoaHocId}`)}
                 >
-                  Xem
+                  👁️ Xem
                 </button>
                 <button
-                  className="btn btn-sm btn-warning me-2"
-                  onClick={() => navigate(`/khoa-hoc/edit/${kh.khoaHocId}`)}
+                  className="khoahoc-btn-edit"
+                  onClick={() => navigate(`/khoa-hoc/edit/${khoaHoc.khoaHocId}`)}
                 >
-                  Sửa
+                  ✏️ Sửa
                 </button>
                 <button
-                  className="btn btn-sm btn-danger"
-                  onClick={() => handleDelete(kh.khoaHocId)}
+                  className="khoahoc-btn-delete"
+                  onClick={() => handleDelete(khoaHoc.khoaHocId)}
                 >
-                  Xóa
+                  🗑️ Xóa
                 </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

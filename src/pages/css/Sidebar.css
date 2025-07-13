@@ -1,10 +1,12 @@
 .sidebar {
-  background: linear-gradient(135deg, #232946 70%, #2563eb 100%);
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6, #2f8190, #8b5cf6, #1e3a8a);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
   color: #fff;
   width: 68px;
   min-height: 100vh;
   transition: width 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s;
-  box-shadow: 2px 0 16px rgba(37,99,235,0.08);
+  box-shadow: 2px 0 20px rgba(59, 130, 246, 0.15);
   border-top-right-radius: 18px;
   border-bottom-right-radius: 18px;
   position: fixed;
@@ -26,7 +28,7 @@
   padding: 0 18px;
   font-size: 1.15rem;
   font-weight: 700;
-  border-bottom: 1px solid #2d365a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   letter-spacing: 0.5px;
 }
 
@@ -55,11 +57,12 @@
   background: #2563eb;
   color: #fff;
   font-weight: 600;
-  box-shadow: 0 2px 8px #2563eb22;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
 .sidebar .ms-2 {
   margin-left: 10px;
+  color: white;
 }
 
 @media (max-width: 768px) {
@@ -78,5 +81,5 @@
   font-size: 0.97em;
 }
 .sidebar-dropdown.open {
-  background: #23305a22;
+  background: rgba(255, 255, 255, 0.1);
 }
