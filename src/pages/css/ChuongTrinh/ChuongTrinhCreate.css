@@ -1,0 +1,391 @@
+.chuong-trinh-create-page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 2rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Background Elements */
+.chuong-trinh-create-page .floating-shapes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.chuong-trinh-create-page .floating-shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(79, 70, 229, 0.05);
+  animation: chuong-trinh-float 15s infinite ease-in-out;
+}
+
+.chuong-trinh-create-page .floating-shape-1 { 
+  width: 200px; 
+  height: 200px; 
+  top: 10%; 
+  left: 10%; 
+}
+
+.chuong-trinh-create-page .floating-shape-2 { 
+  width: 150px; 
+  height: 150px; 
+  top: 60%; 
+  right: 20%; 
+  animation-delay: 5s; 
+}
+
+.chuong-trinh-create-page .floating-shape-3 { 
+  width: 100px; 
+  height: 100px; 
+  bottom: 20%; 
+  left: 30%; 
+  animation-delay: 10s; 
+}
+
+/* Main Content */
+.chuong-trinh-create-page .content-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Header Section */
+.chuong-trinh-create-page .page-header {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.chuong-trinh-create-page .header-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+}
+
+.chuong-trinh-create-page .header-title h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.25rem 0;
+}
+
+.chuong-trinh-create-page .header-title p {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Form Card */
+.chuong-trinh-create-page .form-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.5);
+  overflow: hidden;
+  position: relative;
+}
+
+.chuong-trinh-create-page .form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4F46E5, #7C3AED, #EC4899);
+}
+
+/* Form Section */
+.chuong-trinh-create-page .form-section {
+  padding: 2rem;
+}
+
+.chuong-trinh-create-page .section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.chuong-trinh-create-page .section-icon {
+  color: #4F46E5;
+  font-size: 1.25rem;
+}
+
+.chuong-trinh-create-page .section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* Input Groups */
+.chuong-trinh-create-page .input-group {
+  margin-bottom: 1.5rem;
+}
+
+.chuong-trinh-create-page .input-label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.chuong-trinh-create-page .input-label .required {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.chuong-trinh-create-page .input-wrapper {
+  position: relative;
+}
+
+.chuong-trinh-create-page .form-input,
+.chuong-trinh-create-page .form-textarea {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 2.5rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  background: white;
+  transition: all 0.2s ease;
+  color: #1e293b;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.chuong-trinh-create-page .form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.chuong-trinh-create-page .form-input:focus,
+.chuong-trinh-create-page .form-textarea:focus {
+  outline: none;
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.chuong-trinh-create-page .form-input.error,
+.chuong-trinh-create-page .form-textarea.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.chuong-trinh-create-page .input-icon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 0.875rem;
+  pointer-events: none;
+}
+
+/* Error Messages */
+.chuong-trinh-create-page .error-message {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+  font-weight: 500;
+}
+
+.chuong-trinh-create-page .error-alert {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #dc2626;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.chuong-trinh-create-page .error-alert .error-icon {
+  font-size: 1rem;
+}
+
+/* Form Actions */
+.chuong-trinh-create-page .form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding: 2rem;
+  border-top: 2px solid #f1f5f9;
+  background: #f8fafc;
+}
+
+.chuong-trinh-create-page .btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  text-decoration: none;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.chuong-trinh-create-page .btn-primary {
+  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  color: white;
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+}
+
+.chuong-trinh-create-page .btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+}
+
+.chuong-trinh-create-page .btn-secondary {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+.chuong-trinh-create-page .btn-secondary:hover:not(:disabled) {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.chuong-trinh-create-page .btn-reset {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.chuong-trinh-create-page .btn-reset:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}
+
+.chuong-trinh-create-page .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading Spinner */
+.chuong-trinh-create-page .loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: chuong-trinh-spin 1s linear infinite;
+}
+
+/* Animations */
+@keyframes chuong-trinh-float {
+  0%, 100% { 
+    transform: translate(0, 0) rotate(0deg); 
+  }
+  33% { 
+    transform: translate(10px, -10px) rotate(120deg); 
+  }
+  66% { 
+    transform: translate(-5px, 5px) rotate(240deg); 
+  }
+}
+
+@keyframes chuong-trinh-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chuong-trinh-create-page {
+    padding: 1rem;
+  }
+
+  .chuong-trinh-create-page .page-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .chuong-trinh-create-page .form-section {
+    padding: 1.5rem;
+  }
+
+  .chuong-trinh-create-page .form-actions {
+    flex-direction: column-reverse;
+    padding: 1.5rem;
+  }
+
+  .chuong-trinh-create-page .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chuong-trinh-create-page .header-title h1 {
+    font-size: 1.5rem;
+  }
+
+  .chuong-trinh-create-page .floating-shape {
+    display: none;
+  }
+
+  .chuong-trinh-create-page .form-section {
+    padding: 1rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .chuong-trinh-create-page .floating-shape {
+    opacity: 0.1;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .chuong-trinh-create-page * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Performance optimizations */
+.chuong-trinh-create-page .btn,
+.chuong-trinh-create-page .form-input,
+.chuong-trinh-create-page .form-textarea {
+  will-change: transform;
+}

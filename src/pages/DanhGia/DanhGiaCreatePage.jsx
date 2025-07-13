@@ -4,6 +4,7 @@ import { getDsHocVienByLopId } from "../../services/dsHocVienApi";
 import { getLopById } from "../../services/lopApi";
 import { createDanhGia } from "../../services/danhGiaApi";
 import useRole from "../../hooks/useRole";
+import "../css/DanhGia/DanhGiaCreatePage.css";
 
 const DanhGiaCreatePage = () => {
   const { lopId, hocVienId } = useParams();
@@ -59,120 +60,130 @@ const DanhGiaCreatePage = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h2>📝 Tạo đánh giá học viên</h2>
-
-      {lopInfo && hocVienInfo && (
-        <div className="card shadow-sm mb-4 border-0">
-          <div className="card-header bg-info text-white">
-            <strong>📌 Thông tin lớp & học viên</strong>
-          </div>
-          <div className="card-body">
-            <p><strong>🏫 Chương trình:</strong> {lopInfo.chuongTrinhName}</p>
-            <p><strong>📘 Khóa học:</strong> {lopInfo.khoaHocName}</p>
-            <p><strong>🏷️ Lớp:</strong> {lopInfo.tenLop}</p>
-            <p><strong>👤 Học viên:</strong> {hocVienInfo.hocVienName} ({hocVienInfo.soCanCuoc})</p>
-          </div>
+    <div className="danhgia-create-container">
+      <div className="create-element-1"></div>
+      <div className="create-element-2"></div>
+      <div className="create-element-3"></div>
+      
+      <div className="danhgia-create-content">
+        <div className="danhgia-create-header">
+          <h2 className="danhgia-create-title">
+            📝 Tạo Đánh Giá Học Viên
+          </h2>
         </div>
-      )}
 
-      {message && (
-        <div className="alert alert-warning">⚠️ {message}</div>
-      )}
+        {lopInfo && hocVienInfo && (
+          <div className="info-card">
+            <div className="info-card-header">
+              <strong>📌 Thông tin lớp & học viên</strong>
+            </div>
+            <div className="info-card-body">
+              <p><strong>🏫 Chương trình:</strong> {lopInfo.chuongTrinhName}</p>
+              <p><strong>📘 Khóa học:</strong> {lopInfo.khoaHocName}</p>
+              <p><strong>🏷️ Lớp:</strong> {lopInfo.tenLop}</p>
+              <p><strong>👤 Học viên:</strong> {hocVienInfo.hocVienName} ({hocVienInfo.soCanCuoc})</p>
+            </div>
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit} className="card shadow-sm border-0">
-        <div className="card-body">
-          {/* Radio chọn loại đánh giá */}
-          <div className="mb-3">
-            <label className="form-label">🔖 Loại đánh giá</label>
-            <div className="form-check">
-              <input
-                type="radio"
-                className="form-check-input"
-                id="danhGiaTot"
-                name="loaiDanhGia"
-                value="Tốt"
-                checked={loaiDanhGia === "Tốt"}
-                onChange={(e) => setLoaiDanhGia(e.target.value)}
-              />
-              <label className="form-check-label" htmlFor="danhGiaTot">Tốt</label>
-            </div>
-            <div className="form-check">
-              <input
-                type="radio"
-                className="form-check-input"
-                id="danhGiaKha"
-                name="loaiDanhGia"
-                value="Khá"
-                checked={loaiDanhGia === "Khá"}
-                onChange={(e) => setLoaiDanhGia(e.target.value)}
-              />
-              <label className="form-check-label" htmlFor="danhGiaKha">Khá</label>
-            </div>
-            <div className="form-check">
-              <input
-                type="radio"
-                className="form-check-input"
-                id="danhGiaTB"
-                name="loaiDanhGia"
-                value="Trung Bình"
-                checked={loaiDanhGia === "Trung Bình"}
-                onChange={(e) => setLoaiDanhGia(e.target.value)}
-              />
-              <label className="form-check-label" htmlFor="danhGiaTB">Trung Bình</label>
-            </div>
-            <div className="form-check">
-              <input
-                type="radio"
-                className="form-check-input"
-                id="danhGiaKhac"
-                name="loaiDanhGia"
-                value="Khác"
-                checked={loaiDanhGia === "Khác"}
-                onChange={(e) => setLoaiDanhGia(e.target.value)}
-              />
-              <label className="form-check-label" htmlFor="danhGiaKhac">Khác</label>
+        {message && (
+          <div className="create-alert">⚠️ {message}</div>
+        )}
+
+        <form onSubmit={handleSubmit} className="create-form-card">
+          <div className="create-form-body">
+            {/* Radio chọn loại đánh giá */}
+            <div className="mb-3">
+              <label className="create-form-label">🔖 Loại đánh giá</label>
+              <div className="create-form-check">
+                <input
+                  type="radio"
+                  className="create-form-check-input"
+                  id="danhGiaTot"
+                  name="loaiDanhGia"
+                  value="Tốt"
+                  checked={loaiDanhGia === "Tốt"}
+                  onChange={(e) => setLoaiDanhGia(e.target.value)}
+                />
+                <label className="create-form-check-label" htmlFor="danhGiaTot">⭐ Tốt</label>
+              </div>
+              <div className="create-form-check">
+                <input
+                  type="radio"
+                  className="create-form-check-input"
+                  id="danhGiaKha"
+                  name="loaiDanhGia"
+                  value="Khá"
+                  checked={loaiDanhGia === "Khá"}
+                  onChange={(e) => setLoaiDanhGia(e.target.value)}
+                />
+                <label className="create-form-check-label" htmlFor="danhGiaKha">👍 Khá</label>
+              </div>
+              <div className="create-form-check">
+                <input
+                  type="radio"
+                  className="create-form-check-input"
+                  id="danhGiaTB"
+                  name="loaiDanhGia"
+                  value="Trung Bình"
+                  checked={loaiDanhGia === "Trung Bình"}
+                  onChange={(e) => setLoaiDanhGia(e.target.value)}
+                />
+                <label className="create-form-check-label" htmlFor="danhGiaTB">👌 Trung Bình</label>
+              </div>
+              <div className="create-form-check">
+                <input
+                  type="radio"
+                  className="create-form-check-input"
+                  id="danhGiaKhac"
+                  name="loaiDanhGia"
+                  value="Khác"
+                  checked={loaiDanhGia === "Khác"}
+                  onChange={(e) => setLoaiDanhGia(e.target.value)}
+                />
+                <label className="create-form-check-label" htmlFor="danhGiaKhac">✏️ Khác</label>
+              </div>
+
+              {/* Nếu chọn "Khác" thì hiện ô nhập */}
+              {loaiDanhGia === "Khác" && (
+                <input
+                  type="text"
+                  className="create-form-control mt-2"
+                  placeholder="Nhập loại đánh giá khác"
+                  value={loaiDanhGiaKhac}
+                  onChange={(e) => setLoaiDanhGiaKhac(e.target.value)}
+                  required
+                />
+              )}
             </div>
 
-            {/* Nếu chọn "Khác" thì hiện ô nhập */}
-            {loaiDanhGia === "Khác" && (
-              <input
-                type="text"
-                className="form-control mt-2"
-                placeholder="Nhập loại đánh giá khác"
-                value={loaiDanhGiaKhac}
-                onChange={(e) => setLoaiDanhGiaKhac(e.target.value)}
+            <div className="mb-3">
+              <label className="create-form-label">📝 Nội dung đánh giá</label>
+              <textarea
+                className="create-form-control"
+                rows={4}
+                value={noiDung}
+                onChange={(e) => setNoiDung(e.target.value)}
+                placeholder="Nhận xét chi tiết về học viên..."
                 required
-              />
-            )}
-          </div>
+              ></textarea>
+            </div>
 
-          <div className="mb-3">
-            <label className="form-label">📝 Nội dung đánh giá</label>
-            <textarea
-              className="form-control"
-              rows={4}
-              value={noiDung}
-              onChange={(e) => setNoiDung(e.target.value)}
-              placeholder="Nhận xét chi tiết..."
-              required
-            ></textarea>
+            <div className="create-btn-group">
+              <button
+                type="button"
+                className="create-btn create-btn-secondary"
+                onClick={() => navigate(-1)}
+              >
+                ⬅️ Quay lại
+              </button>
+              <button type="submit" className="create-btn create-btn-primary">
+                ➕ Gửi đánh giá
+              </button>
+            </div>
           </div>
-
-          <div className="d-flex justify-content-between">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => navigate(-1)}
-            >
-              ⬅️ Quay lại
-            </button>
-            <button type="submit" className="btn btn-primary">
-              ➕ Gửi đánh giá
-            </button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
