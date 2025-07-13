@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import gsap from "gsap";
-import "./loginForm.css";
+import "../../pages/css/account/loginForm.css";
 import api from "../../api/api";
 
 const LoginForm = () => {

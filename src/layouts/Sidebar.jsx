@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../pages/css/Sidebar.css";
 import {
   FaChalkboardTeacher,
   FaUsers,
@@ -17,7 +18,6 @@ import {
 } from "react-icons/fa";
 import { useSidebar } from "../contexts/SidebarContext";
 import useRole from "../hooks/useRole";
-import "./Sidebar.css";
 
 const Sidebar = () => {
   const { expanded, setExpanded } = useSidebar();
@@ -109,9 +109,6 @@ const Sidebar = () => {
                 </Link>
                 <Link to="/loai-lop" className="sidebar-link">
                   <FaBook className="me-1" /> Loại lớp
-                </Link>
-                <Link to="/chi-tiet-lop/:lopId" className="sidebar-link">
-                  <FaInfoCircle className="me-1" /> Thông tin lớp
                 </Link>
               </div>
             )}
