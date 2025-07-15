@@ -1,20 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { createLop } from "../../services/lopApi";
 import { getAllKhoaHoc } from "../../services/khoaHocApi";
 import { getAllLoaiLop } from "../../services/loaiLopApi";
-import { useNavigate } from "react-router";
-import { FaPlus, FaSave, FaArrowLeft, FaCalendarAlt, FaClock, FaGraduationCap, FaUsers, FaEdit, FaCalculator, FaCheck, FaTimes } from "react-icons/fa";
-import "../css/Lop/LopCreate.css";
-
-const formatDateTimeLocal = (date) => {
-  const offset = date.getTimezoneOffset();
-  const localDate = new Date(date.getTime() - offset * 60 * 1000);
-  return localDate.toISOString().slice(0, 16);
-};
+import { formatDateTimeLocal, calculateSoGio } from "../../utils/timeUtils";
 
 const LopCreate = () => {
+  const navigate = useNavigate();
+
   const defaultStart = new Date();
   defaultStart.setHours(7, 0, 0, 0);
+
   const defaultEnd = new Date(defaultStart.getTime() + 30 * 24 * 60 * 60 * 1000);
   defaultEnd.setHours(17, 0, 0, 0);
 
@@ -22,21 +18,16 @@ const LopCreate = () => {
     tenLop: "",
     ngayBatDauDuKien: formatDateTimeLocal(defaultStart),
     ngayKetThucDuKien: formatDateTimeLocal(defaultEnd),
-    soGio: 0,
+    soGio: calculateSoGio(defaultStart.toISOString(), defaultEnd.toISOString()),
     soGioQuyDoi: 0,
     coDanhSachHocVien: false,
     khoaHocId: "",
     loaiLopId: "",
   });
 
+  const [userModifiedSoGio, setUserModifiedSoGio] = useState(false);
   const [khoaHocs, setKhoaHocs] = useState([]);
   const [loaiLops, setLoaiLops] = useState([]);
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const containerRef = useRef(null);
-  const formRef = useRef(null);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     getAllKhoaHoc().then(setKhoaHocs);
@@ -44,44 +35,49 @@ const LopCreate = () => {
   }, []);
 
   useEffect(() => {
-    const start = new Date(form.ngayBatDauDuKien);
-    const end = new Date(form.ngayKetThucDuKien);
-    if (end > start) {
-      const hoursPerDay = end.getHours() + end.getMinutes() / 60 - (start.getHours() + start.getMinutes() / 60);
-      const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-      const total = hoursPerDay * days;
-      setForm((prev) => ({ ...prev, soGio: total }));
-    }
-  }, [form.ngayBatDauDuKien, form.ngayKetThucDuKien]);
+  const newSoGio = calculateSoGio(form.ngayBatDauDuKien, form.ngayKetThucDuKien);
+  setForm((prev) => ({
+    ...prev,
+    soGio: userModifiedSoGio ? prev.soGio : newSoGio,
+  }));
+}, [form.ngayBatDauDuKien, form.ngayKetThucDuKien, userModifiedSoGio]);
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!form.tenLop.trim()) newErrors.tenLop = "Tên lớp không được để trống";
-    if (!form.khoaHocId) newErrors.khoaHocId = "Vui lòng chọn khóa học";
-    if (!form.loaiLopId) newErrors.loaiLopId = "Vui lòng chọn loại lớp";
-    const start = new Date(form.ngayBatDauDuKien);
-    const end = new Date(form.ngayKetThucDuKien);
-    if (end <= start) newErrors.ngayKetThucDuKien = "Ngày kết thúc phải sau ngày bắt đầu";
-    if (form.soGioQuyDoi <= 0) newErrors.soGioQuyDoi = "Số giờ quy đổi phải lớn hơn 0";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const parsedValue = type === "checkbox" ? checked : name.includes("Id") ? parseInt(value) || "" : value;
-    setForm({ ...form, [name]: parsedValue });
-    if (errors[name]) setErrors({ ...errors, [name]: "" });
+
+    if (name === "soGio") {
+      setUserModifiedSoGio(true);
+    }
+
+    const parsedValue =
+      type === "checkbox"
+        ? checked
+        : name.includes("Id")
+        ? parseInt(value) || ""
+        : name === "soGio" || name === "soGioQuyDoi"
+        ? parseFloat(value)
+        : value;
+
+    setForm((prev) => ({ ...prev, [name]: parsedValue }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) {
-      const firstErrorField = document.querySelector('.input-error');
-      if (firstErrorField) firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const start = new Date(form.ngayBatDauDuKien);
+    const end = new Date(form.ngayKetThucDuKien);
+
+    if (end <= start) {
+      alert("❌ Ngày kết thúc phải sau ngày bắt đầu!");
       return;
     }
-    setIsSubmitting(true);
+
+    if (!form.khoaHocId || !form.loaiLopId) {
+      alert("Vui lòng chọn đầy đủ khóa học và loại lớp.");
+      return;
+    }
+
     try {
       const response = await createLop(form);
       const id = response.lopId || response.id || response.LopId;
@@ -92,263 +88,123 @@ const LopCreate = () => {
       }
     } catch (err) {
       console.error(err);
-      setErrors({ submit: "Lỗi khi tạo lớp học!" });
-      setIsSubmitting(false);
+      alert("Lỗi khi tạo lớp học!");
     }
   };
 
-  const handleBack = () => navigate("/lop");
-
-      return (
-        <div className="create-class-container" ref={containerRef}>
-          {/* Header */}
-          <div className="create-header">
-            <button className="back-button" onClick={handleBack}>
-              <FaArrowLeft />
-            </button>
-
-            <div className="header-title">
-              <div className="title-icon">
-                <FaPlus />
-              </div>
-              <div className="title-text">
-                <h1>Tạo lớp học mới</h1>
-              </div>
-            </div>
-          </div>
-
-          {/* Form Container */}
-          <div className="form-container" ref={formRef}>
-            <form onSubmit={handleSubmit} className="create-form">
-              {/* Thông tin cơ bản */}
-              <div className="form-section">
-                <div className="section-header">
-                  <FaEdit className="section-icon" />
-                  <h3>Thông tin cơ bản</h3>
-                </div>
-                <div className="input-group">
-                  <label className="input-label">
-                    <span>Tên lớp học</span>
-                    <span className="required">*</span>
-                  </label>
-                  <div className="input-wrapper">
-                    <input
-                      type="text"
-                      className={`form-input ${errors.tenLop ? 'input-error' : ''}`}
-                      name="tenLop"
-                      value={form.tenLop}
-                      onChange={handleChange}
-                      placeholder="Nhập tên lớp học..."
-                    />
-                    <FaGraduationCap className="input-icon" />
-                  </div>
-                  {errors.tenLop && <span className="error-message">{errors.tenLop}</span>}
-                </div>
-              </div>
-
-              {/* Thời gian học */}
-              <div className="form-section">
-                <div className="section-header">
-                  <FaCalendarAlt className="section-icon" />
-                  <h3>Thời gian học</h3>
-                </div>
-
-                <div className="input-row">
-                  <div className="input-group">
-                    <label className="input-label">
-                      <span>Ngày giờ bắt đầu</span>
-                      <span className="required">*</span>
-                    </label>
-                    <div className="input-wrapper">
-                      <input
-                        type="datetime-local"
-                        className={`form-input ${errors.ngayBatDauDuKien ? 'input-error' : ''}`}
-                        name="ngayBatDauDuKien"
-                        value={form.ngayBatDauDuKien}
-                        onChange={handleChange}
-                      />
-                      <FaCalendarAlt className="input-icon" />
-                    </div>
-                    {errors.ngayBatDauDuKien && (
-                      <span className="error-message">{errors.ngayBatDauDuKien}</span>
-                    )}
-                  </div>
-
-                  <div className="input-group">
-                    <label className="input-label">
-                      <span>Ngày giờ kết thúc</span>
-                      <span className="required">*</span>
-                    </label>
-                    <div className="input-wrapper">
-                      <input
-                        type="datetime-local"
-                        className={`form-input ${errors.ngayKetThucDuKien ? 'input-error' : ''}`}
-                        name="ngayKetThucDuKien"
-                        value={form.ngayKetThucDuKien}
-                        onChange={handleChange}
-                      />
-                      <FaCalendarAlt className="input-icon" />
-                    </div>
-                    {errors.ngayKetThucDuKien && (
-                      <span className="error-message">{errors.ngayKetThucDuKien}</span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="input-row">
-                  <div className="input-group">
-                    <label className="input-label">Số giờ (tự động tính)</label>
-                    <div className="input-wrapper">
-                      <input
-                        type="number"
-                        className="form-input readonly"
-                        value={form.soGio.toFixed(2)}
-                        readOnly
-                      />
-                      <FaCalculator className="input-icon" />
-                    </div>
-                  </div>
-
-                  <div className="input-group">
-                    <label className="input-label">
-                      <span>Số giờ quy đổi</span>
-                      <span className="required">*</span>
-                    </label>
-                    <div className="input-wrapper">
-                      <input
-                        type="number"
-                        className={`form-input ${errors.soGioQuyDoi ? 'input-error' : ''}`}
-                        name="soGioQuyDoi"
-                        value={form.soGioQuyDoi}
-                        onChange={handleChange}
-                        placeholder="0"
-                        min="0"
-                        step="0.5"
-                      />
-                      <FaClock className="input-icon" />
-                    </div>
-                    {errors.soGioQuyDoi && <span className="error-message">{errors.soGioQuyDoi}</span>}
-                  </div>
-                </div>
-              </div>
-
-              {/* Khóa học và loại lớp */}
-              <div className="form-section">
-                <div className="section-header">
-                  <FaGraduationCap className="section-icon" />
-                  <h3>Thông tin khóa học</h3>
-                </div>
-                <div className="input-row">
-                  <div className="input-group">
-                    <label className="input-label">
-                      <span>Khóa học</span>
-                      <span className="required">*</span>
-                    </label>
-                    <div className="select-wrapper">
-                      <select
-                        className={`form-select ${errors.khoaHocId ? 'input-error' : ''}`}
-                        name="khoaHocId"
-                        value={form.khoaHocId}
-                        onChange={handleChange}
-                      >
-                        <option value="">-- Chọn khóa học --</option>
-                        {khoaHocs.map((kh) => (
-                          <option key={kh.khoaHocId} value={kh.khoaHocId}>
-                            {kh.tenKhoaHoc}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    {errors.khoaHocId && <span className="error-message">{errors.khoaHocId}</span>}
-                  </div>
-
-                  <div className="input-group">
-                    <label className="input-label">
-                      <span>Loại lớp</span>
-                      <span className="required">*</span>
-                    </label>
-                    <div className="select-wrapper">
-                      <select
-                        className={`form-select ${errors.loaiLopId ? 'input-error' : ''}`}
-                        name="loaiLopId"
-                        value={form.loaiLopId}
-                        onChange={handleChange}
-                      >
-                        <option value="">-- Chọn loại lớp --</option>
-                        {loaiLops.map((ll) => (
-                          <option key={ll.loaiLopId} value={ll.loaiLopId}>
-                            {ll.tenLoaiLop}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    {errors.loaiLopId && <span className="error-message">{errors.loaiLopId}</span>}
-                  </div>
-                </div>
-              </div>
-
-              {/* Tùy chọn */}
-              <div className="form-section">
-                <div className="section-header">
-                  <FaUsers className="section-icon" />
-                  <h3>Tùy chọn</h3>
-                </div>
-
-                <div className="checkbox-group">
-                  <label className="checkbox-label">
-                    <input
-                      type="checkbox"
-                      className="checkbox-input"
-                      name="coDanhSachHocVien"
-                      checked={form.coDanhSachHocVien}
-                      onChange={handleChange}
-                    />
-                    <span className="checkbox-custom">
-                      <FaCheck className="check-icon" />
-                    </span>
-                    <div className="checkbox-text">
-                      <span className="checkbox-title">Thêm học viên ngay sau khi tạo lớp</span>
-                      <span className="checkbox-description">
-                        Chuyển đến trang chọn học viên sau khi tạo lớp thành công
-                      </span>
-                    </div>
-                  </label>
-                </div>
-              </div>
-
-              {/* Hiển thị lỗi tổng */}
-              {errors.submit && (
-                <div className="error-banner">
-                  <FaTimes className="error-icon" />
-                  <span>{errors.submit}</span>
-                </div>
-              )}
-
-              {/* Hành động form */}
-              <div className="form-actions">
-                <button type="button" className="btn-cancel" onClick={handleBack} disabled={isSubmitting}>
-                  <FaTimes />
-                  <span>Hủy</span>
-                </button>
-
-                <button type="submit" className="btn-submit" disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <>
-                      <div className="loading-spinner"></div>
-                      <span>Đang tạo...</span>
-                    </>
-                  ) : (
-                    <>
-                      <FaSave />
-                      <span>Tạo lớp học</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
-          </div>
+  return (
+    <div className="container mt-4">
+      <h3>➕ Tạo lớp mới</h3>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label className="form-label">Tên lớp</label>
+          <input className="form-control" name="tenLop" onChange={handleChange} required />
         </div>
-      );
+
+        <div className="mb-3">
+          <label className="form-label">Ngày, giờ bắt đầu</label>
+          <input
+            type="datetime-local"
+            className="form-control"
+            name="ngayBatDauDuKien"
+            value={form.ngayBatDauDuKien}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Ngày, giờ kết thúc</label>
+          <input
+            type="datetime-local"
+            className="form-control"
+            name="ngayKetThucDuKien"
+            value={form.ngayKetThucDuKien}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Số giờ</label>
+          <input
+            type="number"
+            name="soGio"
+            className="form-control"
+            value={form.soGio}
+            onChange={handleChange}
+            min={0}
+            step={0.5}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Số giờ quy đổi / Điểm đào tạo</label>
+          <input
+            type="number"
+            name="soGioQuyDoi"
+            className="form-control"
+            value={form.soGioQuyDoi}
+            onChange={handleChange}
+            min={0}
+            required
+          />
+        </div>
+
+        <div className="form-check mb-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            name="coDanhSachHocVien"
+            checked={form.coDanhSachHocVien}
+            onChange={handleChange}
+          />
+          <label className="form-check-label">Thêm học viên ngay?</label>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Khóa học</label>
+          <select
+            className="form-select"
+            name="khoaHocId"
+            value={form.khoaHocId}
+            onChange={handleChange}
+            required
+          >
+            <option value="">-- Chọn khóa học --</option>
+            {khoaHocs.map((kh) => (
+              <option key={kh.khoaHocId} value={kh.khoaHocId}>
+                {kh.tenKhoaHoc}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Loại lớp</label>
+          <select
+            className="form-select"
+            name="loaiLopId"
+            value={form.loaiLopId}
+            onChange={handleChange}
+            required
+          >
+            <option value="">-- Chọn loại lớp --</option>
+            {loaiLops.map((ll) => (
+              <option key={ll.loaiLopId} value={ll.loaiLopId}>
+                {ll.tenLoaiLop}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button className="btn btn-primary">Lưu</button>
+      </form>
+    </div>
+  );
 };
 
 export default LopCreate;
+
+
