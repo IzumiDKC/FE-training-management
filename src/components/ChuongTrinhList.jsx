@@ -1,21 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getAllChuongTrinh, deleteChuongTrinh } from "../services/chuongTrinhApi";
 import { useNavigate } from "react-router";
-import { 
-  FaPlus, 
-  FaEye, 
-  FaEdit, 
-  FaTrash, 
-  FaSearch,
-  FaBook,
-  FaGraduationCap,
-  FaUsers,
-  FaChartBar,
-  FaSpinner,
-  FaFileAlt,
-  FaAward
-} from "react-icons/fa";
+import { FaPlus, FaEye, FaEdit, FaTrash, FaSearch, FaBook, FaGraduationCap,FaBookOpen, FaUsers, FaChartBar, FaSpinner, FaFileAlt, FaAward } from "react-icons/fa";
 import "../pages/css/ChuongTrinh/ChuongTrinhList.css";
+import useRole from "../hooks/useRole";
 
 const ChuongTrinhList = () => {
   const [chuongTrinhs, setChuongTrinhs] = useState([]);
@@ -23,6 +11,7 @@ const ChuongTrinhList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const { isAdmin, isGiangVien } = useRole();
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -113,24 +102,21 @@ const ChuongTrinhList = () => {
             <div key={i} className="program-dot"></div>
           ))}
         </div>
-        <div className="program-shapes">
-          <div className="program-shape shape-circle"></div>
-          <div className="program-shape shape-square"></div>
-          <div className="program-shape shape-triangle"></div>
-          <div className="program-shape shape-hexagon"></div>
-        </div>
+        
       </div>
 
       {/* Header */}
       <div className="program-header">
         <div className="header-left">
-          <div className="header-icon">
-            <FaGraduationCap />
-          </div>
-          <div className="header-text">
-            <h1>Danh sách chương trình đào tạo</h1>
-          </div>
+          <div className="header-bar">
+        <div className="header-icon-modern">
+          <FaBookOpen />
         </div>
+        <h2 className="header-title">Danh sách chương trình đào tạo</h2>
+      </div>
+         
+      </div>
+      {(isAdmin || isGiangVien) && (
         <button
           className="btn-add-new"
           onClick={() => navigate("/chuong-trinh/create")}
@@ -138,6 +124,7 @@ const ChuongTrinhList = () => {
           <FaPlus />
           <span>Thêm mới</span>
         </button>
+        )}
       </div>
 
       {/* Search Section */}
@@ -154,7 +141,7 @@ const ChuongTrinhList = () => {
           </div>
         </div>
       </div>
-
+ 
       {/* Programs Grid */}
       <div className="programs-grid">
         {filteredData.map((ct, index) => {
@@ -171,28 +158,12 @@ const ChuongTrinhList = () => {
               onMouseLeave={() => setHoveredCard(null)}
             >
               <div className="card-header">
-                <div 
-                  className="card-icon"
-                  style={{ backgroundColor: colors.primary }}
-                >
+                <div className="card-icon"style={{ backgroundColor: colors.primary }}>
                   <IconComponent />
                 </div>
-                <div className="card-number">
-                  #{String(index + 1).padStart(2, "0")}
-                </div>
-              </div>
-
-              <div className="card-body">
-                <h3 className="card-title">{ct.tenChuongTrinh}</h3>
-                <div 
-                  className="card-id"
-                  style={{ backgroundColor: colors.primary }}
-                >
-                  ID: {ct.chuongTrinhDaoTaoId}
-                </div>
-                <p className="card-description">
-                  {ct.moTa || "Chưa có mô tả cho chương trình này"}
-                </p>
+                    <div className="card-title-block">
+                        <h3 className="card-title">{ct.tenChuongTrinh}</h3>
+                    </div>
               </div>
 
               <div className="card-stats">
@@ -204,48 +175,41 @@ const ChuongTrinhList = () => {
                     <span className="stat-number">{ct.khoaHocs?.length || 0}</span>
                     <span className="stat-label">Khóa học</span>
                   </div>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-icon">
-                    <FaUsers />
-                  </div>
-                  <div className="stat-info">
-                    <span className="stat-number">
-                      {ct.khoaHocs?.reduce((total, kh) => 
-                        total + (kh.lops?.length || 0), 0) || 0}
-                    </span>
-                    <span className="stat-label">Lớp học</span>
-                  </div>
-                </div>
+                </div>      
               </div>
+              <div className="card-actions-wrapper">
+                  <div className="card-actions">
+                    <button
+                      className="action-btn view-btn"
+                      onClick={() => navigate(`/chuong-trinh/${ct.chuongTrinhDaoTaoId}`)}
+                      title="Xem chi tiết"
+                    >
+                      <FaEye />
+                      <span>Xem</span>
+                    </button>
 
-              <div className="card-actions">
-                <button
-                  className="action-btn view-btn"
-                  onClick={() => navigate(`/chuong-trinh/${ct.chuongTrinhDaoTaoId}`)}
-                  title="Xem chi tiết"
-                >
-                  <FaEye />
-                  <span>Xem</span>
-                </button>
-                <button
-                  className="action-btn edit-btn"
-                  onClick={() => navigate(`/chuong-trinh/edit/${ct.chuongTrinhDaoTaoId}`)}
-                  title="Chỉnh sửa"
-                >
-                  <FaEdit />
-                  <span>Sửa</span>
-                </button>
-                <button
-                  className="action-btn delete-btn"
-                  onClick={() => handleDelete(ct.chuongTrinhDaoTaoId)}
-                  title="Xóa"
-                >
-                  <FaTrash />
-                  <span>Xóa</span>
-                </button>
+                    {(isAdmin || isGiangVien) && (
+                    <button
+                      className="action-btn edit-btn"
+                      onClick={() => navigate(`/chuong-trinh/edit/${ct.chuongTrinhDaoTaoId}`)}
+                      title="Chỉnh sửa"
+                    >
+                      <FaEdit />
+                      <span>Sửa</span>
+                    </button>
+                    )}
+                    {isAdmin && (
+                    <button
+                      className="action-btn delete-btn"
+                      onClick={() => handleDelete(ct.chuongTrinhDaoTaoId)}
+                      title="Xóa"
+                    >
+                      <FaTrash />
+                      <span>Xóa</span>
+                    </button>
+                    )}
+                  </div>
               </div>
-
               <div className="card-indicator">
                 {[...Array(4)].map((_, i) => (
                   <div 
@@ -273,7 +237,7 @@ const ChuongTrinhList = () => {
               onClick={() => navigate("/chuong-trinh/create")}
             >
               <FaPlus />
-              <span>Tạo chương trình đầu tiên</span>
+              <span>Tạo chương trình</span>
             </button>
           </div>
         </div>

@@ -340,13 +340,6 @@
   letter-spacing: -0.015em;
 }
 
-.create-card-title span {
-  color: #718096;
-  font-size: 0.9rem;
-  font-weight: 500;
-  line-height: 1.5;
-}
-
 /* Form Styling */
 .create-session-form {
   display: flex;

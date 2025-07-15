@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { getChuongTrinhById, updateChuongTrinh } from "../../services/chuongTrinhApi";
-import { 
-  FaArrowLeft, 
-  FaSave,
-  FaGraduationCap,
-  FaEdit,
-  FaFileAlt,
-  FaLightbulb,
-  FaSpinner,
-  FaTimes,
-  FaCheckCircle
-} from "react-icons/fa";
+import { FaArrowLeft, FaSave,FaGraduationCap,FaFileAlt,FaLightbulb,FaSpinner,FaTimes,FaCheckCircle} from "react-icons/fa";
 import "../css/ChuongTrinh/ChuongTrinhEdit.css";
 
 const ChuongTrinhEdit = () => {
@@ -34,7 +24,6 @@ const ChuongTrinhEdit = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [id]);
 
@@ -117,13 +106,9 @@ const ChuongTrinhEdit = () => {
             <FaArrowLeft />
           </button>
           <div className="header-text">
-            <div className="header-icon">
-              <FaEdit />
-            </div>
             <div className="title-section">
-              <h1>Chỉnh sửa chương trình đào tạo</h1>
-              <p>Cập nhật thông tin chương trình đào tạo</p>
-            </div>
+              <h1>Chỉnh sửa chương trình đào tạo</h1>            
+              </div>
           </div>
         </div>
       </div>
@@ -138,9 +123,7 @@ const ChuongTrinhEdit = () => {
                 <FaGraduationCap />
               </div>
               <div className="card-title">
-                <h3>Thông tin chương trình</h3>
-                <span>Chỉnh sửa thông tin chi tiết của chương trình đào tạo</span>
-              </div>
+                <h3>Thông tin chương trình</h3>              </div>
             </div>
 
             <form onSubmit={handleSubmit} className="edit-form">

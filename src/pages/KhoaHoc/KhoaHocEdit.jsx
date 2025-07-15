@@ -3,7 +3,7 @@ import { getKhoaHocById, updateKhoaHoc } from "../../services/khoaHocApi";
 import { getAllChuongTrinh } from "../../services/chuongTrinhApi";
 import { useParams, useNavigate } from "react-router";
 import { gsap } from "gsap";
-import { FaArrowLeft, FaSave, FaSpinner } from "react-icons/fa";
+import { FaSave, FaSpinner,FaEdit } from "react-icons/fa";
 import "../css/KhoaHoc/KhoaHocEdit.css";
 
 const KhoaHocEdit = () => {
@@ -13,8 +13,6 @@ const KhoaHocEdit = () => {
   const [chuongTrinhOptions, setChuongTrinhOptions] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-
-  // GSAP refs
   const cardRef = useRef(null);
   const formRef = useRef(null);
 
@@ -27,8 +25,6 @@ const KhoaHocEdit = () => {
         setTenKhoaHoc(khoaHoc.tenKhoaHoc);
         setChuongTrinhDaoTaoId(khoaHoc.chuongTrinhDaoTao?.chuongTrinhDaoTaoId || "");
         setChuongTrinhOptions(chuongTrinhs);
-
-        // Entrance animation
         gsap.fromTo(cardRef.current, 
           { y: 50, opacity: 0, scale: 0.9 },
           { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" }
@@ -51,8 +47,6 @@ const KhoaHocEdit = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Submit animation
     gsap.to(formRef.current, {
       scale: 0.98,
       duration: 0.1,
@@ -66,8 +60,6 @@ const KhoaHocEdit = () => {
         tenKhoaHoc,
         chuongTrinhDaoTaoId: parseInt(chuongTrinhDaoTaoId),
       });
-
-      // Success animation
       gsap.to(cardRef.current, {
         scale: 1.05,
         duration: 0.2,
@@ -84,8 +76,6 @@ const KhoaHocEdit = () => {
       });
     } catch (error) {
       console.error(error);
-      
-      // Error shake
       gsap.to(cardRef.current, {
         x: -5,
         duration: 0.1,
@@ -120,20 +110,9 @@ const KhoaHocEdit = () => {
       <div className="edit-container">
         <div className="edit-card" ref={cardRef}>
           <div className="card-header">
-            <button 
-              className="back-btn"
-              onClick={() => {
-                gsap.to(cardRef.current, {
-                  x: -100,
-                  opacity: 0,
-                  duration: 0.3,
-                  onComplete: () => navigate("/khoa-hoc")
-                });
-              }}
-            >
-              <FaArrowLeft />
-            </button>
-            <h2>✏️ Cập nhật Khóa học</h2>
+            <div className="header-left">
+              <h2><FaEdit className="me-2" /> Cập nhật khóa học</h2>  
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} ref={formRef}>

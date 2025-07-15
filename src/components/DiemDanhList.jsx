@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getDiemDanhByChiTietLopId } from "../services/diemDanhApi";
 import { getDsHocVienByLopId } from "../services/dsHocVienApi";
-// eslint-disable-next-line
-import { formatDate, formatTime } from "../utils/formatTime";
+import { formatTime } from "../utils/formatTime";
 
 const DiemDanhList = ({ chiTietLopId, lopId }) => {
   const [diemDanhs, setDiemDanhs] = useState([]);

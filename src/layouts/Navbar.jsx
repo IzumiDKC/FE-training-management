@@ -2,8 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import api from "../api/api"; 
-// eslint-disable-next-line
-import { FaUserCircle, FaCogs, FaGraduationCap } from "react-icons/fa";
+import { FaUserCircle, FaGraduationCap } from "react-icons/fa";
 import "../pages/css/Navbar.css";
 const Navbar = () => {
   const { currentUser } = useAuth();
@@ -20,9 +19,6 @@ const handleLogout = async () => {
     console.error(err);
   }
 };
-
-// eslint-disable-next-line
-  const isAdmin = currentUser?.roles?.includes("Admin");
 
   return (
     <nav className="navbar-custom">

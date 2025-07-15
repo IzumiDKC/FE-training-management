@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createChiTietLop, getAllGiangVien } from "../../services/chiTietLopApi";
 import { useNavigate, useParams } from "react-router-dom";
-import { 
-  FaArrowLeft,
-  FaSave,
-  FaCalendarAlt,
-  FaClock,
-  FaChalkboardTeacher,
-  FaSpinner,
-  FaTimes,
-  FaCheckCircle,
-  FaPlus,
-  FaGraduationCap
-} from "react-icons/fa";
+import { FaArrowLeft, FaSave, FaCalendarAlt, FaClock, FaChalkboardTeacher, FaSpinner, FaTimes, FaCheckCircle, FaPlus, FaGraduationCap } from "react-icons/fa";
 import "../css/ChiTietLop/ChiTietLopCreate.css";
 
 const ChiTietLopCreate = () => {
@@ -50,23 +39,26 @@ const ChiTietLopCreate = () => {
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setIsSubmitting(true);
-      await createChiTietLop(form);
-      setShowSuccess(true);
-      
-      setTimeout(() => {
-        navigate(`/chi-tiet-lop/${lopId}`);
-      }, 1500);
-    } catch (error) {
-      console.error("Error creating session:", error);
-      alert("Có lỗi xảy ra khi tạo buổi học!");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    setIsSubmitting(true);
+    await createChiTietLop({
+      ...form,
+      giangVienId: form.giangVienId || null
+    });
+    setShowSuccess(true);
+
+    setTimeout(() => {
+      navigate(`/chi-tiet-lop/${lopId}`);
+    }, 1500);
+  } catch (error) {
+    console.error("Error creating session:", error);
+    alert("Có lỗi xảy ra khi tạo buổi học!");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   if (loading) {
     return (
@@ -130,9 +122,7 @@ const ChiTietLopCreate = () => {
                   <FaPlus />
                 </div>
                 <div className="create-card-title">
-                  <h3>Thông Tin Buổi Học</h3>
-                  <span>Điền đầy đủ thông tin để tạo buổi học mới</span>
-                </div>
+                  <h3>Thông Tin Buổi Học</h3>                </div>
               </div>
 
               <form onSubmit={handleSubmit} className="create-session-form">
@@ -209,7 +199,6 @@ const ChiTietLopCreate = () => {
                         name="giangVienId"
                         value={form.giangVienId}
                         onChange={handleChange}
-                        required
                         disabled={isSubmitting}
                       >
                         <option value="">-- Chọn giảng viên phụ trách --</option>

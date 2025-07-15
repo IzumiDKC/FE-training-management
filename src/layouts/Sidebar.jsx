@@ -1,22 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../pages/css/Sidebar.css";
-import {
-  FaChalkboardTeacher,
-  FaUsers,
-  FaBook,
-  FaChartBar,
-  FaBars,
-  FaHome,
-  FaChevronDown,
-  FaChevronUp,
-  FaLayerGroup,
-  FaInfoCircle,
-  FaClipboardList,
-  FaEdit,
-  FaTasks,
-  FaStar,
-} from "react-icons/fa";
+import { FaChalkboardTeacher, FaUsers, FaBook, FaChartBar, FaBars, FaHome, FaChevronDown, FaChevronUp, FaLayerGroup, FaClipboardList, FaEdit, FaTasks, FaStar } from "react-icons/fa";
 import { useSidebar } from "../contexts/SidebarContext";
 import useRole from "../hooks/useRole";
 

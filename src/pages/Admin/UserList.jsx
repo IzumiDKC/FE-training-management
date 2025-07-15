@@ -1,30 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getPagedUsers, changeUserRole } from "../../services/adminApi";
-import { 
-  Container, 
-  Card, 
-  Table, 
-  Button, 
-  Badge, 
-  Spinner, 
-  Pagination,
-  Row,
-  Col,
-  Alert
+import { Container,Card,Table,Button,Badge,Spinner, Pagination,Row,Col
 } from "react-bootstrap";
-import { 
-  FaUsers, 
-  FaUser, 
-  FaEnvelope, 
-  FaIdCard, 
-  FaCrown,
-  FaShieldAlt,
-  FaUserTag,
-  FaExchangeAlt,
-  FaChevronLeft,
-  FaChevronRight,
-  FaSpinner
-} from "react-icons/fa";
+import { FaUsers,FaUser,FaEnvelope,FaIdCard,FaCrown,FaShieldAlt,FaUserTag,FaExchangeAlt,FaChevronLeft,FaChevronRight,FaSpinner} from "react-icons/fa";
 import "./UserList.css";
 
 const UserList = () => {
@@ -129,19 +107,6 @@ const UserList = () => {
 
   return (
     <div className="userlist-modern-wrapper">
-      {/* Background Effects */}
-      <div className="userlist-bg-effects">
-        <div className="userlist-particles">
-          {[...Array(10)].map((_, i) => (
-            <div key={i} className={`userlist-particle particle-${i + 1}`}></div>
-          ))}
-        </div>
-        <div className="userlist-shapes">
-          <div className="userlist-shape shape-circle"></div>
-          <div className="userlist-shape shape-square"></div>
-          <div className="userlist-shape shape-hexagon"></div>
-        </div>
-      </div>
 
       <Container className="userlist-container">
         {/* Header Section */}
@@ -160,9 +125,6 @@ const UserList = () => {
                       <h2 className="userlist-title mb-2">
                         👥 Danh sách tài khoản
                       </h2>
-                      <p className="userlist-subtitle mb-0">
-                        Quản lý và phân quyền người dùng trong hệ thống
-                      </p>
                     </div>
                   </Col>
                   <Col xs="auto">

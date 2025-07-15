@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { getLoaiLopById, deleteLoaiLop } from "../../services/loaiLopApi";
 import { useNavigate, useParams } from "react-router-dom";
-import { 
-  FaArrowLeft, 
-  FaEdit,
-  FaTrash,
-  FaGraduationCap,
-  FaInfoCircle,
-  FaCalendarAlt,
-  FaIdBadge,
-  FaBook,
-  FaUsers,
-  FaChartBar
-} from "react-icons/fa";
+import { FaArrowLeft,FaEdit,FaTrash,FaGraduationCap,FaInfoCircle,FaCalendarAlt,FaIdBadge,FaBook} from "react-icons/fa";
 import "../css/LoaiLop/LoaiLopDetail.css";
-
+import useRole from "../../hooks/useRole";
+import { useCallback } from "react";
 const LoaiLopDetail = () => {
   const [loaiLop, setLoaiLop] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { isAdmin, isGiangVien } = useRole();
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getLoaiLopById(id);
@@ -31,11 +22,11 @@ const LoaiLopDetail = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, [fetchData]);
 
   const handleDelete = async () => {
     if (window.confirm("Bạn có chắc muốn xóa loại lớp này?")) {
@@ -133,17 +124,19 @@ const LoaiLopDetail = () => {
           </div>
           <div className="detail-title">
             <h1>Chi tiết loại lớp</h1>
-            <p>Thông tin chi tiết về loại lớp học</p>
           </div>
         </div>
         <div className="header-actions">
-          <button 
+          {(isAdmin || isGiangVien) && (
+            <button 
             className="btn-edit"
-            onClick={() => navigate(`/loai-lop/edit/${id}`)}
+            onClick={() => navigate(`/loai-lop/e/${id}`)}
           >
             <FaEdit />
             <span>Chỉnh sửa</span>
           </button>
+          )}
+          {isAdmin && (
           <button 
             className="btn-delete"
             onClick={handleDelete}
@@ -151,6 +144,7 @@ const LoaiLopDetail = () => {
             <FaTrash />
             <span>Xóa</span>
           </button>
+          )}
         </div>
       </div>
 
@@ -162,8 +156,10 @@ const LoaiLopDetail = () => {
               <FaInfoCircle />
             </div>
             <div className="card-title">
+                <h3>Thông tin loại lớp</h3>             
+            </div>
+            <div className="card-title">
               <h2>{loaiLop.tenLoaiLop}</h2>
-              <span>Thông tin chi tiết loại lớp</span>
             </div>
           </div>
 
@@ -199,33 +195,6 @@ const LoaiLopDetail = () => {
               <div className="info-value">
                 {new Date().toLocaleDateString('vi-VN')}
               </div>
-            </div>
-          </div>
-
-          {/* Statistics */}
-          <div className="stats-section">
-            <div className="stat-card">
-              <div className="stat-icon">
-                <FaUsers />
-              </div>
-              <div className="stat-number">0</div>
-              <div className="stat-label">Số lớp học</div>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-icon">
-                <FaGraduationCap />
-              </div>
-              <div className="stat-number">0</div>
-              <div className="stat-label">Học viên</div>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-icon">
-                <FaChartBar />
-              </div>
-              <div className="stat-number">0</div>
-              <div className="stat-label">Khóa học</div>
             </div>
           </div>
         </div>

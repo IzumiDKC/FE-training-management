@@ -5,7 +5,7 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Header */
+
 .create-header {
   display: flex;
   align-items: center;
@@ -71,7 +71,6 @@
   margin: 0;
 }
 
-/* Form Container */
 .form-container {
   background: white;
   border-radius: 20px;
@@ -88,7 +87,6 @@
   gap: 2rem;
 }
 
-/* Form Sections */
 .form-section {
   padding: 1.5rem;
   background: #f8fafc;
@@ -117,7 +115,6 @@
   margin: 0;
 }
 
-/* Input Groups */
 .input-group {
   margin-bottom: 1.5rem;
 }
@@ -148,6 +145,13 @@
   font-weight: 700;
 }
 
+input.form-input,
+input.number-input,
+input.datetime-input,
+select.form-select {
+  padding-left: 2rem;
+}
+
 .input-wrapper {
   position: relative;
   width: 100%;
@@ -164,6 +168,7 @@
   color: #1e293b;
   box-sizing: border-box;
   height: 44px;
+  margin-right:rem;
 }
 
 .form-input:focus {
@@ -470,12 +475,10 @@
   -moz-appearance: textfield;
 }
 
-/* Single column layout for specific fields */
 .input-group.full-width .input-row {
   grid-template-columns: 1fr;
 }
 
-/* Time period section styling */
 .time-period-section {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -488,7 +491,6 @@
   flex-direction: column;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .create-class-container {
     padding: 1rem;
@@ -559,7 +561,7 @@
   .form-select,
   .datetime-input,
   .number-input {
-    padding: 0.75rem 1rem 0.75rem 2.25rem;
+    padding-left: 2.75rem;
     height: 40px;
   }
 
@@ -572,7 +574,6 @@
   }
 }
 
-/* Performance optimizations */
 .create-class-container,
 .back-button,
 .btn-cancel,
@@ -580,7 +581,6 @@
   will-change: transform;
 }
 
-/* Accessibility improvements */
 .form-input:focus,
 .form-select:focus,
 .checkbox-custom:focus-within {
@@ -588,7 +588,6 @@
   outline-offset: 2px;
 }
 
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   * {
     transition-duration: 0.01ms !important;
@@ -596,7 +595,6 @@
   }
 }
 
-/* Additional utility classes */
 .sr-only {
   position: absolute;
   width: 1px;

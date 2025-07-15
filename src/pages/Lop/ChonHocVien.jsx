@@ -2,19 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { getHocVienSelector, themHocVienVaoLop } from "../../services/lopApi";
 import { useParams, useNavigate } from "react-router";
-import { 
-  FaArrowLeft, 
-  FaUsers,
-  FaUserPlus,
-  FaSpinner,
-  FaCheckCircle,
-  FaUserGraduate,
-  FaIdCard,
-  FaSearch,
-  FaCheck,
-  FaTimes,
-  FaExclamationTriangle
-} from "react-icons/fa";
+import { FaArrowLeft, FaUsers,FaUserPlus,FaSpinner,FaCheckCircle,FaIdCard,FaSearch,FaCheck,FaTimes,FaExclamationTriangle} from "react-icons/fa";
 import "../css/Lop/ChonHocVien.css";
 
 const ChonHocVien = () => {
@@ -189,12 +177,13 @@ const ChonHocVien = () => {
                       <h3 className="student-name">{hv.hoTen}</h3>
                       <div className="student-details">
                         <div className="detail-row">
-                          <FaIdCard className="detail-icon" />
-                          <span>CCCD: {hv.soCanCuoc}</span>
-                        </div>
-                        <div className="detail-row">
-                          <FaUserGraduate className="detail-icon" />
-                          <span>ID: {hv.userId}</span>
+                          <div className="icon-badge cccd-icon">
+                            <FaIdCard />
+                          </div>
+                          <div className="detail-text">
+                            <label>CCCD:</label>
+                            <span>{hv.soCanCuoc}</span>
+                          </div>
                         </div>
                       </div>
                     </div>

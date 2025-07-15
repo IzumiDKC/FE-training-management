@@ -5,7 +5,6 @@ import {
   FaArrowLeft, 
   FaSave,
   FaUsers,
-  FaEdit,
   FaSpinner,
   FaTimes,
   FaCheckCircle,
@@ -143,9 +142,6 @@ const LopEdit = () => {
             <FaArrowLeft />
           </button>
           <div className="header-text">
-            <div className="header-icon">
-              <FaEdit />
-            </div>
             <div className="title-section">
               <h1>Chỉnh sửa lớp học</h1>
             </div>
@@ -164,7 +160,6 @@ const LopEdit = () => {
               </div>
               <div className="card-title">
                 <h3>Thông tin lớp học</h3>
-                <span>Chỉnh sửa thông tin chi tiết của lớp học</span>
               </div>
             </div>
 

@@ -83,7 +83,7 @@ const ProfileInfo = () => {
       <div className="loading-spinner">🔄 Đang tải thông tin...</div>
     </div>
   );
-
+ 
   return (
     <div className="profile-container">
       {/* Medical decorative elements */}
@@ -93,7 +93,6 @@ const ProfileInfo = () => {
       <div className="profile-content">
         <div className="profile-header">
           <h1 className="profile-title">Hồ Sơ Cá Nhân</h1>
-          <p className="profile-subtitle">Quản lý thông tin tài khoản một cách hiện đại và chuyên nghiệp</p>
         </div>
 
         <div className="profile-card">

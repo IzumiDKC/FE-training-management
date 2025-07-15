@@ -1,18 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getLoaiLopById, updateLoaiLop } from "../../services/loaiLopApi";
 import { useParams, useNavigate } from "react-router";
-import { 
-  FaArrowLeft, 
-  FaSave,
-  FaGraduationCap,
-  FaEdit,
-  FaChalkboardTeacher,
-  FaLightbulb,
-  FaExclamationTriangle,
-  FaTimes,
-  FaSpinner
-} from "react-icons/fa";
-//import "../css/LoaiLop/LoaiLopEdit.css";
+import { FaArrowLeft, FaSave,FaGraduationCap,FaChalkboardTeacher,FaLightbulb,FaTimes,FaSpinner} from "react-icons/fa";
+import "../css/LoaiLop/LoaiLopEdit.css";
 
 const LoaiLopEdit = () => {
   const { id } = useParams();
@@ -95,9 +85,6 @@ const LoaiLopEdit = () => {
             <FaArrowLeft />
           </button>
           <div className="header-text">
-            <div className="header-icon">
-              <FaEdit />
-            </div>
             <div className="title-section">
               <h1>Cập nhật loại lớp</h1>
             </div>
@@ -116,7 +103,6 @@ const LoaiLopEdit = () => {
               </div>
               <div className="card-title">
                 <h3>Chỉnh sửa thông tin</h3>
-                <span>Cập nhật thông tin cho loại lớp ID: {id}</span>
               </div>
             </div>
 
@@ -166,22 +152,6 @@ const LoaiLopEdit = () => {
                 </button>
               </div>
             </form>
-          </div>
-
-          {/* Info Card */}
-          <div className="info-card">
-            <div className="info-header">
-              <FaExclamationTriangle />
-              <h4>Thông tin cập nhật</h4>
-            </div>
-            <div className="info-content">
-              <ul>
-                <li>Tên loại lớp sẽ được cập nhật cho toàn bộ hệ thống</li>
-                <li>Thay đổi có thể ảnh hưởng đến việc phân loại khóa học</li>
-                <li>Kiểm tra kỹ thông tin trước khi lưu</li>
-                <li>Bạn có thể hủy thao tác bất cứ lúc nào</li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>

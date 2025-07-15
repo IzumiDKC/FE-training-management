@@ -86,9 +86,7 @@ const DangKyKhoaHocCreate = () => {
         {/* Header */}
         <div className="dangky-page-header">
           <div className="dangky-header-icon">✏️</div>
-          <h1 className="dangky-page-title">Đăng Ký Khóa Học</h1>
-          <p className="dangky-page-subtitle">Chọn khóa học và lớp học phù hợp với bạn</p>
-        </div>
+          <h1 className="dangky-page-title">Đăng Ký Khóa Học</h1>        </div>
 
         {/* Registration Card */}
         <div className="dangky-registration-card">
