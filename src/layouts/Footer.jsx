@@ -1,8 +1,15 @@
 // File: src/layouts/Footer.jsx
 import React from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import "./Footer.css";
 
 const Footer = () => {
+  const { currentUser } = useAuth();
+  const hasEvaluationAccess = currentUser?.roles?.some(role => 
+    role === "Admin" || role === "GiangVien"
+  );
+
   return (
     <footer className="modern-footer">
       <div className="footer-container">
@@ -12,14 +19,11 @@ const Footer = () => {
             <h3 className="footer-brand-title">
               🎓 Hệ thống Quản lý Đào tạo
             </h3>
-            <p className="footer-brand-description">
-              Nền tảng giáo dục số cung cấp quản lý chương trình, khóa học, lớp học và học 
-              viên một cách chuyên nghiệp và hiện đại.
-            </p>
-            <div className="footer-brand-quote">
-              "Giáo dục là chìa khóa mở ra cánh cửa tương lai."
-              <br />- Nelson Mandela
-            </div>
+          <p className="footer-brand-description">
+            <span>❝ Mở cánh cửa tri thức với nền tảng đào tạo thông minh và hiệu quả.</span><br />
+            <span>❝ Nơi hành trình học tập được dẫn dắt bằng công nghệ và sự chuyên nghiệp.</span><br />
+            <span>❝ Kết nối giảng viên, học viên và chương trình học trên một nền tảng hiện đại.</span>
+          </p>
           </div>
 
           {/* Quick Links */}
@@ -29,29 +33,31 @@ const Footer = () => {
             </h4>
             <ul className="footer-links">
               <li className="footer-link">
-                <a href="/chuong-trinh">
+                <Link to="/chuong-trinh">
                   <span className="footer-link-icon">📚</span>
                   Chương trình
-                </a>
+                </Link>
               </li>
               <li className="footer-link">
-                <a href="/khoa-hoc">
+                <Link to="/khoa-hoc">
                   <span className="footer-link-icon">🎯</span>
                   Khóa học
-                </a>
+                </Link>
               </li>
               <li className="footer-link">
-                <a href="/lop">
+                <Link to="/lop">
                   <span className="footer-link-icon">🏫</span>
                   Lớp học
-                </a>
+                </Link>
               </li>
-              <li className="footer-link">
-                <a href="/danh-gia">
-                  <span className="footer-link-icon">⭐</span>
-                  Đánh giá
-                </a>
-              </li>
+              {hasEvaluationAccess && (
+                <li className="footer-link">
+                  <Link to="/danh-gia">
+                    <span className="footer-link-icon">⭐</span>
+                    Đánh giá
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 
@@ -74,10 +80,10 @@ const Footer = () => {
                 </a>
               </li>
               <li className="footer-link">
-                <a href="/support">
+                <Link to="/support">
                   <span className="footer-link-icon">🎧</span>
                   Hỗ trợ kỹ thuật
-                </a>
+                </Link>
               </li>
             </ul>
 

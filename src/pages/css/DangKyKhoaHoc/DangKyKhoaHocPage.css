@@ -7,7 +7,6 @@
   padding: 2rem 1rem;
 }
 
-/* Medical Pattern Background */
 .dangky-list-page::before {
   content: '';
   position: absolute;
@@ -32,7 +31,6 @@
   z-index: 1;
 }
 
-/* Main Content */
 .dangky-list-content {
   position: relative;
   z-index: 10;
@@ -40,7 +38,6 @@
   margin: 0 auto;
 }
 
-/* Header Section */
 .dangky-list-header {
   margin-bottom: 2.5rem;
   animation: fade-in-down 0.8s ease-out;
@@ -84,7 +81,6 @@
   font-weight: 500;
 }
 
-/* Stats Cards */
 .dangky-stats-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -114,11 +110,6 @@
   animation: scan-line 4s ease-in-out infinite;
 }
 
-.dangky-stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-}
-
 .dangky-stat-card:nth-child(1)::before { animation-delay: 0s; }
 .dangky-stat-card:nth-child(2)::before { animation-delay: 1.3s; }
 .dangky-stat-card:nth-child(3)::before { animation-delay: 2.6s; }
@@ -141,7 +132,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Data Table Container */
 .dangky-data-table-container {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -203,7 +193,6 @@
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
-/* Table Styles */
 .dangky-data-table {
   width: 100%;
   border-collapse: collapse;
@@ -234,17 +223,9 @@
   transition: width 0.3s ease;
 }
 
-.dangky-table-head th:hover::after { width: 100%; }
-
 .dangky-table-body tr {
   border-bottom: 1px solid rgba(241, 245, 249, 0.8);
   transition: all 0.3s ease;
-}
-
-.dangky-table-body tr:hover {
-  background: rgba(59, 130, 246, 0.02);
-  transform: translateX(5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .dangky-table-body tr:last-child { border-bottom: none; }
@@ -289,11 +270,6 @@
   transition: all 0.3s ease;
 }
 
-.dangky-course-badge:hover {
-  background: linear-gradient(135deg, #bfdbfe, #93c5fd);
-  transform: scale(1.05);
-}
-
 .dangky-date-cell {
   color: #64748b;
   font-size: 0.875rem;
@@ -304,7 +280,6 @@
   display: inline-block;
 }
 
-/* Empty State */
 .dangky-empty-state {
   text-align: center;
   padding: 4rem 2rem;
@@ -331,7 +306,6 @@
   color: #64748b;
 }
 
-/* Loading State */
 .dangky-loading-container {
   display: flex;
   justify-content: center;
@@ -347,7 +321,6 @@
   animation: spin 1s linear infinite;
 }
 
-/* Animations */
 @keyframes medical-background-drift {
   0%, 100% { background-position: 0 0; }
   25% { background-position: 35px 17px; }
@@ -387,7 +360,6 @@
 
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .dangky-list-page { padding: 1rem; }
   .dangky-header-info { flex-direction: column; text-align: center; gap: 1rem; }

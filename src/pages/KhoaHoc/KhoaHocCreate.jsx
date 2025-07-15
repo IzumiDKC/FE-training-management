@@ -2,16 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createKhoaHoc } from "../../services/khoaHocApi";
 import api from "../../api/api";
 import { useNavigate } from "react-router";
-import { 
-  FaArrowLeft, 
-  FaSave,
-  FaBook,
-  FaGraduationCap,
-  FaSpinner,
-  FaCheckCircle,
-  FaExclamationCircle,
-  FaInfoCircle
-} from "react-icons/fa";
+import { FaArrowLeft, FaSave,FaBook,FaGraduationCap,FaSpinner,FaCheckCircle,FaExclamationCircle,FaInfoCircle} from "react-icons/fa";
 import "../css/KhoaHoc/KhoaHocCreate.css";
 
 const KhoaHocCreate = () => {
@@ -60,8 +51,6 @@ const KhoaHocCreate = () => {
     const { name, value } = e.target;
     const parsedValue = name.includes("Id") ? parseInt(value) || "" : value;
     setForm((prev) => ({ ...prev, [name]: parsedValue }));
-    
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -80,7 +69,6 @@ const KhoaHocCreate = () => {
     setIsSubmitting(true);
     try {
       await createKhoaHoc(form);
-      // Show success notification
       alert("✅ Tạo khóa học thành công!");
       navigate("/khoa-hoc");
     } catch (error) {
@@ -111,13 +99,9 @@ const KhoaHocCreate = () => {
               <FaArrowLeft />
             </button>
             <div className="header-info">
-              <div className="header-icon">
-                <FaBook />
-              </div>
               <div className="header-text">
-                <h1>Tạo khóa học mới</h1>
-                <p>Thiết lập khóa học đào tạo chuyên nghiệp</p>
-              </div>
+                <h1>Tạo khóa học mới</h1>             
+               </div>
             </div>
           </div>
         </div>
@@ -136,7 +120,6 @@ const KhoaHocCreate = () => {
           </div>
 
           {!showPreview ? (
-            // Form Card
             <div className="form-card">
               <div className="form-header">
                 <h2>📝 Thông tin khóa học</h2>
@@ -156,7 +139,7 @@ const KhoaHocCreate = () => {
                   <div className="form-group">
                     <label className="form-label">
                       <FaBook />
-                      Tên khóa học *
+                      Tên khóa học
                     </label>
                     <input
                       type="text"
@@ -177,7 +160,7 @@ const KhoaHocCreate = () => {
                   <div className="form-group">
                     <label className="form-label">
                       <FaGraduationCap />
-                      Chương trình đào tạo *
+                      Chương trình đào tạo
                     </label>
                     <div className="select-container">
                       <select
@@ -193,7 +176,7 @@ const KhoaHocCreate = () => {
                           </option>
                         ))}
                       </select>
-                      <span className="select-arrow">▼</span>
+
                     </div>
                     {errors.chuongTrinhDaoTaoId && (
                       <span className="error-message">
@@ -232,7 +215,6 @@ const KhoaHocCreate = () => {
               </form>
             </div>
           ) : (
-            // Preview Card
             <div className="preview-card">
               <div className="preview-header">
                 <h2>👁️ Xem trước khóa học</h2>

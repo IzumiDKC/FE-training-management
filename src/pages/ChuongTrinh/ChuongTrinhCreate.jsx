@@ -2,15 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { createChuongTrinh } from "../../services/chuongTrinhApi";
 import { gsap } from "gsap";
-import { 
-  FaPlus, 
-  FaSave, 
-  FaArrowLeft, 
-  FaEdit, 
-  FaFileAlt,
-  FaTimes,
-  FaRedo
-} from "react-icons/fa";
+import { FaSave,FaArrowLeft,FaEdit,FaFileAlt,FaTimes,FaRedo} from "react-icons/fa";
 import "../css/ChuongTrinh/ChuongTrinhCreate.css";
 
 const ChuongTrinhCreate = () => {
@@ -21,13 +13,10 @@ const ChuongTrinhCreate = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
-  // GSAP refs
   const containerRef = useRef(null);
   const formRef = useRef(null);
 
   useEffect(() => {
-    // Entrance animation
     gsap.fromTo(containerRef.current,
       { opacity: 0, y: 30 },
       { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
@@ -42,7 +31,6 @@ const ChuongTrinhCreate = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
@@ -71,8 +59,7 @@ const ChuongTrinhCreate = () => {
     setIsLoading(true);
     try {
       await createChuongTrinh(form);
-      
-      // Success animation
+
       gsap.to(formRef.current, {
         scale: 0.95,
         opacity: 0.8,
@@ -115,11 +102,8 @@ const ChuongTrinhCreate = () => {
       <div className="content-wrapper">
         {/* Header */}
         <div className="page-header">
-          <div className="header-icon">
-            <FaPlus />
-          </div>
           <div className="header-title">
-            <h1>Tạo Chương Trình Đào Tạo</h1>
+            <h1>➕ Tạo Chương Trình Đào Tạo</h1>
           </div>
         </div>
 
@@ -161,6 +145,7 @@ const ChuongTrinhCreate = () => {
                   <span>Mô tả chương trình</span>
                 </label>
                 <div className="input-wrapper">
+                  <FaEdit className="input-icon" />
                   <textarea 
                     className={`form-textarea ${errors.moTa ? 'error' : ''}`}
                     name="moTa"
@@ -169,7 +154,7 @@ const ChuongTrinhCreate = () => {
                     onChange={handleChange}
                     rows={4}
                   />
-                  <FaEdit className="input-icon" />
+                  <FaEdit className="input-icon-des" />
                 </div>
                 {errors.moTa && (
                   <span className="error-message">{errors.moTa}</span>

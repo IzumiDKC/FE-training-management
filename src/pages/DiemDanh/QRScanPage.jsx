@@ -1,12 +1,11 @@
 // File: src/pages/QRScanPage.jsx
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { Card, Button, Alert, Spinner, Container } from "react-bootstrap";
+import { Card, Button,Container } from "react-bootstrap";
 import { 
   FaCheckCircle, 
   FaExclamationTriangle, 
   FaHome, 
-  FaClock, 
   FaCalendarAlt, 
   FaSignInAlt,
   FaSignOutAlt,

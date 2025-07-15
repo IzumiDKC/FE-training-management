@@ -26,27 +26,7 @@
     radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.04) 2.5px, transparent 2.5px);
   background-size: 150px 150px, 200px 200px, 120px 120px, 180px 180px;
   background-position: 0 0, 50px 50px, 100px 0, 0 100px;
-  animation: createSubtleFloat 60s ease-in-out infinite;
   z-index: 1;
-}
-
-@keyframes createSubtleFloat {
-  0%, 100% { 
-    transform: translateY(0px);
-    background-position: 0 0, 50px 50px, 100px 0, 0 100px;
-  }
-  25% { 
-    transform: translateY(-5px);
-    background-position: 15px 15px, 65px 35px, 85px 15px, 15px 85px;
-  }
-  50% { 
-    transform: translateY(-3px);
-    background-position: -15px 8px, 35px 65px, 115px -8px, -15px 115px;
-  }
-  75% { 
-    transform: translateY(-6px);
-    background-position: 8px -15px, 58px 42px, 92px 8px, 8px 92px;
-  }
 }
 
 /* Minimal decorative accent elements */
@@ -59,7 +39,6 @@
   height: 120px;
   background: linear-gradient(45deg, rgba(59, 130, 246, 0.12), rgba(16, 185, 129, 0.08));
   border-radius: 50%;
-  animation: createGentleFloat 45s ease-in-out infinite;
   z-index: 1;
 }
 
@@ -72,7 +51,6 @@
   height: 70px;
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.08));
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  animation: createGentlePulse 35s ease-in-out infinite;
   z-index: 1;
 }
 
@@ -84,7 +62,6 @@
   height: 90px;
   background: linear-gradient(45deg, rgba(59, 130, 246, 0.08), rgba(16, 185, 129, 0.06));
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  animation: createGentleFloat2 40s ease-in-out infinite reverse;
   z-index: 1;
 }
 
@@ -96,31 +73,7 @@
   height: 60px;
   background: linear-gradient(180deg, rgba(16, 185, 129, 0.09), rgba(59, 130, 246, 0.06));
   border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
-  animation: createGentleFloat3 50s ease-in-out infinite;
   z-index: 1;
-}
-
-@keyframes createGentleFloat {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-12px) scale(1.05); }
-}
-
-@keyframes createGentlePulse {
-  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
-  50% { transform: scale(1.08) rotate(180deg); opacity: 0.7; }
-}
-
-@keyframes createGentleFloat2 {
-  0%, 100% { transform: translateX(0px) translateY(0px) rotate(0deg); }
-  33% { transform: translateX(-8px) translateY(-5px) rotate(120deg); }
-  66% { transform: translateX(5px) translateY(-10px) rotate(240deg); }
-}
-
-@keyframes createGentleFloat3 {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  25% { transform: translateY(-7px) translateX(3px); }
-  50% { transform: translateY(-4px) translateX(-5px); }
-  75% { transform: translateY(-9px) translateX(2px); }
 }
 
 .danhgia-create-content {
@@ -134,18 +87,6 @@
 .danhgia-create-header {
   text-align: center;
   margin-bottom: 3rem;
-  animation: createSlideInFromTop 1s ease-out;
-}
-
-@keyframes createSlideInFromTop {
-  from {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .danhgia-create-title {
@@ -171,12 +112,6 @@
   height: 3px;
   background: linear-gradient(90deg, #64748b, transparent, #64748b);
   border-radius: 2px;
-  animation: createSubtleGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes createSubtleGlow {
-  from { opacity: 0.6; }
-  to { opacity: 0.8; }
 }
 
 .danhgia-create-card {
@@ -190,20 +125,8 @@
     0 4px 16px rgba(0, 0, 0, 0.04),
     0 1px 3px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
-  animation: createSlideInFromBottom 1s ease-out;
   position: relative;
   overflow: hidden;
-}
-
-@keyframes createSlideInFromBottom {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .danhgia-create-card::before {
@@ -244,7 +167,6 @@
   backdrop-filter: blur(20px);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  animation: infoCardFadeIn 0.8s ease-out;
 }
 
 .info-card::before {
@@ -256,32 +178,6 @@
   height: 4px;
   background: linear-gradient(90deg, #6b7280, #9ca3af, #d1d5db, #6b7280);
   background-size: 300% 100%;
-  animation: gradientShift 3s ease-in-out infinite;
-}
-
-@keyframes infoCardFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.info-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 
-    0 12px 40px rgba(59, 130, 246, 0.15),
-    0 6px 20px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  border-color: rgba(59, 130, 246, 0.25);
 }
 
 .info-card-header {
@@ -302,13 +198,6 @@
   height: 200%;
   background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   transform: rotate(45deg);
-  animation: headerShimmer 3s ease-in-out infinite;
-}
-
-@keyframes headerShimmer {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-  50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-  100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
 }
 
 .info-card-header strong {
@@ -343,14 +232,6 @@
   margin-bottom: 0;
 }
 
-.info-card-body p:hover {
-  color: #1e40af;
-  transform: translateX(8px);
-  background: linear-gradient(90deg, rgba(59, 130, 246, 0.05), transparent);
-  border-radius: 8px;
-  padding-left: 1rem;
-}
-
 .info-card-body p strong {
   color: #1e40af;
   font-weight: 600;
@@ -361,22 +242,10 @@
   position: relative;
 }
 
-.info-card-body p strong::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-  transition: width 0.3s ease;
-}
-
 .info-card-body p:hover strong::after {
   width: 100%;
 }
 
-/* Icon Styling */
 .info-card-header strong::before,
 .info-card-body p strong::before {
   margin-right: 0.5rem;
@@ -388,7 +257,6 @@
   transform: scale(1.2) rotate(5deg);
 }
 
-/* Form styling - Enhanced */
 .create-form-card {
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(148, 163, 184, 0.2);
