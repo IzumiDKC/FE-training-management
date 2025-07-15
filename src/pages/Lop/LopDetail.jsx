@@ -3,48 +3,31 @@ import { getLopById } from "../../services/lopApi";
 import { getDsHocVienByLopId } from "../../services/dsHocVienApi";
 import { useParams, useNavigate } from "react-router";
 import useRole from "../../hooks/useRole";
-import { 
-  FaArrowLeft, 
-  FaEdit,
-  FaEye,
-  FaUsers,
-  FaBook,
-  FaGraduationCap,
-  FaInfoCircle,
-  FaIdBadge,
-  FaSpinner,
-  FaCalendarAlt,
-  FaClock,
-  FaUserGraduate,
-  FaChartBar,
-  FaSchool,
-  FaBookOpen,
-  FaCalendar
-} from "react-icons/fa";
+import {FaArrowLeft, FaEdit,FaEye,FaUsers,FaGraduationCap,FaInfoCircle,FaIdBadge,FaSpinner,FaClock,FaUserGraduate,FaSchool,FaBookOpen,FaCalendar} from "react-icons/fa";
 import "../css/Lop/LopDetail.css";
 const LopDetail = () => {
   const { id } = useParams();
   const [lop, setLop] = useState(null);
   const [dsHocVien, setDsHocVien] = useState([]);
-  const [message, setMessage] = useState(""); 
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { isAdmin, isGiangVien } = useRole();
 
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
         const lopData = await getLopById(id);
         setLop(lopData);
 
         if (id && (isAdmin || isGiangVien)) {
           try {
-            const hocVienData = await getDsHocVienByLopId(id);
-            if (hocVienData.message) {
-              setMessage(hocVienData.message);
+            const data = await getDsHocVienByLopId(id);
+            if (data.message) {
+              setMessage(data.message);
             } else {
-              setDsHocVien(hocVienData);
+              setDsHocVien(data);
             }
           } catch (err) {
             console.error("Không thể lấy danh sách học viên:", err);
@@ -52,7 +35,8 @@ const LopDetail = () => {
           }
         }
       } catch (error) {
-        console.error("Error loading class data:", error);
+        console.error("Lỗi khi lấy thông tin lớp:", error);
+        // Có thể xử lý lỗi ở đây nếu cần
       } finally {
         setLoading(false);
       }
@@ -66,11 +50,11 @@ const LopDetail = () => {
       <div className="lop-detail-page">
         <div className="lop-detail-background">
           <div className="floating-elements">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="floating-element" style={{
-                '--delay': `${i * 0.5}s`,
-                '--duration': `${4 + i * 0.3}s`
-              }}></div>
+            {[...Array(8)].map((_, i) => (          
+            <div key={i} className="floating-element" style={{
+            '--delay': `${i * 0.5}s`,
+            '--duration': `${4 + i * 0.3}s`
+          }}></div>
             ))}
           </div>
         </div>
@@ -124,18 +108,27 @@ const LopDetail = () => {
         {/* Header Navigation */}
         <div className="page-header">
           <div className="header-content">
-          <button 
-            className="back-btn icon-only"
-            onClick={() => navigate("/lop")}
-            title="Quay lại"
-          >
-            <FaArrowLeft />
-          </button>
+              <button 
+                className="btn-back-gradient"
+                onClick={() => navigate("/lop")}
+                title="Quay lại trang danh sách lớp"
+              >
+                <FaArrowLeft className="me-2" />
+              </button>
             <div className="page-title">
               <FaSchool className="title-icon" />
               <div className="title-text">
                 <h1>Chi tiết lớp học</h1>
               </div>
+              <div className="page-title-right">
+                  <button 
+                    className="btn-view-session"
+                    onClick={() => navigate(`/chi-tiet-lop/${lop.lopId}`)}
+                  >
+                    <FaEye />
+                    <span>Xem buổi học</span>
+                  </button>
+                </div>
             </div>
           </div>
         </div>
@@ -145,13 +138,16 @@ const LopDetail = () => {
           {/* Class Info Card */}
           <div className="class-card main-info">
             <div className="card-header">
-              <div className="header-icon">
-                <FaUsers />
-              </div>
+
               <div className="header-text">
-                <h2>{lop.tenLop}</h2>
-                <span className="class-status">Đang hoạt động</span>
+               <div className="class-title-with-icon">
+                  <div className="class-icon">
+                    <FaUserGraduate />
+                  </div>
+                  <h2 className="class-title">{lop.tenLop}</h2>
+                </div>
               </div>
+              <div className="class-status">Đang hoạt động</div>
             </div>
             
             <div className="card-body">
@@ -207,11 +203,9 @@ const LopDetail = () => {
                     <span className="info-label">Thời gian học</span>
                     <div className="date-range">
                       <span className="date-item">
-                        <strong>Bắt đầu:</strong> {new Date(lop.ngayBatDauDuKien).toLocaleDateString('vi-VN')}
-                      </span>
-                      <span className="date-separator">→</span>
-                      <span className="date-item">
-                        <strong>Kết thúc:</strong> {new Date(lop.ngayKetThucDuKien).toLocaleDateString('vi-VN')}
+                       {new Date(lop.ngayBatDauDuKien).toLocaleDateString('vi-VN')}
+                       <span className="date-separator"> → </span>
+                        {new Date(lop.ngayKetThucDuKien).toLocaleDateString('vi-VN')}
                       </span>
                     </div>
                   </div>
@@ -220,6 +214,7 @@ const LopDetail = () => {
             </div>
 
             <div className="card-actions">
+              {(isAdmin || isGiangVien) && (
               <button 
                 className="action-btn primary"
                 onClick={() => navigate(`/lop/edit/${lop.lopId}`)}
@@ -227,36 +222,7 @@ const LopDetail = () => {
                 <FaEdit />
                 <span>Chỉnh sửa lớp</span>
               </button>
-              <button 
-                className="action-btn secondary"
-                onClick={() => navigate(`/chi-tiet-lop/${lop.lopId}`)}
-              >
-                <FaEye />
-                <span>Xem buổi học</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Statistics Cards */}
-          <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-icon students">
-                <FaUserGraduate />
-              </div>
-              <div className="stat-content">
-                <div className="stat-number">{dsHocVien.length}</div>
-                <div className="stat-label">Học viên</div>
-              </div>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-icon hours">
-                <FaClock />
-              </div>
-              <div className="stat-content">
-                <div className="stat-number">{lop.soGio}</div>
-                <div className="stat-label">Giờ học</div>
-              </div>
+              )}
             </div>
           </div>
 
@@ -264,11 +230,11 @@ const LopDetail = () => {
           {(isAdmin || isGiangVien) && (
             <div className="students-card">
               <div className="card-header">
-                <div className="header-icon">
-                  <FaUsers />
-                </div>
                 <div className="header-text">
-                  <h3>Danh sách học viên</h3>
+                  <h3>
+                    <FaUsers style={{ marginRight: "8px", color: "#2563eb" }} />
+                    Danh sách học viên
+                  </h3>
                   <span className="student-count">{dsHocVien.length} Học viên</span>
                 </div>
               </div>
@@ -295,10 +261,7 @@ const LopDetail = () => {
                         <div className="student-info">
                           <div className="student-name">{item.hocVienName}</div>
                           <div className="student-details">
-                            <span className="student-id">
-                              <FaIdBadge />
-                              {item.hocVienId}
-                            </span>
+
                             <span className="student-cccd">
                               CCCD: {item.soCanCuoc}
                             </span>

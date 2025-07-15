@@ -7,7 +7,6 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Background Elements */
 .chuong-trinh-create-page .floating-shapes {
   position: absolute;
   width: 100%;
@@ -56,7 +55,6 @@
   margin: 0 auto;
 }
 
-/* Header Section */
 .chuong-trinh-create-page .page-header {
   background: white;
   border-radius: 20px;
@@ -96,7 +94,6 @@
   font-weight: 500;
 }
 
-/* Form Card */
 .chuong-trinh-create-page .form-card {
   background: white;
   border-radius: 20px;
@@ -116,7 +113,6 @@
   background: linear-gradient(90deg, #4F46E5, #7C3AED, #EC4899);
 }
 
-/* Form Section */
 .chuong-trinh-create-page .form-section {
   padding: 2rem;
 }
@@ -142,7 +138,6 @@
   margin: 0;
 }
 
-/* Input Groups */
 .chuong-trinh-create-page .input-group {
   margin-bottom: 1.5rem;
 }
@@ -207,8 +202,16 @@
   font-size: 0.875rem;
   pointer-events: none;
 }
+.chuong-trinh-create-page .input-icon-des {
+  position: absolute;
+  left: 0.875rem;
+  top: 21%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 0.875rem;
+  pointer-events: none;
+}
 
-/* Error Messages */
 .chuong-trinh-create-page .error-message {
   color: #ef4444;
   font-size: 0.75rem;
@@ -235,7 +238,6 @@
   font-size: 1rem;
 }
 
-/* Form Actions */
 .chuong-trinh-create-page .form-actions {
   display: flex;
   gap: 1rem;
@@ -300,7 +302,6 @@
   transform: none;
 }
 
-/* Loading Spinner */
 .chuong-trinh-create-page .loading-spinner {
   width: 16px;
   height: 16px;
@@ -310,7 +311,6 @@
   animation: chuong-trinh-spin 1s linear infinite;
 }
 
-/* Animations */
 @keyframes chuong-trinh-float {
   0%, 100% { 
     transform: translate(0, 0) rotate(0deg); 
@@ -328,7 +328,6 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .chuong-trinh-create-page {
     padding: 1rem;
@@ -368,14 +367,12 @@
   }
 }
 
-/* High contrast mode support */
 @media (prefers-contrast: high) {
   .chuong-trinh-create-page .floating-shape {
     opacity: 0.1;
   }
 }
 
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   .chuong-trinh-create-page * {
     animation-duration: 0.01ms !important;
@@ -383,7 +380,6 @@
   }
 }
 
-/* Performance optimizations */
 .chuong-trinh-create-page .btn,
 .chuong-trinh-create-page .form-input,
 .chuong-trinh-create-page .form-textarea {

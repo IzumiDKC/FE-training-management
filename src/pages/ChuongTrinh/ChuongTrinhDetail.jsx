@@ -1,21 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router";
 import { getChuongTrinhById } from "../../services/chuongTrinhApi";
-import { 
-  FaArrowLeft, 
-  FaEdit,
-  FaTrash,
-  FaGraduationCap,
-  FaInfoCircle,
-  FaCalendarAlt,
-  FaIdBadge,
-  FaBook,
-  FaUsers,
-  FaChartBar,
-  FaFileAlt,
-  FaClock,
-  FaAward
-} from "react-icons/fa";
+import { FaArrowLeft, FaEdit,FaTrash,FaGraduationCap,FaInfoCircle,FaIdBadge,FaBook,FaFileAlt,FaClock} from "react-icons/fa";
 import { gsap } from "gsap";
 import "../css/ChuongTrinh/ChuongTrinhDetail.css";
 
@@ -35,8 +21,6 @@ const ChuongTrinhDetail = () => {
         setLoading(true);
         const data = await getChuongTrinhById(id);
         setItem(data);
-        
-        // Enhanced animations
         setTimeout(() => {
           gsap.fromTo(
             cardRef.current,
@@ -75,7 +59,6 @@ const ChuongTrinhDetail = () => {
   const handleDelete = async () => {
     if (window.confirm("Bạn có chắc muốn xóa chương trình này?")) {
       try {
-        // Add delete logic here
         navigate("/chuongtrinh");
       } catch (err) {
         alert("Xóa thất bại!");
@@ -172,7 +155,6 @@ const ChuongTrinhDetail = () => {
           </div>
           <div ref={titleRef} className="detail-title">
             <h1>Chi tiết chương trình</h1>
-            <p>Thông tin chi tiết về chương trình đào tạo</p>
           </div>
         </div>
         <div className="header-actions">
@@ -201,7 +183,7 @@ const ChuongTrinhDetail = () => {
               <FaInfoCircle />
             </div>
             <div className="card-title">
-              <h2>{item.tenChuongTrinh}</h2>
+              <h3>Thông tin chương trình</h3>
             </div>
           </div>
 
@@ -244,27 +226,6 @@ const ChuongTrinhDetail = () => {
               </div>
             </div>
 
-            <div className="info-row">
-              <div className="info-label">
-                <FaCalendarAlt />
-                Ngày tạo
-              </div>
-              <div className="info-value">
-                {item.createdAt 
-                  ? new Date(item.createdAt).toLocaleDateString('vi-VN', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })
-                  : new Date().toLocaleDateString('vi-VN', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })
-                }
-              </div>
-            </div>
-
             {item.updatedAt && (
               <div className="info-row">
                 <div className="info-label">
@@ -285,27 +246,15 @@ const ChuongTrinhDetail = () => {
           {/* Statistics */}
           <div className="stats-section">
             <div className="stat-card">
-              <div className="stat-icon">
-                <FaBook />
+              <div className="stat-left">
+                <div className="stat-icon">
+                  <FaBook />
+                </div>
               </div>
-              <div className="stat-number">{item.khoaHocs?.length || 0}</div>
-              <div className="stat-label">Khóa học</div>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-icon">
-                <FaUsers />
+              <div className="stat-right">
+                <span className="stat-number">{item.khoaHocs?.length || 0}</span>
+                <span className="stat-label">Khóa học</span>
               </div>
-              <div className="stat-number">0</div>
-              <div className="stat-label">Học viên</div>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-icon">
-                <FaChartBar />
-              </div>
-              <div className="stat-number">0</div>
-              <div className="stat-label">Đánh giá</div>
             </div>
           </div>
         </div>

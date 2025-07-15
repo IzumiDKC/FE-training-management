@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getChiTietLopById } from "../../services/chiTietLopApi";
-import { 
-  FaArrowLeft,
-  FaEdit,
-  FaCalendarAlt,
-  FaClock,
-  FaChalkboardTeacher,
-  FaGraduationCap,
-  FaSpinner,
-  FaInfoCircle,
-  FaUserCheck,
-  FaEye
-} from "react-icons/fa";
+import { FaArrowLeft, FaEdit, FaCalendarAlt, FaClock, FaChalkboardTeacher, FaGraduationCap, FaSpinner, FaInfoCircle, FaUserCheck, FaEye } from "react-icons/fa";
 import "../css/ChiTietLop/ChiTietLopDetail.css";
 
 const ChiTietLopDetail = () => {
@@ -98,7 +87,6 @@ const ChiTietLopDetail = () => {
               </div>
               <div className="detail-header-text">
                 <h1>Chi Tiết Buổi Học</h1>
-                <p>Thông tin chi tiết về buổi học</p>
               </div>
             </div>
           </div>
@@ -114,12 +102,14 @@ const ChiTietLopDetail = () => {
                   <FaInfoCircle />
                 </div>
                 <div className="detail-card-title">
-                  <h3>Thông Tin Buổi Học</h3>
-                  <div className={`detail-status-badge ${status}`}>
-                    {status === 'completed' && 'Đã hoàn thành'}
-                    {status === 'ongoing' && 'Đang diễn ra'}
-                    {status === 'upcoming' && 'Sắp diễn ra'}
-                  </div>
+                      <div className="detail-card-heading">
+                          <h3 className="title-text">Thông Tin Buổi Học</h3>
+                      </div>
+                      <div className={`detail-status-badge ${status}`}>
+                        {status === 'completed' && 'Đã hoàn thành'}
+                        {status === 'ongoing' && 'Đang diễn ra'}
+                        {status === 'upcoming' && 'Sắp diễn ra'}
+                      </div>
                 </div>
               </div>
 

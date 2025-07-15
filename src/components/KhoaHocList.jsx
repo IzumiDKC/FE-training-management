@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { getAllKhoaHoc, deleteKhoaHoc } from "../services/khoaHocApi";
 import { useNavigate } from "react-router";
 import "../pages/css/KhoaHoc/KhoaHocList.css";
-
+import useRole from "../hooks/useRole";
 const KhoaHocList = () => {
   const [khoaHocs, setKhoaHocs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { isAdmin, isGiangVien } = useRole();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,13 +37,11 @@ const KhoaHocList = () => {
       }
     }
   };
-
+  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("vi-VN");
   };
-
-  // Helper function to check if a course is active based on its classes
   const isCourseActive = (khoaHoc) => {
     if (!khoaHoc.lops || khoaHoc.lops.length === 0) return false;
 
@@ -56,28 +55,18 @@ const KhoaHocList = () => {
     });
   };
 
-  // Helper function to check if a course is ended
   const isCourseEnded = (khoaHoc) => {
     if (!khoaHoc.lops || khoaHoc.lops.length === 0) return false;
-
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    // Get the latest end date from all classes
     const { endDate } = getCourseDateRange(khoaHoc);
-    
     if (!endDate) return false;
-    
-    // Course is ended if the latest end date is in the past
     return endDate < today;
   };
-
-  // Helper function to get course date range from classes
   const getCourseDateRange = (khoaHoc) => {
     if (!khoaHoc.lops || khoaHoc.lops.length === 0) {
       return { startDate: null, endDate: null };
     }
-
     const startDates = khoaHoc.lops
       .filter((lop) => lop.ngayBatDauDuKien)
       .map((lop) => new Date(lop.ngayBatDauDuKien));
@@ -111,12 +100,14 @@ const KhoaHocList = () => {
         <div className="khoahoc-empty-subtext">
           Hãy tạo khóa học đầu tiên để bắt đầu
         </div>
+        {(isAdmin || isGiangVien) && (
         <button
           className="khoahoc-empty-btn"
           onClick={() => navigate("/khoa-hoc/create")}
         >
           Tạo khóa học ngay
         </button>
+        )}
       </div>
     );
   }
@@ -147,8 +138,6 @@ const KhoaHocList = () => {
       <div className="khoahoc-grid">
         {khoaHocs.map((khoaHoc, index) => {
           const { startDate, endDate } = getCourseDateRange(khoaHoc);
-          const isActive = isCourseActive(khoaHoc);
-
           return (
             <div
               key={khoaHoc.khoaHocId}
@@ -187,13 +176,13 @@ const KhoaHocList = () => {
                   <div className="khoahoc-info-item">
                     <span className="info-label">📅 Bắt đầu:</span>
                     <span className="info-value">
-                      {startDate ? formatDate(startDate) : "Chưa có lớp"}
+                      {startDate ? formatDate(startDate) : "Thời điểm bắt đầu chưa có"}
                     </span>
                   </div>
                   <div className="khoahoc-info-item">
                     <span className="info-label">🏁 Kết thúc:</span>
                     <span className="info-value">
-                      {endDate ? formatDate(endDate) : "Chưa có lớp"}
+                      {endDate ? formatDate(endDate) : "Thời điểm kết thúc chưa có"}
                     </span>
                   </div>
                   <div className="khoahoc-info-item">
@@ -212,18 +201,22 @@ const KhoaHocList = () => {
                 >
                   👁️ Xem
                 </button>
+                {(isAdmin || isGiangVien) && (
                 <button
                   className="khoahoc-btn-edit"
                   onClick={() => navigate(`/khoa-hoc/edit/${khoaHoc.khoaHocId}`)}
                 >
                   ✏️ Sửa
                 </button>
+                )}
+                {isAdmin && (
                 <button
                   className="khoahoc-btn-delete"
                   onClick={() => handleDelete(khoaHoc.khoaHocId)}
                 >
                   🗑️ Xóa
                 </button>
+                )}
               </div>
             </div>
           );

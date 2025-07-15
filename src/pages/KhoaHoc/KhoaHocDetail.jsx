@@ -1,34 +1,17 @@
 // File: src/pages/KhoaHoc/KhoaHocDetail.jsx
 import React, { useEffect, useState } from "react";
 import { getKhoaHocById, deleteKhoaHoc } from "../../services/khoaHocApi";
-import { getAllDangKy } from "../../services/dangKyApi";
 import { useParams, useNavigate } from "react-router";
-import { 
-  FaArrowLeft, 
-  FaEdit,
-  FaTrash,
-  FaBook,
-  FaGraduationCap,
-  FaInfoCircle,
-  FaIdCard,
-  FaSpinner,
-  FaExclamationTriangle,
-  FaUsers,
-  FaChartLine,
-  FaCopy,
-  FaShare,
-  FaCalendarAlt
-} from "react-icons/fa";
+import { FaArrowLeft, FaEdit, FaTrash, FaBook, FaGraduationCap, FaInfoCircle, FaIdCard, FaSpinner, FaExclamationTriangle} from "react-icons/fa";
 import "../css/KhoaHoc/KhoaHocDetail.css";
-
+import useRole from "../../hooks/useRole";
 const KhoaHocDetail = () => {
   const { id } = useParams();
   const [khoaHoc, setKhoaHoc] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { isAdmin, isGiangVien } = useRole();
   const navigate = useNavigate();
-  const [soHocVien, setSoHocVien] = useState(0);
-  const [tongDangKy, setTongDangKy] = useState(0);
 
 
 useEffect(() => {
@@ -38,12 +21,6 @@ useEffect(() => {
 
       const data = await getKhoaHocById(id);
       setKhoaHoc(data);
-
-      const allDangKy = await getAllDangKy();
-      const filtered = allDangKy.filter(dk => dk.tenKhoaHoc === data.tenKhoaHoc);
-      setTongDangKy(filtered.length);
-      const uniqueTenHocVien = new Set(filtered.map(dk => dk.tenHocVien));
-      setSoHocVien(uniqueTenHocVien.size);
 
     } catch (error) {
       console.error("Lỗi khi tải dữ liệu:", error);
@@ -68,22 +45,6 @@ useEffect(() => {
     setShowDeleteModal(false);
   };
 
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text);
-    alert("📋 Đã sao chép vào clipboard!");
-  };
-
-  const shareLink = () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      navigator.share({
-        title: `Khóa học: ${khoaHoc.tenKhoaHoc}`,
-        url: url
-      });
-    } else {
-      copyToClipboard(url);
-    }
-  };
 
   if (loading) {
     return (
@@ -131,21 +92,9 @@ useEffect(() => {
               <FaArrowLeft />
             </button>
             <div className="header-info">
-              <div className="header-icon">
-                <FaBook />
-              </div>
               <div className="header-text">
                 <h1>Chi tiết khóa học</h1>
               </div>
-            </div>
-            <div className="header-actions">
-              <button 
-                className="action-btn share"
-                onClick={shareLink}
-                title="Chia sẻ"
-              >
-                <FaShare />
-              </button>
             </div>
           </div>
         </div>
@@ -163,7 +112,6 @@ useEffect(() => {
                   <span className="status-badge active">
                     Đang hoạt động
                   </span>
-                  <span className="course-id">ID: {khoaHoc.khoaHocId}</span>
                 </div>
               </div>
             </div>
@@ -173,7 +121,7 @@ useEffect(() => {
                 <div className="info-item">
                   <div className="info-label">
                     <FaIdCard />
-                    Mã khóa học
+                    Mã khóa học 
                   </div>
                   <div className="info-value">
                     <span className="id-badge">{khoaHoc.khoaHocId}</span>
@@ -204,18 +152,6 @@ useEffect(() => {
 
                 <div className="info-item">
                   <div className="info-label">
-                    <FaCalendarAlt />
-                    Ngày tạo
-                  </div>
-                  <div className="info-value">
-                    <span className="date-display">
-                      {new Date().toLocaleDateString('vi-VN')}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="info-item">
-                  <div className="info-label">
                     <FaInfoCircle />
                     Trạng thái
                   </div>
@@ -227,37 +163,14 @@ useEffect(() => {
             </div>
           </div>
 
-          <div className="stats-section">
-            <div className="stats-card">
-              <div className="stat-icon" style={{ backgroundColor: "#DBEAFE" }}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 640 512" fill="#3B82F6">
-                  <path d="M96 128a64 64 0 1 0 0-128 64 64 0 1 0 0 128zm0 32c-53 0-96 43-96 96v32c0 18 14 32 32 32h128c18 0 32-14 32-32v-32c0-53-43-96-96-96zM320 128a64 64 0 1 0 0-128 64 64 0 1 0 0 128zm-32 32c-11 0-22 2-32 5 20 21 32 49 32 79v32c0 11-2 21-5 31h101c18 0 32-14 32-32v-32c0-53-43-96-96-96zm192-32a64 64 0 1 0 0-128 64 64 0 1 0 0 128zm64 32c-21 0-40 6-56 17 18 22 28 49 28 79v32c0 11-2 21-5 31h85c18 0 32-14 32-32v-32c0-53-43-96-96-96z"/>
-                </svg>
-              </div>
-              <div className="stat-content">
-                <div className="stat-number">{soHocVien}</div>
-                <div className="stat-label">Học viên đăng ký</div>
-              </div>
-            </div>
-
-            <div className="stats-card">
-              <div className="stat-icon" style={{ backgroundColor: "#D1FAE5" }}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 512 512" fill="#10B981">
-                  <path d="M64 32C46.3 32 32 46.3 32 64V416c0 17.7 14.3 32 32 32H320V448H64V64H448v96h32V64c0-17.7-14.3-32-32-32H64zM320 384h32V224H320V384zm64 0h32V160H384V384zm64 0h32V288H448V384z" />
-                </svg>
-              </div>
-              <div className="stat-content">
-                <div className="stat-number">{tongDangKy}</div>
-                <div className="stat-label">Tổng đăng ký</div>
-              </div>
-            </div>
-          </div>
-
+          
+          {(isAdmin || isGiangVien) && (
           <div className="actions-card">
             <div className="actions-header">
               <h3>⚡ Thao tác</h3>
             </div>
             <div className="actions-content">
+              {(isAdmin || isGiangVien) && (
               <button 
                 className="action-button edit"
                 onClick={() => navigate(`/khoa-hoc/edit/${id}`)}
@@ -268,7 +181,8 @@ useEffect(() => {
                   <span className="action-desc">Cập nhật thông tin khóa học</span>
                 </div>
               </button>
-
+              )}
+              {isAdmin && (
               <button 
                 className="action-button delete"
                 onClick={() => setShowDeleteModal(true)}
@@ -279,8 +193,10 @@ useEffect(() => {
                   <span className="action-desc">Xóa khóa học khỏi hệ thống</span>
                 </div>
               </button>
+              )}
             </div>
           </div>
+          )}
         </div>
       </div>
 

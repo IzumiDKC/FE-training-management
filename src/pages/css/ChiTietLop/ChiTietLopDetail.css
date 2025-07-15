@@ -333,23 +333,37 @@
   pointer-events: none;
 }
 
-.detail-card-title h3 {
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: #2d3748;
-  margin: 0;
-  letter-spacing: -0.015em;
+.detail-card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.detail-card-heading {
+  display: flex;
+  align-items: center;
+  margin-left: -32.5rem;
+}
+/* Badge mặc định */
+.detail-status-badge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  white-space: nowrap;
 }
 
-.detail-status-badge {
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+/* Trạng thái cụ thể */
+.detail-status-badge.completed {
+  background-color: #22c55e;
 }
+.detail-status-badge.ongoing {
+  background-color: #f59e0b;
+}
+.detail-status-badge.upcoming {
+  background-color: #3b82f6;
+}
+
 
 .detail-status-badge.completed {
   background: linear-gradient(135deg, #48bb78, #38a169);
@@ -379,12 +393,6 @@
   border-radius: 16px;
   border: 1px solid rgba(102, 126, 234, 0.08);
   transition: all 0.3s ease;
-}
-
-.detail-info-item:hover {
-  background: rgba(237, 242, 247, 0.8);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.12);
 }
 
 .detail-info-item.full-width {

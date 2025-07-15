@@ -1,16 +1,7 @@
 import React, { useState } from "react";
 import { createLoaiLop } from "../../services/loaiLopApi";
 import { useNavigate } from "react-router";
-import { 
-  FaArrowLeft, 
-  FaSave,
-  FaGraduationCap,
-  FaBook,
-  FaChalkboardTeacher,
-  FaLightbulb,
-  FaExclamationTriangle,
-  FaTimes
-} from "react-icons/fa";
+import { FaArrowLeft, FaSave,FaBook,FaChalkboardTeacher,FaLightbulb,FaTimes} from "react-icons/fa";
 import "../css/LoaiLop/LoaiLopCreate.css";
 
 const LoaiLopCreate = () => {
@@ -64,12 +55,8 @@ const LoaiLopCreate = () => {
             <FaArrowLeft />
           </button>
           <div className="header-text">
-            <div className="header-icon">
-              <FaGraduationCap />
-            </div>
             <div className="title-section">
               <h1>Tạo loại lớp mới</h1>
-              <p>Thiết lập loại lớp học cho hệ thống giáo dục</p>
             </div>
           </div>
         </div>
@@ -85,9 +72,7 @@ const LoaiLopCreate = () => {
                 <FaBook />
               </div>
               <div className="card-title">
-                <h3>Thông tin loại lớp</h3>
-                <span>Nhập thông tin cơ bản cho loại lớp học</span>
-              </div>
+                <h3>Thông tin loại lớp</h3>              </div>
             </div>
 
             <form onSubmit={handleSubmit} className="education-form">

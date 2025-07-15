@@ -2,21 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getChiTietLopsByLopId, deleteChiTietLop } from "../services/chiTietLopApi";
 import { useNavigate, useParams } from "react-router";
 import useRole from "../hooks/useRole";
-import { 
-  FaArrowLeft,
-  FaPlus,
-  FaEye,
-  FaEdit,
-  FaTrash,
-  FaUserCheck,
-  FaCalendarAlt,
-  FaClock,
-  FaChalkboardTeacher,
-  FaUsers,
-  FaSpinner,
-  FaExclamationTriangle,
-  FaGraduationCap
-} from "react-icons/fa";
+import { FaArrowLeft,FaPlus,FaEye,FaEdit,FaTrash,FaUserCheck,FaCalendarAlt,FaClock,FaChalkboardTeacher,FaUsers,FaSpinner,FaExclamationTriangle} from "react-icons/fa";
 import "../pages/css/ChiTietLop/ChiTietLopList.css";
 
 const ChiTietLopList = () => {
@@ -51,16 +37,6 @@ const ChiTietLopList = () => {
         alert("Không thể xóa buổi học!");
       }
     }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('vi-VN', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
   };
 
   const formatTime = (timeString) => {
@@ -121,15 +97,8 @@ const ChiTietLopList = () => {
             </button>
             
             <div className="header-info">
-              <div className="header-icon">
-                <FaGraduationCap />
-              </div>
               <div className="header-text">
                 <h1>Danh sách buổi học</h1>
-                <p>
-                  Lớp #{lopId}
-                  {buoiHocList[0]?.tenLop ? ` - ${buoiHocList[0].tenLop}` : ""}
-                </p>
               </div>
             </div>
           </div>

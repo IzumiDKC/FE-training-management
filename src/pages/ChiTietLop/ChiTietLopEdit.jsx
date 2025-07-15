@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getChiTietLopById, updateChiTietLop, getAllGiangVien } from "../../services/chiTietLopApi";
 import { useNavigate, useParams } from "react-router-dom";
-import { 
-  FaArrowLeft,
-  FaSave,
-  FaCalendarAlt,
-  FaClock,
-  FaChalkboardTeacher,
-  FaSpinner,
-  FaTimes,
-  FaCheckCircle,
-  FaEdit
-} from "react-icons/fa";
+import { FaArrowLeft, FaSave, FaCalendarAlt, FaClock, FaChalkboardTeacher, FaSpinner, FaTimes, FaCheckCircle, FaEdit } from "react-icons/fa";
 import "../css/ChiTietLop/ChiTietLopEdit.css";
 
 const ChiTietLopEdit = () => {
@@ -100,7 +90,6 @@ const ChiTietLopEdit = () => {
               </div>
               <div className="edit-header-text">
                 <h1>Cập Nhật Buổi Học</h1>
-                <p>Chỉnh sửa thông tin buổi học</p>
               </div>
             </div>
           </div>
@@ -116,7 +105,6 @@ const ChiTietLopEdit = () => {
                 </div>
                 <div className="edit-card-title">
                   <h3>Thông Tin Buổi Học</h3>
-                  <span>Cập nhật thông tin chi tiết của buổi học</span>
                 </div>
               </div>
 
@@ -195,7 +183,7 @@ const ChiTietLopEdit = () => {
                         value={form.giangVienId || ""}
                         onChange={handleChange}
                         disabled={isSubmitting}
-                      >
+                      > 
                         <option value="">-- Không chọn giảng viên --</option>
                         {giangViens.map(gv => (
                           <option key={gv.giangVienId} value={gv.giangVienId}>
