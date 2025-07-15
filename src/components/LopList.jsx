@@ -23,7 +23,7 @@ const LopList = () => {
         await deleteLop(id);
         setLops(await getAllLop());
       } catch (error) {
-        alert("❌ Xóa thất bại.");
+        alert("Xóa thất bại.");
         console.error(error);
       }
     }
@@ -49,8 +49,8 @@ const LopList = () => {
           <p className="lop-subtitle">
           </p>
           {(isAdmin || isGiangVien) && (
-            <button 
-              className="lop-add-btn" 
+            <button
+              className="lop-add-btn"
               onClick={() => navigate("/lop/create")}
             >
               ➕ Tạo Lớp Học Mới
@@ -76,30 +76,25 @@ const LopList = () => {
                   </div>
                   <h3 className="lop-card-title">{lop.tenLop}</h3>
                 </div>
-                
+
                 <div className="lop-card-body">
                   <div className="lop-info-grid">
                     <div className="lop-info-item lop-date-range">
                       <div className="lop-info-label">📅 Thời Gian Học</div>
                       <div className="lop-info-value">
-                        {new Date(lop.ngayBatDauDuKien).toLocaleDateString()} 
-                        <br />
-                        đến {new Date(lop.ngayKetThucDuKien).toLocaleDateString()}
+                        {new Date(lop.ngayBatDauDuKien).toLocaleDateString()} → {new Date(lop.ngayKetThucDuKien).toLocaleDateString()}
                       </div>
                     </div>
-                    
                     <div className="lop-info-item">
                       <div className="lop-info-label">🎯 Khóa Học</div>
                       <div className="lop-info-value">{lop.khoaHocName}</div>
                     </div>
-                    
                     <div className="lop-info-item">
                       <div className="lop-info-label">📂 Loại Lớp</div>
                       <div className="lop-info-value">{lop.loaiLopName}</div>
                     </div>
                   </div>
                 </div>
-
                 <div className="lop-actions">
                   <button
                     className="lop-btn lop-btn-view"
