@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import KhoaHocList from "../../components/KhoaHocList";
-import "../css/KhoaHoc/KhoaHocPage.css";
+import "./KhoaHocPage.css";
 import useRole from "../../hooks/useRole";
 
 const KhoaHocPage = () => {

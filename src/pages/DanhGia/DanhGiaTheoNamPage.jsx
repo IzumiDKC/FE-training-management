@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAllDanhGiaTheoNam } from "../../services/danhGiaTheoNamApi";
-import "../css/DanhGia/DanhGiaTheoNamPage.css";
+import "./DanhGiaTheoNamPage.css";
 
 const DanhGiaTheoNamPage = () => {
   const [danhGias, setDanhGias] = useState([]);

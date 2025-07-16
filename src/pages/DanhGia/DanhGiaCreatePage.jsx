@@ -4,7 +4,7 @@ import { getDsHocVienByLopId } from "../../services/dsHocVienApi";
 import { getLopById } from "../../services/lopApi";
 import { createDanhGia } from "../../services/danhGiaApi";
 import useRole from "../../hooks/useRole";
-import "../css/DanhGia/DanhGiaCreatePage.css";
+import "./DanhGiaCreatePage.css";
 
 const DanhGiaCreatePage = () => {
   const { lopId, hocVienId } = useParams();
@@ -12,8 +12,8 @@ const DanhGiaCreatePage = () => {
   const [hocVienInfo, setHocVienInfo] = useState(null);
   const [lopInfo, setLopInfo] = useState(null);
 
-  const [loaiDanhGia, setLoaiDanhGia] = useState(""); // giá trị thực sẽ gửi
-  const [loaiDanhGiaKhac, setLoaiDanhGiaKhac] = useState(""); // chỉ khi chọn "Khác"
+  const [loaiDanhGia, setLoaiDanhGia] = useState(""); 
+  const [loaiDanhGiaKhac, setLoaiDanhGiaKhac] = useState("");
   const [noiDung, setNoiDung] = useState("");
   const [message, setMessage] = useState("");
   const { isAdmin, isGiangVien } = useRole();

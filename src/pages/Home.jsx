@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../layouts/Footer";
-import "./css/Home.css";
+import "./Home.css";
 import {
   FaChalkboardTeacher,
   FaUserGraduate,

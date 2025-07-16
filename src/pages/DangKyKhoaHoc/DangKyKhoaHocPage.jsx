@@ -1,7 +1,6 @@
-// src/pages/DangKyKhoaHoc/DangKyKhoaHocPage.jsx
 import React, { useEffect, useState } from "react";
 import { getAllDangKy } from "../../services/dangKyApi";
-import "../css/DangKyKhoaHoc/DangKyKhoaHocPage.css";
+import "./DangKyKhoaHocPage.css";
 
 const DangKyKhoaHocPage = () => {
   const [data, setData] = useState([]);

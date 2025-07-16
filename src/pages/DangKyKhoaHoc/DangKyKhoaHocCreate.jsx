@@ -1,8 +1,7 @@
-// src/pages/DangKyKhoaHoc/DangKyKhoaHocCreate.jsx
 import React, { useEffect, useState } from "react";
 import { getAllKhoaHoc, getLopByKhoaHoc, createDangKy } from "../../services/dangKyApi";
 import { useNavigate } from "react-router";
-import "../css/DangKyKhoaHoc/DangKyKhoaHocCreate.css";
+import "./DangKyKhoaHocCreate.css";
 
 const DangKyKhoaHocCreate = () => {
   const [khoaHocs, setKhoaHocs] = useState([]);
@@ -19,7 +18,7 @@ const DangKyKhoaHocCreate = () => {
   useEffect(() => {
     if (selectedKhoaHoc) {
       getLopByKhoaHoc(selectedKhoaHoc).then(setLops);
-      setSelectedLop(""); // Reset lớp khi đổi khóa học
+      setSelectedLop("");
     } else {
       setLops([]);
     }
@@ -86,7 +85,8 @@ const DangKyKhoaHocCreate = () => {
         {/* Header */}
         <div className="dangky-page-header">
           <div className="dangky-header-icon">✏️</div>
-          <h1 className="dangky-page-title">Đăng Ký Khóa Học</h1>        </div>
+          <h1 className="dangky-page-title">Đăng Ký Khóa Học</h1>        
+          </div>
 
         {/* Registration Card */}
         <div className="dangky-registration-card">
@@ -124,7 +124,6 @@ const DangKyKhoaHocCreate = () => {
                       </option>
                     ))}
                   </select>
-                  <div className="dangky-select-arrow">▼</div>
                 </div>
               </div>
 
@@ -155,7 +154,6 @@ const DangKyKhoaHocCreate = () => {
                       </option>
                     ))}
                   </select>
-                  <div className="dangky-select-arrow">▼</div>
                 </div>
               </div>
 

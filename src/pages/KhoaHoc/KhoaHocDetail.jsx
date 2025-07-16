@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getKhoaHocById, deleteKhoaHoc } from "../../services/khoaHocApi";
 import { useParams, useNavigate } from "react-router";
 import { FaArrowLeft, FaEdit, FaTrash, FaBook, FaGraduationCap, FaInfoCircle, FaIdCard, FaSpinner, FaExclamationTriangle} from "react-icons/fa";
-import "../css/KhoaHoc/KhoaHocDetail.css";
+import "./KhoaHocDetail.css";
 import useRole from "../../hooks/useRole";
 const KhoaHocDetail = () => {
   const { id } = useParams();
@@ -178,7 +178,6 @@ useEffect(() => {
                 <FaEdit />
                 <div className="action-text">
                   <span className="action-title">Chỉnh sửa</span>
-                  <span className="action-desc">Cập nhật thông tin khóa học</span>
                 </div>
               </button>
               )}
@@ -190,7 +189,6 @@ useEffect(() => {
                 <FaTrash />
                 <div className="action-text">
                   <span className="action-title">Xóa khóa học</span>
-                  <span className="action-desc">Xóa khóa học khỏi hệ thống</span>
                 </div>
               </button>
               )}

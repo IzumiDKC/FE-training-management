@@ -4,7 +4,7 @@ import { getAllChuongTrinh } from "../../services/chuongTrinhApi";
 import { useParams, useNavigate } from "react-router";
 import { gsap } from "gsap";
 import { FaSave, FaSpinner,FaEdit } from "react-icons/fa";
-import "../css/KhoaHoc/KhoaHocEdit.css";
+import "./KhoaHocEdit.css";
 
 const KhoaHocEdit = () => {
   const { id } = useParams();

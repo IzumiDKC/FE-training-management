@@ -4,17 +4,8 @@ import { useNavigate, useParams } from "react-router";
 import DiemDanhList from "../../components/DiemDanhList";  
 import { Button, Spinner, Card, Row, Col, Badge, Alert } from "react-bootstrap"; 
 import { resetAllCheckIn, resetAllCheckOut } from "../../services/diemDanhApi";
-import { 
-  FaArrowLeft,
-  FaQrcode,
-  FaSignInAlt,
-  FaSignOutAlt,
-  FaRedo,
-  FaClock,
-  FaUserCheck,
-  FaShieldAlt
-} from "react-icons/fa";
-import "../css/DiemDanh/DiemDanhPage.css";
+import { FaArrowLeft,FaQrcode,FaSignInAlt,FaSignOutAlt,FaRedo,FaClock,FaUserCheck,FaShieldAlt} from "react-icons/fa";
+import "./DiemDanhPage.css";
 
 const DiemDanhPage = () => {
   const { chiTietLopId, lopId } = useParams(); 
@@ -126,7 +117,6 @@ const DiemDanhPage = () => {
                     <h2 className="mb-1 diemdanh-title">
                       Điểm Danh Lớp Học
                     </h2>
-                    <p className="mb-0 text-muted">Quản lý điểm danh học viên</p>
                   </div>
                 </div>
               </Col>

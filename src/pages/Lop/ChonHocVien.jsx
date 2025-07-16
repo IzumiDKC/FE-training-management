@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getHocVienSelector, themHocVienVaoLop } from "../../services/lopApi";
 import { useParams, useNavigate } from "react-router";
 import { FaArrowLeft, FaUsers,FaUserPlus,FaSpinner,FaCheckCircle,FaIdCard,FaSearch,FaCheck,FaTimes,FaExclamationTriangle} from "react-icons/fa";
-import "../css/Lop/ChonHocVien.css";
+import "./ChonHocVien.css";
 
 const ChonHocVien = () => {
   const { id: lopId } = useParams();
@@ -117,9 +117,6 @@ const ChonHocVien = () => {
               <span>Quay lại</span>
             </button>
             <div className="header-info">
-              <div className="header-icon">
-                <FaUserPlus />
-              </div>
               <div className="header-text">
                 <h1>Chọn học viên cho lớp #{lopId}</h1>
               </div>

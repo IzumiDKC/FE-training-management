@@ -1,0 +1,278 @@
+.qrscan-page-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.qrscan-container {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  width: 100%;
+}
+
+.qrscan-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.qrscan-card {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px);
+  border-radius: 25px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.qrscan-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+  border-radius: 25px 25px 0 0;
+}
+
+.qrscan-success-icon,
+.qrscan-error-icon,
+.qrscan-loading-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 3rem;
+  color: white;
+}
+
+.qrscan-success-icon {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  box-shadow: 0 15px 40px rgba(72, 187, 120, 0.4);
+}
+
+.qrscan-error-icon {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  box-shadow: 0 15px 40px rgba(245, 101, 101, 0.4);
+}
+
+.qrscan-loading-icon {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+}
+
+.qrscan-success-title,
+.qrscan-error-title,
+.qrscan-loading-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2d3748;
+}
+
+.qrscan-success-title,
+.qrscan-loading-title {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.qrscan-loading-title {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.qrscan-error-title {
+  color: #e53e3e;
+}
+
+.qrscan-success-message,
+.qrscan-error-message,
+.qrscan-loading-message {
+  color: #718096;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.qrscan-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  margin-top: 1rem;
+}
+
+.qrscan-progress-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.qrscan-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.qrscan-info-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: rgba(248, 250, 252, 0.8);
+  border-radius: 15px;
+  border: 1px solid rgba(226, 232, 240, 0.5);
+  transition: all 0.3s ease;
+}
+
+.qrscan-info-item:hover {
+  background: rgba(241, 245, 249, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.qrscan-info-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.qrscan-info-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.qrscan-info-icon.checkin {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+}
+
+.qrscan-info-icon.checkout {
+  background: linear-gradient(135deg, #ed8936, #dd6b20);
+}
+
+.qrscan-info-icon.date {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.qrscan-info-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.qrscan-info-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d3748;
+  line-height: 1.3;
+}
+
+.qrscan-btn {
+  border-radius: 15px !important;
+  padding: 1rem 2.5rem !important;
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.qrscan-btn:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2) !important;
+}
+
+.btn-success.qrscan-btn {
+  background: linear-gradient(135deg, #48bb78, #38a169) !important;
+}
+
+.btn-danger.qrscan-btn {
+  background: linear-gradient(135deg, #f56565, #e53e3e) !important;
+}
+
+@media (max-width: 768px) {
+  .qrscan-page-wrapper {
+    padding: 1rem 0;
+  }
+
+  .qrscan-container {
+    max-width: 90%;
+  }
+
+  .qrscan-success-icon,
+  .qrscan-error-icon,
+  .qrscan-loading-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 2.5rem;
+  }
+
+  .qrscan-success-title,
+  .qrscan-error-title,
+  .qrscan-loading-title {
+    font-size: 1.5rem;
+  }
+
+  .qrscan-info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .qrscan-btn {
+    padding: 0.875rem 2rem !important;
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .qrscan-container {
+    max-width: 95%;
+  }
+
+  .qrscan-info-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .qrscan-btn {
+    width: 100% !important;
+    padding: 1rem !important;
+  }
+
+  .qrscan-success-icon,
+  .qrscan-error-icon,
+  .qrscan-loading-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+  }
+
+  .qrscan-success-title,
+  .qrscan-error-title,
+  .qrscan-loading-title {
+    font-size: 1.375rem;
+  }
+}

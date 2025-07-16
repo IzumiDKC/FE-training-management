@@ -1,6 +1,6 @@
 import React from "react";
 import LoaiLopList from "../../components/LoaiLopList";
-import "../css/LoaiLop/LoaiLopPage.css";
+import "./LoaiLopPage.css";
 
 const LoaiLopPage = () => {
   return (

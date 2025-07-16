@@ -4,6 +4,8 @@ import { createLop } from "../../services/lopApi";
 import { getAllKhoaHoc } from "../../services/khoaHocApi";
 import { getAllLoaiLop } from "../../services/loaiLopApi";
 import { formatDateTimeLocal, calculateSoGio } from "../../utils/timeUtils";
+import "./LopCreate.css";
+import { FaChalkboardTeacher } from 'react-icons/fa';
 
 const LopCreate = () => {
   const navigate = useNavigate();
@@ -35,13 +37,12 @@ const LopCreate = () => {
   }, []);
 
   useEffect(() => {
-  const newSoGio = calculateSoGio(form.ngayBatDauDuKien, form.ngayKetThucDuKien);
-  setForm((prev) => ({
-    ...prev,
-    soGio: userModifiedSoGio ? prev.soGio : newSoGio,
-  }));
-}, [form.ngayBatDauDuKien, form.ngayKetThucDuKien, userModifiedSoGio]);
-
+    const newSoGio = calculateSoGio(form.ngayBatDauDuKien, form.ngayKetThucDuKien);
+    setForm((prev) => ({
+      ...prev,
+      soGio: userModifiedSoGio ? prev.soGio : newSoGio,
+    }));
+  }, [form.ngayBatDauDuKien, form.ngayKetThucDuKien, userModifiedSoGio]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -93,114 +94,270 @@ const LopCreate = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h3>➕ Tạo lớp mới</h3>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Tên lớp</label>
-          <input className="form-control" name="tenLop" onChange={handleChange} required />
+    <div className="lop-create-wrapper">
+      {/* Modern Background */}
+      <div className="modern-background">
+        <div className="gradient-waves">
+          <div className="wave wave-1"></div>
+          <div className="wave wave-2"></div>
+          <div className="wave wave-3"></div>
         </div>
-
-        <div className="mb-3">
-          <label className="form-label">Ngày, giờ bắt đầu</label>
-          <input
-            type="datetime-local"
-            className="form-control"
-            name="ngayBatDauDuKien"
-            value={form.ngayBatDauDuKien}
-            onChange={handleChange}
-            required
-          />
+        <div className="floating-particles">
+          {[...Array(15)].map((_, i) => (
+            <div key={i} className={`particle particle-${i % 3 + 1}`}></div>
+          ))}
         </div>
+      </div>
 
-        <div className="mb-3">
-          <label className="form-label">Ngày, giờ kết thúc</label>
-          <input
-            type="datetime-local"
-            className="form-control"
-            name="ngayKetThucDuKien"
-            value={form.ngayKetThucDuKien}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Số giờ</label>
-          <input
-            type="number"
-            name="soGio"
-            className="form-control"
-            value={form.soGio}
-            onChange={handleChange}
-            min={0}
-            step={0.5}
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Số giờ quy đổi / Điểm đào tạo</label>
-          <input
-            type="number"
-            name="soGioQuyDoi"
-            className="form-control"
-            value={form.soGioQuyDoi}
-            onChange={handleChange}
-            min={0}
-            required
-          />
-        </div>
-
-        <div className="form-check mb-3">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="coDanhSachHocVien"
-            checked={form.coDanhSachHocVien}
-            onChange={handleChange}
-          />
-          <label className="form-check-label">Thêm học viên ngay?</label>
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Khóa học</label>
-          <select
-            className="form-select"
-            name="khoaHocId"
-            value={form.khoaHocId}
-            onChange={handleChange}
-            required
+      {/* Header Section */}
+      <div className="page-header">
+        <div className="container header-container">
+          <button
+            className="back-btn"
+            onClick={() => navigate("/lop")}
+            type="button"
           >
-            <option value="">-- Chọn khóa học --</option>
-            {khoaHocs.map((kh) => (
-              <option key={kh.khoaHocId} value={kh.khoaHocId}>
-                {kh.tenKhoaHoc}
-              </option>
-            ))}
-          </select>
+            <span className="back-icon">←</span>
+            <span className="back-text">Quay lại</span>
+          </button>
+          <div className="header-title">
+            <div className="title-icon">
+              <span className="icon">🎓</span>
+            </div>
+            <div className="title-content">
+              <h1>Tạo lớp mới</h1>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div className="mb-3">
-          <label className="form-label">Loại lớp</label>
-          <select
-            className="form-select"
-            name="loaiLopId"
-            value={form.loaiLopId}
-            onChange={handleChange}
-            required
-          >
-            <option value="">-- Chọn loại lớp --</option>
-            {loaiLops.map((ll) => (
-              <option key={ll.loaiLopId} value={ll.loaiLopId}>
-                {ll.tenLoaiLop}
-              </option>
-            ))}
-          </select>
+      {/* Main Content */}
+      <div className="main-content">
+        <div className="container content-container">
+          <div className="form-card">
+            <div className="card-header-h">
+              <div className="header-info">
+                <h2>
+                  <FaChalkboardTeacher style={{ marginRight: '0.5rem', color: 'white', fontSize: '2rem'}} />
+                  Thông tin lớp học
+                </h2>
+              </div>
+            </div>
+
+            <div className="card-body">
+              <form onSubmit={handleSubmit} className="create-form">
+                {/* Basic Information Section */}
+                <div className="form-section">
+                  <h3 className="section-title">
+                    <span className="section-icon">ℹ️</span>
+                    Thông tin cơ bản
+                  </h3>
+
+                  <div className="form-group">
+                    <label className="input-label">
+                      <span className="label-icon">📝</span>
+                      <span className="label-text">Tên lớp <span className="required">*</span></span>
+                    </label>
+                    <div className="input-container">
+                      <input
+                        className="form-input"
+                        name="tenLop"
+                        onChange={handleChange}
+                        required
+                        placeholder="Nhập tên lớp học..."
+                      />
+                      <div className="input-focus-border"></div>
+                    </div>
+                  </div>
+
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label className="input-label">
+                        <span className="label-icon">📅</span>
+                        <span className="label-text">Khóa học <span className="required">*</span></span>
+                      </label>
+                      <div className="select-container">
+                        <select
+                          className="form-select"
+                          name="khoaHocId"
+                          value={form.khoaHocId}
+                          onChange={handleChange}
+                          required
+                        >
+                          <option value="">-- Chọn khóa học --</option>
+                          {khoaHocs.map((kh) => (
+                            <option key={kh.khoaHocId} value={kh.khoaHocId}>
+                              {kh.tenKhoaHoc}
+                            </option>
+                          ))}
+                        </select>
+                        <div className="select-arrow">▼</div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="input-label">
+                        <span className="label-icon">🏷️</span>
+                        <span className="label-text">Loại lớp <span className="required">*</span></span>
+                      </label>
+                      <div className="select-container">
+                        <select
+                          className="form-select"
+                          name="loaiLopId"
+                          value={form.loaiLopId}
+                          onChange={handleChange}
+                          required
+                        >
+                          <option value="">-- Chọn loại lớp --</option>
+                          {loaiLops.map((ll) => (
+                            <option key={ll.loaiLopId} value={ll.loaiLopId}>
+                              {ll.tenLoaiLop}
+                            </option>
+                          ))}
+                        </select>
+                        <div className="select-arrow">▼</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Time Information Section */}
+                <div className="form-section">
+                  <h3 className="section-title">
+                    <span className="section-icon">⏰</span>
+                    Thời gian học
+                  </h3>
+
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label className="input-label">
+                        <span className="label-icon">📅</span>
+                        <span className="label-text">Ngày, giờ bắt đầu <span className="required">*</span></span>
+                      </label>
+                      <div className="input-container">
+                        <input
+                          type="datetime-local"
+                          className="form-input"
+                          name="ngayBatDauDuKien"
+                          value={form.ngayBatDauDuKien}
+                          onChange={handleChange}
+                          required
+                        />
+                        <div className="input-focus-border"></div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="input-label">
+                        <span className="label-icon">📅</span>
+                        <span className="label-text">Ngày, giờ kết thúc <span className="required">*</span></span>
+                      </label>
+                      <div className="input-container">
+                        <input
+                          type="datetime-local"
+                          className="form-input"
+                          name="ngayKetThucDuKien"
+                          value={form.ngayKetThucDuKien}
+                          onChange={handleChange}
+                          required
+                        />
+                        <div className="input-focus-border"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label className="input-label">
+                        <span className="label-icon">⏱️</span>
+                        <span className="label-text">Số giờ <span className="required">*</span></span>
+                      </label>
+                      <div className="input-container">
+                        <input
+                          type="number"
+                          name="soGio"
+                          className="form-input"
+                          value={form.soGio}
+                          onChange={handleChange}
+                          min={0}
+                          step={0.5}
+                          required
+                          placeholder="0"
+                        />
+                        <div className="input-focus-border"></div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="input-label">
+                        <span className="label-icon">🎯</span>
+                        <span className="label-text">Số giờ quy đổi / Điểm đào tạo <span className="required">*</span></span>
+                      </label>
+                      <div className="input-container">
+                        <input
+                          type="number"
+                          name="soGioQuyDoi"
+                          className="form-input"
+                          value={form.soGioQuyDoi}
+                          onChange={handleChange}
+                          min={0}
+                          required
+                          placeholder="0"
+                        />
+                        <div className="input-focus-border"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Options Section */}
+                <div className="form-section">
+                  <h3 className="section-title">
+                    <span className="section-icon">⚙️</span>
+                    Tùy chọn
+                  </h3>
+
+                  <div className="checkbox-group">
+                    <label className="checkbox-label">
+                      <input
+                        className="checkbox-input"
+                        type="checkbox"
+                        name="coDanhSachHocVien"
+                        checked={form.coDanhSachHocVien}
+                        onChange={handleChange}
+                      />
+                      <span className="checkbox-custom"></span>
+                      <span className="checkbox-text">
+                        <span className="checkbox-icon">👥</span>
+                        Thêm học viên ngay sau khi tạo lớp
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="form-actions">
+                  <button
+                    type="button"
+                    className="btn btn-cancel"
+                    onClick={() => navigate("/lop")}
+                  >
+                    <span className="btn-icon">✕</span>
+                    <span>Hủy</span>
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-save"
+                  >
+                    <span className="btn-icon">💾</span>
+                    <span>Lưu</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-
-        <button className="btn btn-primary">Lưu</button>
-      </form>
+      </div>
     </div>
   );
 };

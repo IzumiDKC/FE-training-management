@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllKhoaHoc, deleteKhoaHoc } from "../services/khoaHocApi";
 import { useNavigate } from "react-router";
-import "../pages/css/KhoaHoc/KhoaHocList.css";
+import "./KhoaHocList.css";
 import useRole from "../hooks/useRole";
 const KhoaHocList = () => {
   const [khoaHocs, setKhoaHocs] = useState([]);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getChiTietLopById, updateChiTietLop, getAllGiangVien } from "../../services/chiTietLopApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft, FaSave, FaCalendarAlt, FaClock, FaChalkboardTeacher, FaSpinner, FaTimes, FaCheckCircle, FaEdit } from "react-icons/fa";
-import "../css/ChiTietLop/ChiTietLopEdit.css";
+import "./ChiTietLopEdit.css";
 
 const ChiTietLopEdit = () => {
   const { id } = useParams();
