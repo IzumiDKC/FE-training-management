@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { createChuongTrinh } from "../../services/chuongTrinhApi";
 import { gsap } from "gsap";
 import { FaSave,FaArrowLeft,FaEdit,FaFileAlt,FaTimes,FaRedo} from "react-icons/fa";
-import "../css/ChuongTrinh/ChuongTrinhCreate.css";
+import "./ChuongTrinhCreate.css";
 
 const ChuongTrinhCreate = () => {
   const [form, setForm] = useState({

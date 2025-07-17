@@ -2,16 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Card, Button,Container } from "react-bootstrap";
-import { 
-  FaCheckCircle, 
-  FaExclamationTriangle, 
-  FaHome, 
-  FaCalendarAlt, 
-  FaSignInAlt,
-  FaSignOutAlt,
-  FaSpinner
-} from "react-icons/fa";
-import "../css/DiemDanh/QRScanPage.css";
+import { FaCheckCircle,FaExclamationTriangle,FaHome,FaCalendarAlt,FaSignInAlt,FaSignOutAlt,FaSpinner} from "react-icons/fa";
+import "./QRScanPage.css";
 
 const QRScanPage = () => {
   const { token } = useParams();

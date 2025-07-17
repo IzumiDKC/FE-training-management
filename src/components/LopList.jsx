@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllLop, deleteLop } from "../services/lopApi";
 import { useNavigate } from "react-router";
 import useRole from "../hooks/useRole";
-import "../pages/css/Lop/LopList.css";
+import "./LopList.css";
 
 const LopList = () => {
   const [lops, setLops] = useState([]);

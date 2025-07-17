@@ -3,7 +3,7 @@ import { getChiTietLopsByLopId, deleteChiTietLop } from "../services/chiTietLopA
 import { useNavigate, useParams } from "react-router";
 import useRole from "../hooks/useRole";
 import { FaArrowLeft,FaPlus,FaEye,FaEdit,FaTrash,FaUserCheck,FaCalendarAlt,FaClock,FaChalkboardTeacher,FaUsers,FaSpinner,FaExclamationTriangle} from "react-icons/fa";
-import "../pages/css/ChiTietLop/ChiTietLopList.css";
+import "./ChiTietLopList.css";
 
 const ChiTietLopList = () => {
   const [buoiHocList, setBuoiHocList] = useState([]);
@@ -236,7 +236,7 @@ const ChiTietLopList = () => {
                           >
                             <FaEdit />
                           </button>
-                          
+                          {isAdmin && (
                           <button
                             className="action-btn delete"
                             onClick={() => handleDelete(item.chiTietLopId)}
@@ -244,7 +244,7 @@ const ChiTietLopList = () => {
                           >
                             <FaTrash />
                           </button>
-
+                          )}
                           <button
                             className="action-btn attendance"
                             onClick={() => navigate(`/diem-danh/${lopId}/${item.chiTietLopId}`)}

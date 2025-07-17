@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import api from "../api/api"; 
 import { FaUserCircle, FaGraduationCap } from "react-icons/fa";
-import "../pages/css/Navbar.css";
+import "./Navbar.css";
 const Navbar = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();

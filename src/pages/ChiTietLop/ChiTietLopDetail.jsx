@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getChiTietLopById } from "../../services/chiTietLopApi";
 import { FaArrowLeft, FaEdit, FaCalendarAlt, FaClock, FaChalkboardTeacher, FaGraduationCap, FaSpinner, FaInfoCircle, FaUserCheck, FaEye } from "react-icons/fa";
-import "../css/ChiTietLop/ChiTietLopDetail.css";
+import "./ChiTietLopDetail.css";
+import useRole from "../../hooks/useRole";
 
 const ChiTietLopDetail = () => {
   const { id } = useParams();
   const [detail, setDetail] = useState(null);
+  const { isAdmin, isGiangVien } = useRole();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -172,6 +174,7 @@ const ChiTietLopDetail = () => {
                 <h3>⚡ Thao Tác</h3>
               </div>
               <div className="detail-actions-content">
+                {(isAdmin || isGiangVien) && (
                 <button 
                   className="detail-action-btn edit"
                   onClick={() => navigate(`/chi-tiet-lop/edit/${detail.chiTietLopId}`)}
@@ -182,7 +185,8 @@ const ChiTietLopDetail = () => {
                     <span className="detail-action-desc">Cập nhật thông tin buổi học</span>
                   </div>
                 </button>
-
+                )}
+                {(isAdmin || isGiangVien) && (
                 <button 
                   className="detail-action-btn attendance"
                   onClick={() => navigate(`/diem-danh/${detail.lopId}/${detail.chiTietLopId}`)}
@@ -193,7 +197,7 @@ const ChiTietLopDetail = () => {
                     <span className="detail-action-desc">Điểm danh học viên</span>
                   </div>
                 </button>
-
+                )}
                 <button 
                   className="detail-action-btn back"
                   onClick={() => navigate(`/chi-tiet-lop/${detail.lopId}`)}

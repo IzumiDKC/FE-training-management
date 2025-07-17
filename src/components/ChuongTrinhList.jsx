@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllChuongTrinh, deleteChuongTrinh } from "../services/chuongTrinhApi";
 import { useNavigate } from "react-router";
 import { FaPlus, FaEye, FaEdit, FaTrash, FaSearch, FaBook, FaGraduationCap,FaBookOpen, FaUsers, FaChartBar, FaSpinner, FaFileAlt, FaAward } from "react-icons/fa";
-import "../pages/css/ChuongTrinh/ChuongTrinhList.css";
+import "./ChuongTrinhList.css";
 import useRole from "../hooks/useRole";
 
 const ChuongTrinhList = () => {
@@ -10,7 +10,6 @@ const ChuongTrinhList = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [hoveredCard, setHoveredCard] = useState(null);
   const { isAdmin, isGiangVien } = useRole();
   const navigate = useNavigate();
 
@@ -30,8 +29,6 @@ const ChuongTrinhList = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  // Search functionality
   useEffect(() => {
     const filtered = chuongTrinhs.filter(ct =>
       ct.tenChuongTrinh.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -71,177 +68,137 @@ const ChuongTrinhList = () => {
 
   if (isLoading) {
     return (
-      <div className="program-list-container">
-        <div className="program-background">
-          <div className="program-particles">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="program-dot"></div>
-            ))}
+      <div className="simple-program-wrapper">
+        <div className="simple-loading">
+          <div className="loading-spinner">
+            <FaSpinner />
           </div>
-        </div>
-
-        <div className="program-loading">
-          <div className="loading-content">
-            <div className="loading-icon">
-              <FaSpinner className="spinner-icon" />
-            </div>
-            <h3>Đang tải danh sách chương trình...</h3>
-            <p>Vui lòng chờ trong giây lát</p>
-          </div>
+          <p>Đang tải danh sách chương trình...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="program-list-container">
-      {/* Background Effects */}
-      <div className="program-background">
-        <div className="program-particles">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="program-dot"></div>
-          ))}
-        </div>
-        
-      </div>
-
-      {/* Header */}
-      <div className="program-header">
-        <div className="header-left">
-          <div className="header-bar">
-        <div className="header-icon-modern">
-          <FaBookOpen />
-        </div>
-        <h2 className="header-title">Danh sách chương trình đào tạo</h2>
-      </div>
-         
-      </div>
-      {(isAdmin || isGiangVien) && (
-        <button
-          className="btn-add-new"
-          onClick={() => navigate("/chuong-trinh/create")}
-        >
-          <FaPlus />
-          <span>Thêm mới</span>
-        </button>
-        )}
-      </div>
-
-      {/* Search Section */}
-      <div className="search-section">
-        <div className="search-container">
-          <div className="search-box">
-            <FaSearch className="search-icon" />
-            <input
-              type="text"
-              placeholder="Tìm kiếm chương trình đào tạo..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+    <div className="simple-program-wrapper">
+      {/* Header Section */}
+      <div className="simple-header">
+        <div className="header-content">
+          <div className="header-info">
+            <div className="header-icon">
+              <FaBookOpen />
+            </div>
+            <div className="header-text">
+              <h1>Chương Trình Đào Tạo</h1>
+            </div>
           </div>
+          {(isAdmin || isGiangVien) && (
+            <button
+              className="add-button"
+              onClick={() => navigate("/chuong-trinh/create")}
+            >
+              <FaPlus />
+              <span>Thêm mới</span>
+            </button>
+          )}
         </div>
       </div>
- 
-      {/* Programs Grid */}
-      <div className="programs-grid">
-        {filteredData.map((ct, index) => {
-          const IconComponent = getEducationalIcon(index);
-          const colors = getEducationalColor(index);
 
-          return (
-            <div
-              key={ct.chuongTrinhDaoTaoId}
-              className={`program-card ${colors.name} ${
-                hoveredCard === ct.chuongTrinhDaoTaoId ? "hovered" : ""
-              }`}
-              onMouseEnter={() => setHoveredCard(ct.chuongTrinhDaoTaoId)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              <div className="card-header">
-                <div className="card-icon"style={{ backgroundColor: colors.primary }}>
-                  <IconComponent />
-                </div>
-                    <div className="card-title-block">
-                        <h3 className="card-title">{ct.tenChuongTrinh}</h3>
+      {/* Search Bar */}
+      <div className="simple-search">
+        <div className="search-wrapper">
+          <FaSearch className="search-icon" />
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Tìm kiếm chương trình đào tạo..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* Programs List */}
+      <div className="simple-content">
+        <div className="programs-container">
+          {filteredData.map((ct, index) => {
+            const IconComponent = getEducationalIcon(index);
+            const colors = getEducationalColor(index);
+
+            return (
+              <div
+                key={ct.chuongTrinhDaoTaoId}
+                className="program-item"
+              >
+                <div className="program-main">
+                  <div className="program-icon" style={{ backgroundColor: colors.primary }}>
+                    <IconComponent />
+                  </div>
+                  <div className="program-info">
+                    <h3 className="program-title">{ct.tenChuongTrinh}</h3>
+                    <div className="program-stats">
+                      <span className="stats-item">
+                        <FaBook />
+                        <span>{ct.khoaHocs?.length || 0} khóa học</span>
+                      </span>
                     </div>
-              </div>
-
-              <div className="card-stats">
-                <div className="stat-item">
-                  <div className="stat-icon">
-                    <FaBook />
                   </div>
-                  <div className="stat-info">
-                    <span className="stat-number">{ct.khoaHocs?.length || 0}</span>
-                    <span className="stat-label">Khóa học</span>
-                  </div>
-                </div>      
-              </div>
-              <div className="card-actions-wrapper">
-                  <div className="card-actions">
-                    <button
-                      className="action-btn view-btn"
-                      onClick={() => navigate(`/chuong-trinh/${ct.chuongTrinhDaoTaoId}`)}
-                      title="Xem chi tiết"
-                    >
-                      <FaEye />
-                      <span>Xem</span>
-                    </button>
+                </div>
 
-                    {(isAdmin || isGiangVien) && (
+                <div className="program-actions">
+                  <button
+                    className="action-btn view"
+                    onClick={() => navigate(`/chuong-trinh/${ct.chuongTrinhDaoTaoId}`)}
+                    title="Xem chi tiết"
+                  >
+                    <FaEye />
+                  </button>
+
+                  {(isAdmin || isGiangVien) && (
                     <button
-                      className="action-btn edit-btn"
+                      className="action-btn edit"
                       onClick={() => navigate(`/chuong-trinh/edit/${ct.chuongTrinhDaoTaoId}`)}
                       title="Chỉnh sửa"
                     >
                       <FaEdit />
-                      <span>Sửa</span>
                     </button>
-                    )}
-                    {isAdmin && (
+                  )}
+
+                  {isAdmin && (
                     <button
-                      className="action-btn delete-btn"
+                      className="action-btn delete"
                       onClick={() => handleDelete(ct.chuongTrinhDaoTaoId)}
                       title="Xóa"
                     >
                       <FaTrash />
-                      <span>Xóa</span>
                     </button>
-                    )}
-                  </div>
+                  )}
+                </div>
               </div>
-              <div className="card-indicator">
-                {[...Array(4)].map((_, i) => (
-                  <div 
-                    key={i} 
-                    className={`indicator-dot ${i < 2 ? 'active' : ''}`}
-                    style={{ backgroundColor: i < 2 ? colors.primary : '#e2e8f0' }}
-                  />
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      {filteredData.length === 0 && (
-        <div className="empty-state">
-          <div className="empty-content">
+        {/* Empty State */}
+        {filteredData.length === 0 && (
+          <div className="empty-state">
             <div className="empty-icon">
               <FaBook />
             </div>
             <h3>Không tìm thấy chương trình</h3>
-            <p>Không có chương trình nào khớp với từ khóa tìm kiếm của bạn</p>
-            <button
-              className="btn-create-first"
-              onClick={() => navigate("/chuong-trinh/create")}
-            >
-              <FaPlus />
-              <span>Tạo chương trình</span>
-            </button>
+            <p>Không có chương trình nào khớp với từ khóa tìm kiếm</p>
+            {(isAdmin || isGiangVien) && (
+              <button
+                className="create-button"
+                onClick={() => navigate("/chuong-trinh/create")}
+              >
+                <FaPlus />
+                <span>Tạo chương trình đầu tiên</span>
+              </button>
+            )}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

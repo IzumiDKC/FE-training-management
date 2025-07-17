@@ -1,0 +1,256 @@
+.dangky-registration-page {
+  min-height: 100vh;
+  background: #f8fafb;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  padding: 2rem 1rem;
+}
+
+.dangky-registration-page::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: 
+    linear-gradient(90deg, transparent 48%, rgba(59, 130, 246, 0.1) 49%, rgba(59, 130, 246, 0.1) 51%, transparent 52%),
+    linear-gradient(0deg, transparent 48%, rgba(59, 130, 246, 0.1) 49%, rgba(59, 130, 246, 0.1) 51%, transparent 52%),
+    radial-gradient(ellipse 16px 32px at 25% 25%, rgba(16, 185, 129, 0.1) 40%, transparent 40%),
+    radial-gradient(ellipse 16px 32px at 75% 25%, rgba(245, 158, 11, 0.1) 40%, transparent 40%),
+    radial-gradient(ellipse 16px 32px at 25% 75%, rgba(239, 68, 68, 0.1) 40%, transparent 40%),
+    radial-gradient(ellipse 16px 32px at 75% 75%, rgba(168, 85, 247, 0.1) 40%, transparent 40%);
+  background-size: 120px 120px, 120px 120px, 200px 200px, 180px 180px, 160px 160px, 220px 220px;
+  z-index: 1;
+}
+
+.dangky-registration-content {
+  position: relative;
+  z-index: 10;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.dangky-page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dangky-header-icon {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 2.5rem;
+  color: white;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+}
+
+.dangky-page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #1e293b, #475569);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dangky-registration-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  position: relative;
+}
+
+.dangky-card-content {
+  padding: 2.5rem;
+}
+
+.dangky-form-steps {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  gap: 1rem;
+  position: relative;
+}
+
+.dangky-form-steps::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: #e2e8f0;
+  z-index: 1;
+}
+
+.dangky-step-item {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: 3px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #94a3b8;
+  position: relative;
+  z-index: 2;
+}
+
+.dangky-step-item.active {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-color: #3b82f6;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+}
+
+.dangky-step-item.completed {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-color: #10b981;
+  color: white;
+}
+
+.dangky-form-group {
+  margin-bottom: 1.8rem;
+}
+
+.dangky-form-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.75rem;
+}
+
+.dangky-select-container {
+  position: relative;
+}
+
+.dangky-form-select {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  background: white;
+  color: #374151;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.dangky-form-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dangky-form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.dangky-action-btn {
+  flex: 1;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.dangky-action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.dangky-action-btn:hover::before {
+  left: 100%;
+}
+
+.dangky-btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.dangky-btn-primary:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
+}
+
+.dangky-btn-primary:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.dangky-btn-secondary {
+  background: white;
+  color: #6b7280;
+  border: 2px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dangky-btn-secondary:hover {
+  background: #f9fafb;
+  color: #374151;
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dangky-loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .dangky-registration-page { padding: 1rem; }
+  .dangky-page-title { font-size: 2rem; }
+  .dangky-header-icon { width: 60px; height: 60px; font-size: 2rem; }
+  .dangky-card-content { padding: 2rem 1.5rem; }
+  .dangky-form-steps { gap: 0.5rem; }
+  .dangky-step-item { width: 40px; height: 40px; font-size: 0.875rem; }
+  .dangky-form-actions { flex-direction: column; }
+  .dangky-action-btn { width: 100%; }
+}

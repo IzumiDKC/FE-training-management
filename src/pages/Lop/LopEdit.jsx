@@ -1,20 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getLopById, updateLop } from "../../services/lopApi";
 import { useParams, useNavigate } from "react-router";
-import { 
-  FaArrowLeft, 
-  FaSave,
-  FaUsers,
-  FaSpinner,
-  FaTimes,
-  FaCheckCircle,
-  FaBook,
-  FaClock,
-  FaCalendarAlt,
-  FaGraduationCap
-} from "react-icons/fa";
-
-import "../css/Lop/LopEdit.css";
+import { FaArrowLeft, FaSave,FaUsers,FaSpinner,FaTimes,FaCheckCircle,FaBook,FaClock,FaCalendarAlt,FaGraduationCap} from "react-icons/fa";
+import "./LopEdit.css";
 const LopEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();

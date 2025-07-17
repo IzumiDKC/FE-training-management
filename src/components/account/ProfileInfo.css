@@ -1,0 +1,529 @@
+:root {
+  --ethereal-primary: #e0f7ff;
+  --ethereal-secondary: #ffffff;
+  --ethereal-accent: #a0d7f5;
+  --ethereal-soft: #7dc9f2;
+  --dreamy-pink: #fcefee;
+  --dreamy-lavender: #dbeafc;
+  --dreamy-mint: #d2f2f1;
+  --dreamy-peach: #ffffff;
+  --cosmic-blue: #38bdf8;
+  --cosmic-purple: #60a5fa;
+  --cosmic-teal: #0ea5e9;
+  --cosmic-rose: #f472b6;
+  --text-ethereal: #0f172a;
+  --text-dreamy: #334155;
+  --text-cosmic: #475569;
+  --glass-bg: rgba(255, 255, 255, 0.2);
+  --glass-border: rgba(0, 0, 0, 0.07);
+  --soft-shadow: 0 6px 20px rgba(14, 165, 233, 0.08);
+  --dreamy-shadow: 0 10px 30px rgba(1, 7, 10, 0.15);
+  --cosmic-glow: 0 0 10px rgba(56, 189, 248, 0.3);
+  --border-radius-soft: 16px;
+  --border-radius-cosmic: 24px;
+  --transition-dreamy: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.profile-wrapper {
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--ethereal-primary) 0%, var(--dreamy-lavender) 30%, var(--dreamy-mint) 70%, var(--ethereal-secondary) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.floating-header {
+  padding: 3rem 2rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.header-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-cosmic);
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: var(--dreamy-shadow);
+  transition: var(--transition-dreamy);
+}
+
+.avatar-ring {
+  width: 100px;
+  height: 100px;
+  background: conic-gradient(var(--cosmic-blue), var(--cosmic-purple), var(--cosmic-teal), var(--cosmic-rose), var(--cosmic-blue));
+  border-radius: 50%;
+  padding: 3px;
+}
+
+.avatar-inner {
+  width: 100%;
+  height: 100%;
+  background: var(--ethereal-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.main-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--cosmic-blue), var(--cosmic-purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.content-bubbles {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.info-bubble {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-cosmic);
+  box-shadow: var(--dreamy-shadow);
+  transition: var(--transition-dreamy);
+}
+
+.bubble-header {
+  background: linear-gradient(135deg, var(--ethereal-accent), var(--dreamy-lavender));
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bubble-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--cosmic-blue), var(--cosmic-purple));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: var(--cosmic-glow);
+  margin-right: 1.5rem;
+}
+
+.bubble-title h4,
+.bubble-title h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-ethereal);
+}
+
+.bubble-title h3 {
+  margin-right: 43.5rem;
+}
+
+.bubble-title h4 {
+  margin-right: 42.5rem;
+}
+
+.bubble-content {
+  padding: 2.5rem;
+}
+
+.info-mosaic {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.mosaic-tile {
+  background: linear-gradient(135deg, var(--dreamy-peach), var(--ethereal-secondary));
+  border-radius: var(--border-radius-soft);
+  padding: 1.8rem;
+  border: 1px solid var(--glass-border);
+}
+
+.tile-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.tile-icon {
+  font-size: 1.3rem;
+}
+
+.tile-label {
+  font-weight: 500;
+  color: var(--text-dreamy);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tile-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-ethereal);
+  line-height: 1.4;
+}
+
+.role-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.role-pill {
+  background: linear-gradient(135deg, var(--cosmic-rose), var(--cosmic-purple));
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.role-pill.empty {
+  background: var(--ethereal-accent);
+  color: var(--text-dreamy);
+}
+
+.status-orb {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-orb.active {
+  background: linear-gradient(135deg, var(--cosmic-teal), var(--cosmic-blue));
+  color: white;
+  box-shadow: var(--cosmic-glow);
+}
+
+.status-orb.inactive {
+  background: var(--ethereal-accent);
+  color: var(--text-dreamy);
+}
+
+.message-float {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.8rem;
+  background: linear-gradient(135deg, var(--dreamy-mint), var(--ethereal-secondary));
+  border-radius: var(--border-radius-soft);
+  margin-bottom: 2rem;
+  border: 1px solid var(--cosmic-teal);
+  box-shadow: var(--cosmic-glow);
+}
+
+.message-text {
+  font-weight: 500;
+  color: var(--text-ethereal);
+}
+
+.checkbox-constellation {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--dreamy-lavender), var(--ethereal-accent));
+  border-radius: var(--border-radius-soft);
+  border: 1px solid var(--cosmic-purple);
+}
+
+.cosmic-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.checkbox-orbit {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text-ethereal);
+}
+
+.hidden-check {
+  display: none;
+}
+
+.check-planet {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--cosmic-purple);
+  border-radius: 50%;
+  background: var(--ethereal-primary);
+  position: relative;
+  box-shadow: inset 0 0 10px rgba(184, 165, 243, 0.2);
+}
+
+.hidden-check:checked + .check-planet {
+  background: linear-gradient(135deg, var(--cosmic-purple), var(--cosmic-blue));
+  border-color: var(--cosmic-purple);
+  box-shadow: var(--cosmic-glow);
+}
+
+.hidden-check:checked + .check-planet::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.check-description {
+  color: var(--text-dreamy);
+  font-size: 1.85rem;
+  line-height: 1.4;
+  margin-left: 2.5rem;
+  font-style: italic;
+}
+
+.action-galaxy {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: flex-end;
+  padding-top: 2rem;
+  border-top: 1px solid var(--glass-border);
+}
+.edit-floating-btn {
+  background: linear-gradient(135deg, var(--cosmic-teal), var(--cosmic-blue));
+  border: none;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-dreamy);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--cosmic-glow);
+}
+
+.edit-floating-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(165, 243, 232, 0.4);
+}
+.cosmic-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: var(--border-radius-cosmic);
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition-dreamy);
+  position: relative;
+  overflow: hidden;
+}
+.cosmic-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.cosmic-btn:hover::before {
+  left: 100%;
+}
+
+.cancel-btn {
+  background: linear-gradient(135deg, var(--ethereal-accent), var(--dreamy-lavender));
+  color: var(--text-ethereal);
+  border: 1px solid var(--glass-border);
+}
+
+.cancel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--soft-shadow);
+}
+
+.save-btn {
+  background: linear-gradient(135deg, var(--cosmic-teal), var(--cosmic-blue));
+  color: white;
+  box-shadow: var(--cosmic-glow);
+}
+
+.save-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(165, 243, 232, 0.4);
+}
+
+.btn-constellation {
+  font-size: 1.1rem;
+}
+
+.form-constellation {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.input-nebula {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.nebula-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 500;
+  color: var(--text-ethereal);
+  font-size: 0.95rem;
+}
+
+.label-star {
+  font-size: 1.1rem;
+}
+
+.input-orbit {
+  position: relative;
+}
+
+.cosmic-input {
+  width: 100%;
+  padding: 1.2rem 1.5rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-soft);
+  font-size: 0.95rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  color: var(--text-ethereal);
+  transition: var(--transition-dreamy);
+  box-sizing: border-box;
+}
+
+.cosmic-input:focus {
+  outline: none;
+  border-color: var(--cosmic-blue);
+  box-shadow: 0 0 0 3px rgba(165, 184, 243, 0.2);
+}
+
+.input-aurora {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cosmic-blue), var(--cosmic-purple), var(--cosmic-teal));
+  transition: width 0.4s ease;
+  border-radius: 1px;
+}
+
+.cosmic-input:focus + .input-aurora {
+  width: 100%;
+}
+
+.checkbox-constellation {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--dreamy-lavender), var(--ethereal-accent));
+  border-radius: var(--border-radius-soft);
+  border: 1px solid var(--cosmic-purple);
+}
+
+.cosmic-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.checkbox-orbit {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text-ethereal);
+}
+
+.hidden-check {
+  display: none;
+}
+
+.check-planet {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--cosmic-purple);
+  border-radius: 50%;
+  background: var(--ethereal-primary);
+  position: relative;
+  transition: var(--transition-dreamy);
+  box-shadow: inset 0 0 10px rgba(184, 165, 243, 0.2);
+}
+
+.hidden-check:checked + .check-planet {
+  background: linear-gradient(135deg, var(--cosmic-purple), var(--cosmic-blue));
+  border-color: var(--cosmic-purple);
+  box-shadow: var(--cosmic-glow);
+}
+
+.hidden-check:checked + .check-planet::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.check-description {
+  color: var(--text-dreamy);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin-left: 2.5rem;
+  font-style: italic;
+}
+.action-galaxy {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: flex-end;
+  padding-top: 2rem;
+  border-top: 1px solid var(--glass-border);
+}

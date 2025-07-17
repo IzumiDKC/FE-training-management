@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllLoaiLop, deleteLoaiLop } from "../services/loaiLopApi";
 import { useNavigate } from "react-router";
 import useRole from "../hooks/useRole";
-import "../pages/css/LoaiLop/LoaiLopList.css";
+import "./LoaiLopList.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
 const LoaiLopList = () => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createChiTietLop, getAllGiangVien } from "../../services/chiTietLopApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft, FaSave, FaCalendarAlt, FaClock, FaChalkboardTeacher, FaSpinner, FaTimes, FaCheckCircle, FaPlus, FaGraduationCap } from "react-icons/fa";
-import "../css/ChiTietLop/ChiTietLopCreate.css";
+import "./ChiTietLopCreate.css";
 
 const ChiTietLopCreate = () => {
   const { lopId } = useParams();
@@ -39,16 +39,22 @@ const ChiTietLopCreate = () => {
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
- const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     setIsSubmitting(true);
+    const normalizeTime = (timeStr) => {
+      return timeStr.length === 5 ? `${timeStr}:00` : timeStr;
+    };
+
     await createChiTietLop({
       ...form,
-      giangVienId: form.giangVienId || null
+      thoiGianBatDau: normalizeTime(form.thoiGianBatDau),
+      thoiGianKetThuc: normalizeTime(form.thoiGianKetThuc),
+      giangVienId: form.giangVienId || null,
     });
-    setShowSuccess(true);
 
+    setShowSuccess(true);
     setTimeout(() => {
       navigate(`/chi-tiet-lop/${lopId}`);
     }, 1500);
@@ -59,6 +65,7 @@ const ChiTietLopCreate = () => {
     setIsSubmitting(false);
   }
 };
+
 
   if (loading) {
     return (
@@ -122,7 +129,8 @@ const ChiTietLopCreate = () => {
                   <FaPlus />
                 </div>
                 <div className="create-card-title">
-                  <h3>Thông Tin Buổi Học</h3>                </div>
+                  <h3>Thông Tin Buổi Học</h3>           
+               </div>
               </div>
 
               <form onSubmit={handleSubmit} className="create-session-form">
@@ -235,8 +243,8 @@ const ChiTietLopCreate = () => {
                       </>
                     ) : (
                       <>
-                        <FaSave />
-                        <span>Tạo buổi học</span>
+                        <FaSave className="create-btn-save-icon" />
+                        <span className="create-btn-text">Tạo buổi học</span>
                       </>
                     )}
                   </button>
