@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { getChuongTrinhById, updateChuongTrinh } from "../../services/chuongTrinhApi";
 import { FaArrowLeft, FaSave,FaGraduationCap,FaFileAlt,FaLightbulb,FaSpinner,FaTimes,FaCheckCircle} from "react-icons/fa";
-import "../css/ChuongTrinh/ChuongTrinhEdit.css";
+import "./ChuongTrinhEdit.css";
 
 const ChuongTrinhEdit = () => {
   const { id } = useParams();

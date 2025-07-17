@@ -3,13 +3,15 @@ import { useParams, useNavigate } from "react-router";
 import { getChuongTrinhById } from "../../services/chuongTrinhApi";
 import { FaArrowLeft, FaEdit,FaTrash,FaGraduationCap,FaInfoCircle,FaIdBadge,FaBook,FaFileAlt,FaClock} from "react-icons/fa";
 import { gsap } from "gsap";
-import "../css/ChuongTrinh/ChuongTrinhDetail.css";
+import "./ChuongTrinhDetail.css";
+import useRole from "../../hooks/useRole";
 
 const ChuongTrinhDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { isAdmin, isGiangVien } = useRole();
   const containerRef = useRef(null);
   const cardRef = useRef(null);
   const titleRef = useRef(null);
@@ -141,6 +143,7 @@ const ChuongTrinhDetail = () => {
       </div>
 
       {/* Header */}
+      <div className="detail-inner-container">
       <div className="detail-header">
         <div className="header-left">
           <button 
@@ -158,6 +161,7 @@ const ChuongTrinhDetail = () => {
           </div>
         </div>
         <div className="header-actions">
+          {(isAdmin || isGiangVien) && (
           <button 
             className="btn-edit"
             onClick={() => navigate(`/chuong-trinh/edit/${id}`)}
@@ -165,6 +169,8 @@ const ChuongTrinhDetail = () => {
             <FaEdit />
             <span>Chỉnh sửa</span>
           </button>
+          )}
+          {isAdmin && (
           <button 
             className="btn-delete"
             onClick={handleDelete}
@@ -172,6 +178,7 @@ const ChuongTrinhDetail = () => {
             <FaTrash />
             <span>Xóa</span>
           </button>
+          )}
         </div>
       </div>
 
@@ -257,6 +264,7 @@ const ChuongTrinhDetail = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>

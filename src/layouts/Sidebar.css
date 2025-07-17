@@ -1,0 +1,233 @@
+.sidebar {
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6, #2f8190, #8b5cf6, #1e3a8a);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+  color: #fff;
+  width: 68px;
+  min-height: 100vh;
+  transition: width 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s;
+  box-shadow: 2px 0 20px rgba(59, 130, 246, 0.15);
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.expanded {
+  width: 220px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 0 18px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.5px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 18px;
+  color: #e0e7ff;
+  font-size: 1.08rem;
+  border-radius: 10px;
+  margin: 0 8px;
+  transition: background 0.2s, color 0.2s, font-weight 0.2s;
+  text-decoration: none;
+  font-weight: 500;
+  gap: 10px;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.sidebar .ms-2 {
+  margin-left: 10px;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .sidebar.expanded {
+    width: 160px;
+  }
+}
+
+.sidebar-submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sidebar-submenu .sidebar-link {
+  padding-left: 28px;
+  font-size: 0.97em;
+}
+.sidebar-dropdown.open {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.evaluation-dropdown {
+  position: relative;
+  background: transparent;
+  border-left: 3px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.evaluation-dropdown:hover {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  transform: translateX(3px);
+}
+
+.evaluation-dropdown.open {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+}
+
+.evaluation-dropdown svg {
+  color: #e0e7ff;
+  transition: all 0.3s ease;
+}
+
+.evaluation-dropdown:hover svg {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.evaluation-dropdown.open svg {
+  color: #fff;
+  transform: rotate(180deg) scale(1.1);
+}
+
+.evaluation-submenu {
+  background: transparent;
+  border-radius: 0;
+  margin-left: 1rem !important;
+  padding: 0.5rem 0;
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
+  animation: evaluationSlideIn 0.4s ease-out;
+}
+
+@keyframes evaluationSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+    max-height: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    max-height: 200px;
+  }
+}
+
+.evaluation-link {
+  position: relative;
+  margin: 0.25rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #e0e7ff;
+  font-size: 0.97em;
+  padding-left: 28px;
+}
+
+.evaluation-link:hover {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.evaluation-link svg {
+  color: #e0e7ff;
+  transition: all 0.3s ease;
+}
+
+.evaluation-link:hover svg {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.evaluation-link.active,
+.evaluation-link[aria-current="page"] {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.evaluation-link.active svg,
+.evaluation-link[aria-current="page"] svg {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .evaluation-dropdown {
+    padding: 0.6rem 0.8rem;
+  }
+  
+  .evaluation-submenu {
+    margin-left: 0.5rem !important;
+  }
+  
+  .evaluation-link {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+.evaluation-dropdown:hover .ms-2 {
+  color: #fff;
+  font-weight: 600;
+}
+
+.evaluation-dropdown:focus-visible,
+.evaluation-link:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.evaluation-dropdown.open svg {
+  animation: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .evaluation-dropdown {
+    background: transparent;
+  }
+  
+  .evaluation-submenu {
+    background: transparent;
+    border-left-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .evaluation-link {
+    background: transparent;
+    color: #e0e7ff;
+  }
+}

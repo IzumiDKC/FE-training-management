@@ -7,7 +7,7 @@ import {
 } from "../../services/accountApi";
 
 import AutoCompleteInput from "../../utils/AutoCompleteInput";
-import "../../pages/css/account/ProfileInfo.css";
+import "./ProfileInfo.css";
 
 const ProfileInfo = () => {
   const [user, setUser] = useState(null);
@@ -33,8 +33,9 @@ const ProfileInfo = () => {
         getProfile().then((data) => {
           const isEmptyDate = !data.ngaySinh || data.ngaySinh.startsWith("0001");
           setProfile({
-            ...data,
-            ngaySinh: isEmptyDate ? "2000-01-01" : data.ngaySinh.slice(0, 10),
+          ...data,
+          hocHamHocVi: data.hocHamHocVi || "",
+          ngaySinh: isEmptyDate ? "2000-01-01" : data.ngaySinh.slice(0, 10),
           });
         });
       })
@@ -63,168 +64,297 @@ const ProfileInfo = () => {
   };
 
   if (tokenError) return (
-    <div className="profile-container">
-      <div className="profile-content">
-        <div className="profile-card error-alert">{tokenError}</div>
+    <div className="profile-wrapper">
+      <div className="error-state">
+        <div className="error-bubble">
+          <div className="error-icon">🔒</div>
+          <h3>Phiên đăng nhập hết hạn</h3>
+          <p>{tokenError}</p>
+        </div>
       </div>
     </div>
   );
   
   if (error) return (
-    <div className="profile-container">
-      <div className="profile-content">
-        <div className="profile-card error-alert">{error}</div>
+    <div className="profile-wrapper">
+      <div className="error-state">
+        <div className="error-bubble">
+          <div className="error-icon">⚠️</div>
+          <h3>Có lỗi xảy ra</h3>
+          <p>{error}</p>
+        </div>
       </div>
     </div>
   );
   
   if (!user) return (
-    <div className="profile-container">
-      <div className="loading-spinner">🔄 Đang tải thông tin...</div>
+    <div className="profile-wrapper">
+      <div className="loading-state">
+        <div className="loading-orb">
+          <div className="orb"></div>
+          <div className="orb-shadow"></div>
+        </div>
+        <p className="loading-text">Đang tải thông tin...</p>
+      </div>
     </div>
   );
  
   return (
-    <div className="profile-container">
-      {/* Medical decorative elements */}
-      <div className="medical-element-1"></div>
-      <div className="medical-element-2"></div>
-      
-      <div className="profile-content">
-        <div className="profile-header">
-          <h1 className="profile-title">Hồ Sơ Cá Nhân</h1>
+    <div className="profile-wrapper">
+      {/* Ethereal Background */}
+      <div className="ethereal-bg">
+        <div className="cloud cloud-1"></div>
+        <div className="cloud cloud-2"></div>
+        <div className="cloud cloud-3"></div>
+        <div className="sparkles">
+          {[...Array(15)].map((_, i) => (
+            <div key={i} className={`sparkle sparkle-${i % 3 + 1}`}></div>
+          ))}
         </div>
+      </div>
 
-        <div className="profile-card">
-          <h3 className="card-title">
-            <div className="card-icon">👤</div>
-            Thông tin tài khoản
-          </h3>
-          <div className="info-grid">
-            <div className="info-item">
-              <div className="info-label">Họ và tên</div>
-              <div className="info-value">{user.hoTen}</div>
+      {/* Floating Header */}
+      <div className="floating-header">
+        <div className="header-glass">
+          <div className="avatar-container">
+            <div className="avatar-ring">
+              <div className="avatar-inner">
+                <span className="avatar-emoji">👤</span>
+              </div>
             </div>
-            <div className="info-item">
-              <div className="info-label">Địa chỉ Email</div>
-              <div className="info-value">{user.email}</div>
+          </div>
+          <div className="header-content">
+            <h1 className="main-title">Hồ Sơ Cá Nhân</h1>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Bubbles */}
+      <div className="content-bubbles">
+        {/* Account Info Bubble */}
+        <div className="info-bubble account-bubble">
+          <div className="bubble-header">
+            <div className="bubble-icon">
+              <span className="icon-glow">🏠</span>
             </div>
-            <div className="info-item">
-              <div className="info-label">Số CCCD/CMND</div>
-              <div className="info-value">{user.soCanCuoc}</div>
+            <div className="bubble-title">
+              <h3>Thông tin tài khoản</h3>
             </div>
-            <div className="info-item">
-              <div className="info-label">Vai trò hệ thống</div>
-              <div className="info-value">{Array.isArray(user.roles) ? user.roles.join(", ") : "Chưa có"}</div>
+          </div>
+          
+          <div className="bubble-content">
+            <div className="info-mosaic">
+              <div className="mosaic-tile">
+                <div className="tile-header">
+                  <span className="tile-icon">👤</span>
+                  <span className="tile-label">Họ và tên</span>
+                </div>
+                <div className="tile-value">{user.hoTen}</div>
+              </div>
+              
+              <div className="mosaic-tile">
+                <div className="tile-header">
+                  <span className="tile-icon">📧</span>
+                  <span className="tile-label">Email</span>
+                </div>
+                <div className="tile-value">{user.email}</div>
+              </div>
+              
+              <div className="mosaic-tile">
+                <div className="tile-header">
+                  <span className="tile-icon">🆔</span>
+                  <span className="tile-label">CCCD/CMND</span>
+                </div>
+                <div className="tile-value">{user.soCanCuoc}</div>
+              </div>
+              
+              <div className="mosaic-tile role-tile">
+                <div className="tile-header">
+                  <span className="tile-icon">🎭</span>
+                  <span className="tile-label">Vai trò</span>
+                </div>
+                <div className="tile-value">
+                  <div className="role-pills">
+                    {Array.isArray(user.roles) ? 
+                      user.roles.map((role, index) => (
+                        <span key={index} className="role-pill">{role}</span>
+                      )) : 
+                      <span className="role-pill empty">Chưa có</span>
+                    }
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="profile-card">
-          <h4 className="card-title">
-            <div className="card-icon">📝</div>
-            Thông tin bổ sung
-          </h4>
-          {message && <div className="alert-custom">{message}</div>}
+        {/* Profile Info Bubble */}
+        <div className="info-bubble profile-bubble">
+          <div className="bubble-header">
+            <div className="bubble-icon">
+              <span className="icon-glow">📝</span>
+            </div>
+            <div className="bubble-title">
+              <h4>Thông tin bổ sung</h4>
+            </div>
+            {!editMode && (
+              <button 
+                className="edit-floating-btn"
+                onClick={() => setEditMode(true)}
+              >
+                <span className="btn-sparkle">✨</span>
+                Chỉnh sửa
+              </button>
+            )}
+          </div>
 
-          {!editMode ? (
-            <>
-              <div className="info-grid">
-                <div className="info-item">
-                  <div className="info-label">Nơi công tác</div>
-                  <div className="info-value">{profile.noiCongTac || "Chưa cập nhật"}</div>
+          <div className="bubble-content">
+            {message && (
+              <div className="message-float">
+
+                <span className="message-text">{message}</span>
+              </div>
+            )}
+
+            {!editMode ? (
+              <div className="info-mosaic">
+                <div className="mosaic-tile">
+                  <div className="tile-header">
+                    <span className="tile-icon">🏢</span>
+                    <span className="tile-label">Nơi công tác</span>
+                  </div>
+                  <div className="tile-value">{profile.noiCongTac || "Chưa cập nhật"}</div>
                 </div>
-                <div className="info-item">
-                  <div className="info-label">Ngày sinh</div>
-                  <div className="info-value">{profile.ngaySinh || "Chưa cập nhật"}</div>
+                
+                <div className="mosaic-tile">
+                  <div className="tile-header">
+                    <span className="tile-icon">🎂</span>
+                    <span className="tile-label">Ngày sinh</span>
+                  </div>
+                  <div className="tile-value">{profile.ngaySinh || "Chưa cập nhật"}</div>
                 </div>
-                <div className="info-item">
-                  <div className="info-label">Học hàm học vị</div>
-                  <div className="info-value">{profile.hocHamHocVi || "Chưa cập nhật"}</div>
+                
+                <div className="mosaic-tile">
+                  <div className="tile-header">
+                    <span className="tile-icon">🎓</span>
+                    <span className="tile-label">Học hàm học vị</span>
+                  </div>
+                  <div className="tile-value">{profile.hocHamHocVi || "Chưa cập nhật"}</div>
                 </div>
-                <div className="info-item">
-                  <div className="info-label">Thuộc bệnh viện</div>
-                  <div className="info-value">{profile.thuocBenhVien ? "Có" : "Không"}</div>
+                
+                <div className="mosaic-tile status-tile">
+                  <div className="tile-header">
+                    <span className="tile-icon">🏥</span>
+                    <span className="tile-label">Thuộc bệnh viện</span>
+                  </div>
+                  <div className="tile-value">
+                    <span className={`status-orb ${profile.thuocBenhVien ? 'active' : 'inactive'}`}>
+                      {profile.thuocBenhVien ? "Có" : "Không"}
+                    </span>
+                  </div>
                 </div>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="ethereal-form">
+                <div className="form-constellation">
+                  <div className="form-row">
+                    <div className="input-nebula">
+                      <label className="nebula-label">
+                        <span className="label-star">🏢</span>
+                        Nơi công tác
+                      </label>
+                      <div className="input-orbit">
+                        <input
+                          name="noiCongTac"
+                          value={profile.noiCongTac}
+                          onChange={handleChange}
+                          placeholder="VD: Bệnh viện Ung Bướu Cơ Sở 2"
+                          className="cosmic-input"
+                        />
+                        <div className="input-aurora"></div>
+                      </div>
+                    </div>
 
-              <div className="button-group">
-                <button className="btn-custom btn-primary-custom" onClick={() => setEditMode(true)}>
-                  ✏️ Chỉnh sửa thông tin
-                </button>
-              </div>
-            </>
-          ) : (
-            <form onSubmit={handleSubmit} className="edit-form">
-              <div className="form-group">
-                <label className="form-label">Nơi công tác</label>
-                <input
-                  name="noiCongTac"
-                  value={profile.noiCongTac}
-                  onChange={handleChange}
-                  placeholder="VD: Bệnh viện Ung Bướu Cơ Sở 2"
-                  className="form-input"
-                />
-              </div>
+                    <div className="input-nebula">
+                      <label className="nebula-label">
+                        <span className="label-star">🎂</span>
+                        Ngày sinh
+                      </label>
+                      <div className="input-orbit">
+                        <input
+                          type="date"
+                          name="ngaySinh"
+                          value={profile.ngaySinh}
+                          onChange={handleChange}
+                          className="cosmic-input"
+                          min="1960-01-01"
+                          max="2005-12-31"
+                        />
+                        <div className="input-aurora"></div>
+                      </div>
+                    </div>
+                  </div>
 
-              <div className="form-group">
-                <label className="form-label">Ngày sinh</label>
-                <input
-                  type="date"
-                  name="ngaySinh"
-                  value={profile.ngaySinh}
-                  onChange={handleChange}
-                  className="form-input"
-                  min="1960-01-01"
-                  max="2005-12-31"
-                />
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">Học hàm học vị</label>
-                <AutoCompleteInput
-                  value={profile.hocHamHocVi}
-                  onChange={(newValue) =>
-                    setProfile((prev) => ({ ...prev, hocHamHocVi: newValue }))
-                  }
-                />
-              </div>
-
-              <div className="form-group">
-                <div className="form-checkbox">
-                  <div className="checkbox-wrapper">
-                    <input
-                      type="checkbox"
-                      name="thuocBenhVien"
-                      checked={profile.thuocBenhVien}
-                      onChange={handleChange}
-                      className="checkbox-input"
-                      id="thuocBenhVien"
-                    />
-                    <label className="checkbox-label" htmlFor="thuocBenhVien">
-                      Thuộc bệnh viện
+                  <div className="input-nebula">
+                    <label className="nebula-label">
+                      <span className="label-star">🎓</span>
+                      Học hàm học vị
                     </label>
+                    <div className="autocomplete-orbit">
+                      <AutoCompleteInput
+                        value={profile.hocHamHocVi || ""}
+                        onChange={(newValue) =>
+                          setProfile((prev) => ({ ...prev, hocHamHocVi: newValue }))
+                        }
+                      />
+                    </div>
                   </div>
-                  <div className="checkbox-text">
-                    Đánh dấu nếu bạn đang công tác tại bệnh viện Ung Bướu Cơ Sở 2
+
+                  <div className="checkbox-constellation">
+                    <div className="cosmic-checkbox">
+                      <label className="checkbox-orbit">
+                        <input
+                          type="checkbox"
+                          name="thuocBenhVien"
+                          checked={profile.thuocBenhVien}
+                          onChange={handleChange}
+                          className="hidden-check"
+                          id="thuocBenhVien"
+                        />
+                        <span className="check-planet"></span>
+                        <span className="check-label">
+                          <span className="check-icon">🏥</span>
+                          Thuộc bệnh viện
+                        </span>
+                      </label>
+                      <div className="check-description">
+                        Đánh dấu nếu bạn đang công tác tại bệnh viện Ung Bướu Cơ Sở 2
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="button-group">
-                <button className="btn-custom btn-success-custom" type="submit">
-                  💾 Lưu thay đổi
-                </button>
-                <button 
-                  className="btn-custom btn-secondary-custom" 
-                  type="button" 
-                  onClick={() => setEditMode(false)}
-                >
-                  ↩️ Hủy bỏ
-                </button>
-              </div>
-            </form>
-          )}
+                {/* Floating Action Buttons */}
+                <div className="action-galaxy">
+                  <button 
+                    type="button"
+                    className="cosmic-btn cancel-btn"
+                    onClick={() => setEditMode(false)}
+                  >
+                    <span className="btn-constellation">↩️</span>
+                    Hủy bỏ
+                  </button>
+                  <button 
+                    type="submit"
+                    className="cosmic-btn save-btn"
+                  >
+                    <span className="btn-constellation">💾</span>
+                    Lưu thay đổi
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </div>

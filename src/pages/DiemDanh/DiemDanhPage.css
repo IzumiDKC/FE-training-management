@@ -1,0 +1,338 @@
+.diemdanh-modern-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  padding: 2rem 0;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.diemdanh-bg-effects {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.diemdanh-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+}
+
+.diemdanh-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.diemdanh-header-card {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.diemdanh-back-btn {
+  width: 60px !important;
+  height: 60px !important;
+  border-width: 2px !important;
+  transition: all 0.3s ease !important;
+}
+
+.diemdanh-back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3) !important;
+}
+
+.diemdanh-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.diemdanh-main-icon {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.diemdanh-title {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-size: 1.75rem;
+}
+
+.diemdanh-control-card,
+.diemdanh-qr-card,
+.diemdanh-list-card {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-header {
+  pointer-events: none;
+}
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #764ba2, #667eea) !important;
+  border-radius: 20px 20px 0 0 !important;
+}
+
+.bg-gradient-info {
+  background: linear-gradient(135deg, #2886d9, #00f2fe) !important;
+  border-radius: 20px 20px 0 0 !important;
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(135deg, #ab680b, #fcb69f) !important;
+  border-radius: 20px 20px 0 0 !important;
+  color: #333 !important;
+}
+
+.diemdanh-action-btn {
+  border-radius: 12px !important;
+  padding: 1rem !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.diemdanh-action-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.diemdanh-action-btn:disabled {
+  opacity: 0.6 !important;
+  transform: none !important;
+  cursor: not-allowed !important;
+}
+
+.btn-success.diemdanh-action-btn {
+  background: linear-gradient(135deg, #48bb78, #38a169) !important;
+}
+
+.btn-warning.diemdanh-action-btn {
+  background: linear-gradient(135deg, #ed8936, #dd6b20) !important;
+}
+
+.btn-danger.diemdanh-action-btn {
+  background: linear-gradient(135deg, #f56565, #e53e3e) !important;
+}
+
+.btn-outline-warning.diemdanh-action-btn {
+  border: 2px solid #ed8936 !important;
+  color: #ed8936 !important;
+  background: transparent !important;
+}
+
+.btn-outline-warning.diemdanh-action-btn:hover {
+  background: linear-gradient(135deg, #ed8936, #dd6b20) !important;
+  color: white !important;
+}
+
+.diemdanh-loading-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.diemdanh-qr-display {
+  padding: 1rem 0;
+}
+
+.diemdanh-qr-container {
+  position: relative;
+  display: inline-block;
+}
+
+.diemdanh-qr-image {
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  border: 4px solid white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.diemdanh-qr-overlay {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
+}
+
+.diemdanh-countdown-alert {
+  background: linear-gradient(135deg, #fed7d7, #feb2b2) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  animation: countdownPulse 2s ease-in-out infinite;
+}
+
+@keyframes countdownPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.diemdanh-no-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.diemdanh-qr-placeholder {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: #a0aec0;
+  margin-bottom: 1rem;
+}
+
+.diemdanh-list-wrapper {
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+}
+
+.badge {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+}
+
+@media (max-width: 768px) {
+  .diemdanh-container {
+    padding: 0 1rem;
+  }
+
+  .diemdanh-modern-wrapper {
+    padding: 1rem 0;
+  }
+
+  .diemdanh-title {
+    font-size: 1.5rem;
+  }
+
+  .diemdanh-back-btn {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .diemdanh-icon-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .diemdanh-main-icon {
+    font-size: 1.25rem;
+  }
+
+  .diemdanh-qr-image {
+    max-width: 250px;
+  }
+
+  .diemdanh-action-btn {
+    padding: 0.875rem !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .diemdanh-container {
+    padding: 0 0.5rem;
+  }
+
+  .diemdanh-control-card,
+  .diemdanh-qr-card,
+  .diemdanh-list-card {
+    border-radius: 15px !important;
+  }
+
+  .bg-gradient-primary,
+  .bg-gradient-info,
+  .bg-gradient-secondary {
+    border-radius: 15px 15px 0 0 !important;
+  }
+
+  .diemdanh-qr-image {
+    max-width: 200px;
+  }
+
+  .diemdanh-qr-placeholder {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+}
+
+.diemdanh-control-card,
+.diemdanh-qr-card,
+.diemdanh-list-card {
+  animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.diemdanh-back-btn:focus,
+.diemdanh-action-btn:focus {
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3) !important;
+  outline: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diemdanh-particles,
+  .countdownPulse,
+  .slideInUp {
+    animation: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

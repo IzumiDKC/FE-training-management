@@ -3,7 +3,7 @@ import { createKhoaHoc } from "../../services/khoaHocApi";
 import api from "../../api/api";
 import { useNavigate } from "react-router";
 import { FaArrowLeft, FaSave,FaBook,FaGraduationCap,FaSpinner,FaCheckCircle,FaExclamationCircle,FaInfoCircle} from "react-icons/fa";
-import "../css/KhoaHoc/KhoaHocCreate.css";
+import "./KhoaHocCreate.css";
 
 const KhoaHocCreate = () => {
   const [form, setForm] = useState({
@@ -87,25 +87,16 @@ const KhoaHocCreate = () => {
     <div className="khoahoc-create-page">
       {/* Educational Background */}
       <div className="khoahoc-create-background"></div>
-
       <div className="khoahoc-create-content">
         {/* Header */}
-        <div className="khoahoc-create-header">
-          <div className="header-content">
-            <button 
-              className="back-button"
-              onClick={() => navigate("/khoa-hoc")}
-            >
+        <div className="header-bar">
+          <div className="header-left">
+            <button className="back-button" onClick={() => navigate("/khoa-hoc")}>
               <FaArrowLeft />
             </button>
-            <div className="header-info">
-              <div className="header-text">
-                <h1>Tạo khóa học mới</h1>             
-               </div>
-            </div>
+            <h1 className="page-title">Tạo khóa học mới</h1>
           </div>
         </div>
-
         <div className="form-container">
           {/* Progress Indicator */}
           <div className="progress-indicator">

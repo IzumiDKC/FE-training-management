@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createLoaiLop } from "../../services/loaiLopApi";
 import { useNavigate } from "react-router";
 import { FaArrowLeft, FaSave,FaBook,FaChalkboardTeacher,FaLightbulb,FaTimes} from "react-icons/fa";
-import "../css/LoaiLop/LoaiLopCreate.css";
+import "./LoaiLopCreate.css";
 
 const LoaiLopCreate = () => {
   const [tenLoaiLop, setTenLoaiLop] = useState("");

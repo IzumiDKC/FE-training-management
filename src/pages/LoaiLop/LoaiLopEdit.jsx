@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getLoaiLopById, updateLoaiLop } from "../../services/loaiLopApi";
 import { useParams, useNavigate } from "react-router";
 import { FaArrowLeft, FaSave,FaGraduationCap,FaChalkboardTeacher,FaLightbulb,FaTimes,FaSpinner} from "react-icons/fa";
-import "../css/LoaiLop/LoaiLopEdit.css";
+import "./LoaiLopEdit.css";
 
 const LoaiLopEdit = () => {
   const { id } = useParams();
