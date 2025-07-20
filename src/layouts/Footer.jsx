@@ -14,7 +14,6 @@ const Footer = () => {
     <footer className="modern-footer">
       <div className="footer-container">
         <div className="footer-content">
-          {/* Brand Section */}
           <div className="footer-brand">
             <h3 className="footer-brand-title">
               🎓 Hệ thống Quản lý Đào tạo
@@ -26,7 +25,6 @@ const Footer = () => {
           </p>
           </div>
 
-          {/* Quick Links */}
           <div className="footer-section">
             <h4 className="footer-section-title">
               🔗 Liên kết nhanh
@@ -87,7 +85,6 @@ const Footer = () => {
               </li>
             </ul>
 
-            {/* Social Links */}
             <div className="footer-social">
               <a 
                 href="https://www.facebook.com/Izumi.3107/" 
@@ -118,7 +115,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
         <div className="footer-bottom">
           <p className="footer-bottom-text">
             © <span className="footer-year">{new Date().getFullYear()}</span> Hệ thống Quản lý Đào tạo | 

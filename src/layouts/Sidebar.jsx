@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import "./Sidebar.css";
 import { FaChalkboardTeacher, FaUsers, FaBook, FaChartBar, FaBars, FaHome, FaChevronDown, FaChevronUp, FaLayerGroup, FaClipboardList, FaEdit, FaTasks, FaStar } from "react-icons/fa";
 import { useSidebar } from "../contexts/SidebarContext";
@@ -125,6 +125,9 @@ const Sidebar = () => {
                     {/* <Link to="/danh-gia/create" className="sidebar-link evaluation-link">
                       <FaEdit className="me-1" /> Tạo đánh giá
                     </Link> */}
+                    <Link to="/danh-gia-tong-hop-theo-nam" className="sidebar-link evaluation-link">
+                      <FaClipboardList className="me-1" /> Xem đánh giá theo năm
+                    </Link>
                   </div>
                 )}
               </>

@@ -20,7 +20,6 @@ const DanhGiaPage = () => {
     fetch();
   }, []);
 
-  // Function to determine evaluation type badge class
   const getEvaluationTypeClass = (loaiDanhGia) => {
     if (!loaiDanhGia) return 'neutral';
     const type = loaiDanhGia.toLowerCase();
@@ -54,7 +53,7 @@ const DanhGiaPage = () => {
       <div className="danhgia-content">
         <div className="danhgia-header">
           <h2 className="danhgia-title">
-            📋 Danh Sách Đánh Giá
+            Danh Sách Đánh Giá
           </h2>
         </div>
         
@@ -62,11 +61,12 @@ const DanhGiaPage = () => {
           <table className="danhgia-table">
             <thead>
               <tr>
-                <th>👤 Họ tên</th>
-                <th>🏫 Lớp</th>
-                <th>⭐ Loại</th>
-                <th>📝 Nội dung</th>
-                <th>📅 Ngày</th>
+                <th>Họ tên</th>
+                <th>Lớp</th>
+                <th>Loại</th>
+                <th>Nội dung</th>
+                <th>Người đánh giá</th>
+                <th>Ngày đánh giá</th>
               </tr>
             </thead>
             <tbody>
@@ -80,6 +80,7 @@ const DanhGiaPage = () => {
                     </span>
                   </td>
                   <td>{item.noiDung}</td>
+                  <td>{item.nguoiDanhGia}</td>
                   <td>{new Date(item.ngayDanhGia).toLocaleDateString()}</td>
                 </tr>
               ))}

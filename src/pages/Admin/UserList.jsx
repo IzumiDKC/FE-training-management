@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { getPagedUsers, changeUserRole } from "../../services/adminApi";
-import { Container,Card,Table,Button,Badge,Spinner, Pagination,Row,Col
-} from "react-bootstrap";
-import { FaUsers,FaUser,FaEnvelope,FaIdCard,FaCrown,FaShieldAlt,FaUserTag,FaExchangeAlt,FaChevronLeft,FaChevronRight,FaSpinner} from "react-icons/fa";
+import { Container, Card, Table, Button, Badge, Spinner, Pagination, Row, Col, Form } from "react-bootstrap";
+import { FaUsers, FaUser, FaEnvelope, FaIdCard, FaCrown, FaShieldAlt, FaUserTag, FaExchangeAlt, FaChevronLeft, FaChevronRight, FaSpinner } from "react-icons/fa";
 import "./UserList.css";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [loading, setLoading] = useState(true);
   const [processingUserId, setProcessingUserId] = useState("");
 
-  const loadUsers = async (currentPage) => {
-    setLoading(true);
-    try {
-      const res = await getPagedUsers(currentPage);
-      setUsers(res.data.users);
-      setTotalPages(res.data.totalPages);
-    } catch (err) {
-      console.error("Lỗi khi tải người dùng:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const loadUsers = useCallback(async (currentPage, currentSize = pageSize) => {
+  setLoading(true);
+  try {
+    const res = await getPagedUsers(currentPage, currentSize);
+    setUsers(res.data.users);
+    setTotalPages(res.data.totalPages);
+  } catch (err) {
+    console.error("Lỗi khi tải người dùng:", err);
+  } finally {
+    setLoading(false);
+  }
+}, [pageSize]);
 
-  useEffect(() => {
-    loadUsers(page);
-  }, [page]);
+useEffect(() => {
+  loadUsers(page, pageSize);
+}, [page, pageSize, loadUsers]);
 
   const goToPage = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages && newPage !== page) {
@@ -40,7 +40,7 @@ const UserList = () => {
     setProcessingUserId(userId);
     try {
       await changeUserRole(userId);
-      await loadUsers(page); 
+      await loadUsers(page, pageSize);
     } catch (err) {
       alert("Lỗi khi chuyển vai trò!");
       console.error(err);
@@ -83,7 +83,7 @@ const UserList = () => {
           >
             <FaChevronLeft />
           </Pagination.Prev>
-          
+
           {[...Array(totalPages)].map((_, i) => (
             <Pagination.Item
               key={i + 1}
@@ -93,7 +93,7 @@ const UserList = () => {
               {i + 1}
             </Pagination.Item>
           ))}
-          
+
           <Pagination.Next 
             disabled={page === totalPages}
             onClick={() => goToPage(page + 1)}
@@ -107,9 +107,7 @@ const UserList = () => {
 
   return (
     <div className="userlist-modern-wrapper">
-
       <Container className="userlist-container">
-        {/* Header Section */}
         <Row className="justify-content-center mb-4">
           <Col lg={12}>
             <Card className="userlist-header-card border-0 shadow-lg">
@@ -122,9 +120,7 @@ const UserList = () => {
                   </Col>
                   <Col>
                     <div className="userlist-header-content">
-                      <h2 className="userlist-title mb-2">
-                        👥 Danh sách tài khoản
-                      </h2>
+                      <h2 className="userlist-title mb-2">👥 Danh sách tài khoản</h2>
                     </div>
                   </Col>
                   <Col xs="auto">
@@ -139,7 +135,24 @@ const UserList = () => {
           </Col>
         </Row>
 
-        {/* Main Content */}
+        <Row className="mb-3">
+          <Col xs="auto">
+            <Form.Select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+                setPage(1);
+              }}
+              className="w-auto"
+            >
+              <option value="5">5 / trang</option>
+              <option value="10">10 / trang</option>
+              <option value="20">20 / trang</option>
+              <option value="50">50 / trang</option>
+            </Form.Select>
+          </Col>
+        </Row>
+
         <Row className="justify-content-center">
           <Col lg={12}>
             <Card className="userlist-main-card border-0 shadow">
@@ -170,18 +183,9 @@ const UserList = () => {
                       <thead>
                         <tr>
                           <th className="userlist-th">#</th>
-                          <th className="userlist-th">
-                            <FaUser className="me-2" />
-                            Họ tên
-                          </th>
-                          <th className="userlist-th">
-                            <FaEnvelope className="me-2" />
-                            Email
-                          </th>
-                          <th className="userlist-th">
-                            <FaIdCard className="me-2" />
-                            Số CCCD
-                          </th>
+                          <th className="userlist-th"><FaUser className="me-2" />Họ tên</th>
+                          <th className="userlist-th"><FaEnvelope className="me-2" />Email</th>
+                          <th className="userlist-th"><FaIdCard className="me-2" />Số CCCD</th>
                           <th className="userlist-th">Vai trò</th>
                           <th className="userlist-th text-center">Hành động</th>
                         </tr>
@@ -191,7 +195,7 @@ const UserList = () => {
                           <tr key={user.userId} className="userlist-row">
                             <td className="userlist-td">
                               <div className="userlist-index">
-                                {(page - 1) * 10 + index + 1}
+                                {(page - 1) * pageSize + index + 1}
                               </div>
                             </td>
                             <td className="userlist-td">
@@ -202,21 +206,10 @@ const UserList = () => {
                                 <div className="userlist-user-name">{user.hoTen}</div>
                               </div>
                             </td>
+                            <td className="userlist-td">{user.email}</td>
+                            <td className="userlist-td">{user.soCanCuoc || <em className="text-muted">Chưa có</em>}</td>
                             <td className="userlist-td">
-                              <div className="userlist-email">{user.email}</div>
-                            </td>
-                            <td className="userlist-td">
-                              {user.soCanCuoc ? (
-                                <div className="userlist-cccd">{user.soCanCuoc}</div>
-                              ) : (
-                                <em className="text-muted">Chưa có</em>
-                              )}
-                            </td>
-                            <td className="userlist-td">
-                              <Badge 
-                                bg={getRoleVariant(user.role)} 
-                                className="userlist-role-badge"
-                              >
+                              <Badge bg={getRoleVariant(user.role)} className="userlist-role-badge">
                                 {getRoleIcon(user.role)}
                                 {user.role}
                               </Badge>
@@ -257,7 +250,6 @@ const UserList = () => {
           </Col>
         </Row>
 
-        {/* Pagination */}
         {!loading && renderPagination()}
       </Container>
     </div>
