@@ -3,8 +3,7 @@ import { Route } from "react-router";
 
 import DanhGiaPage from "../pages/DanhGia/DanhGiaPage";
 import DanhGiaCreatePage from "../pages/DanhGia/DanhGiaCreatePage";
-import DanhGiaTheoNamPage from "../pages/DanhGia/DanhGiaTheoNamPage";
-
+import DanhGiaChiTietTheoNamPage from "../pages/DanhGia/DanhGiaChiTietTheoNamPage";
 import RoleRoute from "./RoleRoute";
 
 const DanhGiaRoutes = () => (
@@ -25,14 +24,16 @@ const DanhGiaRoutes = () => (
         </RoleRoute>
       }
     />
-    <Route
-      path="/danh-gia-theo-nam"
-      element={
-        <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
-          <DanhGiaTheoNamPage />
-        </RoleRoute>
-      }
-    />
+    
+<Route
+  path="/danh-gia-tong-hop-theo-nam"
+  element={
+    <RoleRoute allowedRoles={["Admin", "GiangVien"]}>
+      <DanhGiaChiTietTheoNamPage />
+    </RoleRoute>
+  }
+/>
+    
   </>
 );
 

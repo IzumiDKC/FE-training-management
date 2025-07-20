@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.tongket-nam-wrapper {
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+.tongket-nam-wrapper h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.tongket-nam-wrapper select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+.hocvien-block {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border-left: 6px solid #3b82f6;
+}
+
+.hocvien-block h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e40af;
+  margin-bottom: 1rem;
+}
+
+.danhgia-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.danhgia-table th,
+.danhgia-table td {
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.danhgia-table th {
+  background: #3b82f6;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.tongket-form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tongket-form input,
+.tongket-form textarea {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  width: 100%;
+  background: #f8fafc;
+  resize: vertical;
+}
+
+.tongket-form button {
+  width: fit-content;
+  padding: 0.6rem 1.25rem;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tongket-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
+}
+
+.tongket-nam-wrapper label {
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .hocvien-block {
+    padding: 1rem;
+  }
+
+  .danhgia-table th,
+  .danhgia-table td {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+  }
+
+  .tongket-form input,
+  .tongket-form textarea {
+    font-size: 0.9rem;
+  }
+
+  .tongket-form button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+}
