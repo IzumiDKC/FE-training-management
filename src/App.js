@@ -32,8 +32,8 @@ import AdminRoutes from "./routes/AdminRoutes";
 import DangKyKhoaHocRoutes from "./routes/DangKyKhoaHocRoutes";
 import { setNavigate } from "./utils/navigateService";
 import DanhGiaRoutes from "./routes/DanhGiaRoutes";
+import ThongKeRoutes from "./routes/ThongKeRoutes";
 
-// Wrapper gán navigate vào service
 const AppWithNavigation = () => {
   const navigate = useNavigate();
 
@@ -67,7 +67,7 @@ const AppWithNavigation = () => {
           {AdminRoutes()}
           {DangKyKhoaHocRoutes()}
           {DanhGiaRoutes()}
-
+          {ThongKeRoutes()}
         </Route>
       </Routes>
     </ErrorBoundary>
