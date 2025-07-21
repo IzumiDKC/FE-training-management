@@ -139,8 +139,8 @@ const Sidebar = () => {
                 <Link to="/admin/user-list" className="sidebar-link">
                   <FaUsers /> {expanded && <span className="ms-2">DS Tài Khoản</span>}
                 </Link>
-                <Link to="/baocao" className="sidebar-link">
-                  <FaChartBar /> {expanded && <span className="ms-2">Báo cáo</span>}
+                <Link to="/thong-ke" className="sidebar-link">
+                  <FaChartBar /> {expanded && <span className="ms-2">Thống kê</span>}
                 </Link>
               </>
             )}
