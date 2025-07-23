@@ -1,68 +1,123 @@
-# Training Management System
+# 🎓 Training Management System – Frontend (React)
 
-This project is a basic implementation of a training management system with React and various backend functionalities.
+This is the frontend of a full-stack Training Management System built with **React**. It integrates with a backend (ASP.NET Core) and provides a dynamic interface for managing courses, classes, users, registrations, attendance, and evaluations.
 
-## Features Implemented
+---
 
-- **Basic Home Page UI**: A simple and clean user interface for the homepage.
-- **User Authentication**: 
-  - Register, Login, Logout functionalities.
-  - Confirm Register flow.
-- **CRUD API**:
-  - Manage `ChuongTrinhDaoTao` (Training Program).
-  - Manage `KhoaHoc` (Courses).
-- **Basic User Information Retrieval**: Fetch and display basic user information.
-- **Updated Routing for Index Pages**: Improved how routes are displayed for index pages to make navigation smoother.
-- **New API Endpoints**:
-  - **LoaiLopAPI**: Added API for managing course types.
-  - **LopAPI**: Handles class management, including adding additional students to existing lists.
-- **Study Hours Calculation**: Created a page that automatically calculates the number of study hours based on specific date conditions.
-- **App Routing Update**: Reorganized and updated the routing system for better maintainability.
-- **Navbar Update**: Improved the way the navbar is displayed to enhance UI consistency.
-- **Footer Added**: Added a footer for better user interface consistency.
+## ✅ Core Features
 
-## API & Configuration Updates
+### 🧑‍💼 User Authentication & Management
+- Register, Login, Logout.
+- Email confirmation flow: `ConfirmEmail`, `ForgotPassword`, `ResetPassword`, `ResendEmailConfirmation`.
+- Token-based login with **JWT** stored in `localStorage`.
+- Role-based navigation and protection (`HocVien`, `GiangVien`, `Admin`).
+- View all users (admin): includes pagination and role-switching (HocVien ↔ GiangVien).
+- Role authorization via custom `Hooks` and centralized `AuthContext`.
 
-- **ChiTietLopAPI**: Introduced the **ChiTietLopAPI** for managing detailed class information.
-- **API Optimization**: Optimized the configuration for API requests to improve performance and maintainability.
-- **Page Interface Changes**: Made changes to the interface of some pages for a more user-friendly experience.
-- **Route Configuration for ChiTietLop**: Configured routes for **ChiTietLop** within the app for better routing organization.
+### 🧭 Routing & Authorization
+- Protected routes with `PrivateRoute` and `RoleRoute`.
+- Page-level authorization based on backend roles.
+- 404, 401, 403, 500 error pages with `ErrorBoundary` support.
+- Centralized and optimized `Route` management.
 
-## Folder Structure Update
+---
 
-- **Folder Structure Update**: 
-  - Renamed folder `config` to `api`.
-  - Added new configuration folders to better organize the project.
-  - Updated routing to navigate more efficiently, rather than having all routes within **App**.
+## 📚 Course & Class Management
 
-- **New Route Added**: 
-  - **DiemDanh** route is being added (not fully completed yet).
-  - Added functionality to view students in **Lop/Detail**.
-  - **DiemDanh** page is now viewable with enhanced data handling.
+### 📘 Training Program (`ChuongTrinhDaoTao`)
+- CRUD operations.
+- Role-based access for admin.
 
-## DiemDanh Updates
+### 🏫 Course (`KhoaHoc`)
+- Manage courses with interface updates.
+- Integrated with `KhoaHocAPI` and `Dto` models.
+- Permission checks and validation.
+  
+### 🏷️ Class (`Lop` / `ChiTietLop`)
+- View, create, and update class info.
+- Assign students dynamically.
+- Split logic for `LopCreate` using utility file (`timeUtils.js`).
 
-- **DiemDanh Page**: 
-  - After scanning the QR code, the frontend portal (running on port 3000) is now returned.
-  - The list of **HocVien** (students) for a **Lop** is now displayed correctly.
-  - Display of information is now corrected based on **LopId** and **ChiTietLopId** parameters (previously displayed incorrectly due to missing parameters).
-  - **Confirmation Page** of attendance after scanning the QR code.
-  - Added functionality to send headers with token values when permission is required (not yet optimized).
-  - Updated interface for better usability.
-  - Updated **Routes** related to **DiemDanh**.
+### 📝 Course Registration (`DangKyKhoaHoc`)
+- Register via form with validation.
+- Admin view of all registrations.
+- `DangKyRequestDto` and `DangKyKhoaHocDto` used for clean API communication.
 
-- **DiemDanh API**:
-  - Updated according to backend changes to ensure proper functionality.
-  - Configured **ChiTietLop** to accept **LopId** parameters for better data handling.
-  - Token is now saved to **localStorage** after login to ensure secure session management.
-  - **Profile** page can now only be accessed if the token is valid.
+---
 
-## SSL Configuration
+## 📅 Attendance (DiemDanh)
 
-- **SSL Configuration**:
-  - SSL configuration file is prepared and configured, but currently, the frontend is running on the HTTP port.
-  - If you need to switch to SSL, rename the package file (ssl) as required.
-  - **SSL** content is configured according to backend specifications.
+- QR code-based check-in (integrated with backend).
+- View list of students in class with `LopId`, `ChiTietLopId`.
+- Confirm check-in page post scan.
+- Token passed via headers for auth.
+- `ResetCheckIn/Out` with updated route param usage.
+- `DiemDanh` routes, pages, and permissions fully configured.
+
+---
+
+## 📊 Statistics & Visualization
+
+- Integrated `recharts` for interactive charts.
+- Statistical dashboard includes:
+  - Account creation metrics.
+  - Most popular class/program.
+  - Attendance trends.
+- Separate route, page, and API for statistics (admin only).
+
+---
+
+## 🧪 Evaluation Management
+
+- `DanhGia` & `DanhGiaTheoNam` modules:
+  - Index & Create pages.
+  - Basic form interface and API integration.
+  - Sidebar access.
+  - Authorization by role.
+- Renamed `DanhGiaTheoNam` → `DanhGiaChiTietTheoNam` across codebase.
+
+---
+
+## 🧱 UI/UX & Component System
+
+- Redesigned UI using **GSAP** / **anime.js** for transitions.
+- Responsive layout for all devices.
+- Sidebar:
+  - Interactive hover effect.
+  - Auto-adjusts layout to prevent overlapping.
+  - Dynamic content based on roles.
+  - Includes direct links to registration, evaluation, statistics, etc.
+- Navbar & Footer consistency across all pages.
+- Common error interface for smoother user experience.
+
+---
+
+## 🔧 Utilities & Optimization
+
+- Centralized `api` configuration (was `config`).
+- `formatTime` utility for timestamps.
+- `AuthContext` handles login state, logout resets token/role/user.
+- `useRole` hook to authorize UI components without duplication.
+- Navigation via `navigate()` (replaces `window.location.href`).
+- Basic public pages for unauthenticated users.
+- Updated layout structure & CSS for maintainability.
+
+---
+
+## 🔐 SSL & Environment
+
+- SSL-ready: configured with `.pem` files and `openssl`.
+- Frontend currently runs on **HTTP** for flexibility during development.
+- Supports both HTTP and HTTPS.
+
+---
+
+## 🚀 Coming Soon / In Progress
+
+- Full integration of evaluation summary flows.
+- Enhanced user feedback on submission & errors.
+- Additional statistics metrics for admin.
+
 
 ---
 
