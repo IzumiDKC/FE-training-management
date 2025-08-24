@@ -4,9 +4,13 @@ import { useAuth } from "../../contexts/AuthContext";
 import gsap from "gsap";
 import "./loginForm.css";
 import api from "../../api/api";
+import { useLocation } from "react-router";
 
 const LoginForm = () => {
-  const formRef = useRef(null);
+
+const formRef = useRef(null);
+const location = useLocation();
+const returnUrl = new URLSearchParams(location.search).get("returnUrl") || "/";
 
   const [formData, setFormData] = useState({
     email: "",
@@ -18,7 +22,7 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  // eslint-disable-next-line
   const navigate = useNavigate();
   const { fetchUser } = useAuth();
 
@@ -63,7 +67,8 @@ const LoginForm = () => {
       setFormData({ email: "", password: "", rememberMe: false });
 
       await fetchUser();
-      navigate("/");
+window.location.href = returnUrl;
+
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.error || "Đăng nhập thất bại.");

@@ -27,3 +27,12 @@ export const resetAllCheckOut = async (chiTietLopId) => {
     throw error;
   }
 };
+
+export const submitDiemDanh = async (data) => {
+  try {
+    const res = await api.post("/DiemDanh/DiemDanhSubmit", data);
+    return res.data;
+  } catch (error) {
+    throw error; 
+  }
+};
