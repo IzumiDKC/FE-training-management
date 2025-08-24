@@ -45,7 +45,7 @@ const LopList = () => {
     <div className="lop-container">
       <div className="lop-content">
         <div className="lop-header">
-          <h1 className="lop-title">📚 Quản Lý Lớp Học</h1>
+          <h1 className="lop-title">Quản Lý Lớp Học</h1>
           <p className="lop-subtitle">
           </p>
           {(isAdmin || isGiangVien) && (

@@ -1,14 +1,26 @@
-// File: src/pages/DiemDanh/DiemDanhPage.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import DiemDanhList from "../../components/DiemDanhList";  
-import { Button, Spinner, Card, Row, Col, Badge, Alert } from "react-bootstrap"; 
-import { resetAllCheckIn, resetAllCheckOut } from "../../services/diemDanhApi";
-import { FaArrowLeft,FaQrcode,FaSignInAlt,FaSignOutAlt,FaRedo,FaClock,FaUserCheck,FaShieldAlt} from "react-icons/fa";
+import DiemDanhList from "../../components/DiemDanhList";
+import { Button, Spinner, Card, Row, Col, Badge, Alert } from "react-bootstrap";
+import {
+  resetAllCheckIn,
+  resetAllCheckOut
+} from "../../services/diemDanhApi";
+import {
+  FaArrowLeft,
+  FaQrcode,
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaRedo,
+  FaClock,
+  FaUserCheck,
+  FaShieldAlt
+} from "react-icons/fa";
 import "./DiemDanhPage.css";
+import { submitDiemDanh } from "../../services/diemDanhApi";
 
 const DiemDanhPage = () => {
-  const { chiTietLopId, lopId } = useParams(); 
+  const { chiTietLopId, lopId } = useParams();
   const navigate = useNavigate();
   const [qrImage, setQrImage] = useState(null);
   const [countdown, setCountdown] = useState(120);
@@ -30,37 +42,40 @@ const DiemDanhPage = () => {
 
     const token = localStorage.getItem("token");
     setQrType(type);
-    setLoading(true); 
+    setLoading(true);
 
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/DiemDanh/GenerateQRBase64?lopId=${lopId}&chiTietLopId=${chiTietLopId}&type=${type}`, { 
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+    fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/DiemDanh/GenerateQRBase64?lopId=${lopId}&chiTietLopId=${chiTietLopId}&type=${type}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
       }
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      setQrImage(data.image);
-      setIsQrActive(true);
-    })
-    .catch((error) => {
-      console.error("Lỗi khi lấy QR:", error);
-      alert("Có lỗi xảy ra khi lấy mã QR.");
-    })
-    .finally(() => {
-      setLoading(false);
-    });
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setQrImage(data.image);
+        setIsQrActive(true);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy QR:", error);
+        alert("Có lỗi xảy ra khi lấy mã QR.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleResetCheckIn = async () => {
     if (!chiTietLopId) return;
     try {
       await resetAllCheckIn(chiTietLopId);
-      alert("✅ Đã reset tất cả Check-in.");
+      alert("Đã reset tất cả Check-in.");
     } catch (err) {
       console.error("Error resetting check-in:", err);
-      alert("❌ Có lỗi xảy ra khi reset Check-in.");
+      alert("Có lỗi xảy ra khi reset Check-in.");
     }
   };
 
@@ -68,10 +83,10 @@ const DiemDanhPage = () => {
     if (!chiTietLopId) return;
     try {
       await resetAllCheckOut(chiTietLopId);
-      alert("✅ Đã reset tất cả Check-out.");
+      alert("Đã reset tất cả Check-out.");
     } catch (err) {
       console.error("Error resetting check-out:", err);
-      alert("❌ Có lỗi xảy ra khi reset Check-out.");
+      alert("Có lỗi xảy ra khi reset Check-out.");
     }
   };
 
@@ -82,25 +97,59 @@ const DiemDanhPage = () => {
   const formatCountdown = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
+
+  const handleManualCheck = async (hocVienId, type) => {
+  const now = new Date();
+
+  const hh = now.getHours().toString().padStart(2, "0");
+  const mm = now.getMinutes().toString().padStart(2, "0");
+  const ss = now.getSeconds().toString().padStart(2, "0");
+  const timeStr = `${hh}:${mm}:${ss}`;
+
+  const payload = {
+    ChiTietLopId: parseInt(chiTietLopId),
+    HocVienId: parseInt(hocVienId),
+    NgayCheck: now.toISOString(), 
+    Note: "Điểm danh thủ công"
+  };
+
+  if (type === "checkin") {
+    payload.CheckIn = timeStr;
+  } else if (type === "checkout") {
+    payload.CheckOut = timeStr;
+  }
+
+  console.log("✅ Payload gửi:", payload);
+
+  try {
+    await submitDiemDanh(payload);
+    alert(` ${type === "checkin" ? "Check-in" : "Check-out"} thành công lúc ${hh}:${mm}`);
+  } catch (err) {
+    console.error("Lỗi điểm danh thủ công:", err);
+    alert("Lỗi khi điểm danh thủ công.");
+  }
+};
+
+
+
 
   return (
     <div className="diemdanh-modern-wrapper">
-      {/* Background Effects */}
       <div className="diemdanh-bg-effects">
         <div className="diemdanh-particles"></div>
         <div className="diemdanh-waves"></div>
       </div>
 
       <div className="container-fluid diemdanh-container">
-        {/* Header Section */}
+        {/* Header */}
         <Card className="diemdanh-header-card shadow-lg border-0 mb-4">
           <Card.Body className="p-4">
             <Row className="align-items-center">
               <Col xs="auto">
-                <Button 
-                  variant="outline-primary" 
+                <Button
+                  variant="outline-primary"
                   size="lg"
                   className="diemdanh-back-btn rounded-circle p-3"
                   onClick={handleBackToLop}
@@ -114,9 +163,7 @@ const DiemDanhPage = () => {
                     <FaUserCheck className="diemdanh-main-icon" />
                   </div>
                   <div>
-                    <h2 className="mb-1 diemdanh-title">
-                      Điểm Danh Lớp Học
-                    </h2>
+                    <h2 className="mb-1 diemdanh-title">Điểm Danh Lớp Học</h2>
                   </div>
                 </div>
               </Col>
@@ -141,7 +188,7 @@ const DiemDanhPage = () => {
                     Tạo Mã QR
                   </h6>
                   <div className="d-grid gap-3">
-                    <Button 
+                    <Button
                       variant="success"
                       size="lg"
                       className="diemdanh-action-btn"
@@ -151,7 +198,7 @@ const DiemDanhPage = () => {
                       <FaSignInAlt className="me-2" />
                       🔓 Tạo mã Check-in
                     </Button>
-                    <Button 
+                    <Button
                       variant="warning"
                       size="lg"
                       className="diemdanh-action-btn"
@@ -172,7 +219,7 @@ const DiemDanhPage = () => {
                     Reset Dữ Liệu
                   </h6>
                   <div className="d-grid gap-3">
-                    <Button 
+                    <Button
                       variant="danger"
                       size="lg"
                       className="diemdanh-action-btn"
@@ -182,7 +229,7 @@ const DiemDanhPage = () => {
                       <FaRedo className="me-2" />
                       ♻️ Reset All Check-in
                     </Button>
-                    <Button 
+                    <Button
                       variant="outline-warning"
                       size="lg"
                       className="diemdanh-action-btn"
@@ -198,7 +245,7 @@ const DiemDanhPage = () => {
             </Card>
           </Col>
 
-          {/* QR Code Display */}
+          {/* QR Code Panel */}
           <Col lg={6} className="mb-4">
             <Card className="diemdanh-qr-card h-100 shadow border-0">
               <Card.Header className="bg-gradient-info text-white border-0">
@@ -210,9 +257,9 @@ const DiemDanhPage = () => {
               <Card.Body className="p-4 text-center">
                 {loading ? (
                   <div className="diemdanh-loading-section py-5">
-                    <Spinner 
-                      animation="border" 
-                      variant="primary" 
+                    <Spinner
+                      animation="border"
+                      variant="primary"
                       size="lg"
                       className="mb-3"
                     />
@@ -220,18 +267,18 @@ const DiemDanhPage = () => {
                   </div>
                 ) : isQrActive && qrImage ? (
                   <div className="diemdanh-qr-display">
-                    <Badge 
-                      bg={qrType === 'checkin' ? 'success' : 'warning'} 
+                    <Badge
+                      bg={qrType === "checkin" ? "success" : "warning"}
                       className="mb-3 px-3 py-2 fs-6"
                     >
-                      {qrType === 'checkin' ? 'Check-in' : 'Check-out'} QR Code
+                      {qrType === "checkin" ? "Check-in" : "Check-out"} QR Code
                     </Badge>
-                    
+
                     <div className="diemdanh-qr-container mb-3">
-                      <img 
-                        id="qr-image" 
-                        src={qrImage} 
-                        alt="QR code" 
+                      <img
+                        id="qr-image"
+                        src={qrImage}
+                        alt="QR code"
                         className="diemdanh-qr-image shadow"
                       />
                       <div className="diemdanh-qr-overlay">
@@ -242,7 +289,8 @@ const DiemDanhPage = () => {
                     <Alert variant="danger" className="diemdanh-countdown-alert">
                       <FaClock className="me-2" />
                       <span id="countdown">
-                        Mã QR có hiệu lực trong <strong>{formatCountdown(countdown)}</strong>
+                        Mã QR có hiệu lực trong{" "}
+                        <strong>{formatCountdown(countdown)}</strong>
                       </span>
                     </Alert>
                   </div>
@@ -261,7 +309,7 @@ const DiemDanhPage = () => {
           </Col>
         </Row>
 
-        {/* Attendance List */}
+        {/* Danh sách điểm danh */}
         <Card className="diemdanh-list-card shadow border-0">
           <Card.Header className="bg-gradient-secondary text-white border-0">
             <div className="d-flex align-items-center">
@@ -271,7 +319,11 @@ const DiemDanhPage = () => {
           </Card.Header>
           <Card.Body className="p-0">
             <div className="diemdanh-list-wrapper">
-              <DiemDanhList chiTietLopId={chiTietLopId} lopId={lopId} />
+              <DiemDanhList
+                chiTietLopId={chiTietLopId}
+                lopId={lopId}
+                onManualCheck={handleManualCheck}
+              />
             </div>
           </Card.Body>
         </Card>

@@ -40,6 +40,12 @@ const AppWithNavigation = () => {
   useEffect(() => {
     setNavigate(navigate);
   }, [navigate]);
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    sessionStorage.setItem("token", token);
+  }
+}, []);
 
   return (
     <ErrorBoundary>

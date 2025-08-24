@@ -12,40 +12,41 @@ const QRScanPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!token) return;
+  // const tokenFromStorage = localStorage.getItem("token");
+  //const tokenFromStorage = sessionStorage.getItem("token");
+  const tokenFromStorage = sessionStorage.getItem("token") || localStorage.getItem("token");
 
-    const fetchQRScan = async () => {
-      try {
-        const authToken = localStorage.getItem("token");
+  if (!tokenFromStorage) {
+    window.location.href = `/login?returnUrl=${encodeURIComponent(`/qr-scan/${token}`)}`;
+    return;
+  }
 
-        const response = await fetch(`https://localhost:7247/api/DiemDanh/Scan?token=${token}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${authToken}`,
-          },
-        });
+  const fetchQRScan = async () => {
+    try {
+      const response = await fetch(`https://localhost:7247/api/DiemDanh/Scan?token=${token}`, {
+        headers: {
+          "Authorization": `Bearer ${tokenFromStorage}`,
+        },
+      });
 
-        const data = await response.json();
+      const data = await response.json();
+      if (!response.ok || !data.success) throw new Error(data.message);
 
-        if (!response.ok || !data.success) {
-          throw new Error(data.message || "Mã QR không hợp lệ hoặc đã hết hạn.");
-        }
+      setScanResult(data);
+    } catch (error) {
+      setErrorMessage(`Có lỗi xảy ra: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        setScanResult(data);
-      } catch (error) {
-        setErrorMessage(`Có lỗi xảy ra: ${error.message}`);
-      } finally {
-        setLoading(false);
-      }
-    };
+  fetchQRScan();
+}, [token]);
 
-    fetchQRScan();
-  }, [token]);
+
 
   return (
     <div className="qrscan-page-wrapper">
-      {/* Background Effects */}
       <div className="qrscan-bg-effects">
         <div className="qrscan-particles">
           {[...Array(12)].map((_, i) => (

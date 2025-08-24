@@ -45,23 +45,28 @@ const LopCreate = () => {
   }, [form.ngayBatDauDuKien, form.ngayKetThucDuKien, userModifiedSoGio]);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const { name, value, type, checked } = e.target;
 
-    if (name === "soGio") {
-      setUserModifiedSoGio(true);
-    }
+  if (name === "soGio") {
+    setUserModifiedSoGio(true);
+  }
 
-    const parsedValue =
-      type === "checkbox"
-        ? checked
-        : name.includes("Id")
-        ? parseInt(value) || ""
-        : name === "soGio" || name === "soGioQuyDoi"
-        ? parseFloat(value)
-        : value;
+  if (name === "ngayBatDauDuKien" || name === "ngayKetThucDuKien") {
+    setUserModifiedSoGio(false); // reset để cho phép tính lại tự động
+  }
 
-    setForm((prev) => ({ ...prev, [name]: parsedValue }));
-  };
+  const parsedValue =
+    type === "checkbox"
+      ? checked
+      : name.includes("Id")
+      ? parseInt(value) || ""
+      : name === "soGio" || name === "soGioQuyDoi"
+      ? parseFloat(value)
+      : value;
+
+  setForm((prev) => ({ ...prev, [name]: parsedValue }));
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
